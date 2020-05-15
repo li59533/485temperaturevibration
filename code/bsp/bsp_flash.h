@@ -1,6 +1,6 @@
 /**
  **************************************************************************************************
- * @file        version.h
+ * @file        bsp_flash.h
  * @author
  * @version
  * @date        
@@ -10,8 +10,8 @@
  *
  **************************************************************************************************
  */
-#ifndef _VERSION_H_
-#define _VERSION_H_
+#ifndef _BSP_FLASH_H_
+#define _BSP_FLASH_H_
 
 /**
  * @addtogroup    XXX 
@@ -19,28 +19,22 @@
  */
 #include "self_def.h"
 /**
- * @addtogroup    version_Modules 
+ * @addtogroup    bsp_flash_Modules 
  * @{  
  */
 
 /**
- * @defgroup      version_Exported_Macros 
+ * @defgroup      bsp_flash_Exported_Macros 
  * @{  
  */
-#define VERSION_MAJOR		0   // 0~255
-#define VERSION_MINOR		0   // 0~255
-#define VERSION_LITE		1	// 0~255
 
-#define FRAME_VERSION_MAJOR		0   // 0~255
-#define FRAME_VERSION_MINOR		0   // 0~255
-#define FRAME_VERSION_LITE		3	// 0~255
 
 /**
  * @}
  */
 
 /**
- * @defgroup      version_Exported_Constants
+ * @defgroup      bsp_flash_Exported_Constants
  * @{  
  */
 
@@ -49,7 +43,7 @@
  */
 
 /**
- * @defgroup      version_Exported_Types 
+ * @defgroup      bsp_flash_Exported_Types 
  * @{  
  */
 
@@ -58,7 +52,7 @@
  */
 
 /**
- * @defgroup      version_Exported_Variables 
+ * @defgroup      bsp_flash_Exported_Variables 
  * @{  
  */
 
@@ -67,11 +61,16 @@
  */
 
 /**
- * @defgroup      version_Exported_Functions 
+ * @defgroup      bsp_flash_Exported_Functions 
  * @{  
  */
-uint32_t Version_Get_Bin(void);
-char * Version_Get_Str(void);
+ 
+ 
+void BSP_Flash_Init(void); 
+int8_t BSP_Flash_WriteBytes(uint32_t AddrStart,uint8_t *buf,uint16_t len); 
+void BSP_Flash_ReadBytes(uint32_t AddrStart, uint8_t *buf , uint16_t len);
+
+void BSP_Flash_Test(void);
 /**
  * @}
  */

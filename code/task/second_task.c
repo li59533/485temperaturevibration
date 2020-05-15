@@ -19,7 +19,7 @@
  * @addtogroup    XXX 
  * @{  
  */
-
+#include "bsp_uart.h"
 /**
  * @addtogroup    second_task_Modules 
  * @{  
@@ -120,8 +120,10 @@ void Second_Task(void * pvParameter)
 	while(1)
 	{
 		DEBUG("Second Task Looping\r\n");
+		
+		//BSP_Uart_Test_Send();
+		
 		vTaskDelay(pdMS_TO_TICKS(3000));
-
 	}
 	
 }

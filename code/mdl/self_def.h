@@ -23,6 +23,7 @@
 #include "stdio.h"
 #include "string.h"
 #include "stdio.h"
+#include "rtos_tools.h"
 //#include "ret_error.h"
 /**
  * @addtogroup    self_def_Modules 

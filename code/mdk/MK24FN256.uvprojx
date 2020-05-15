@@ -338,7 +338,7 @@
               <MiscControls>  --library_type=standardlib --c99 --diag_suppress=1296,186,66,111,223  --library_interface=armcc  </MiscControls>
               <Define>SDK_OS_FREE_RTOS, CPU_MK24FN256VDC12, FSL_RTOS_FREE_RTOS, NDEBUG</Define>
               <Undefine></Undefine>
-              <IncludePath>..\app;..\bsp;..\components\CMSIS\Include;..\components\MK24F25612;..\components\MK24F25612\drivers;..\components\MK24F25612\utilities;..\fml;..\mdl;..\mdl\os\include;..\mdl\os\portable\MemMang;..\mdl\os\portable\RVDS\ARM_CM4F;..\mdl\rttviewer;..\task;..\uti</IncludePath>
+              <IncludePath>..\app;..\bsp;..\components\CMSIS\Include;..\components\MK24F25612;..\components\MK24F25612\drivers;..\components\MK24F25612\utilities;..\fml;..\mdl;..\mdl\os\include;..\mdl\os\portable\MemMang;..\mdl\os\portable\RVDS\ARM_CM4F;..\mdl\rttviewer;..\task;..\uti;..\mdl\ModbusRTU</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -393,11 +393,6 @@
               <FilePath>..\app\main.c</FilePath>
             </File>
             <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\app\pin_mux.c</FilePath>
-            </File>
-            <File>
               <FileName>FreeRTOSConfig.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\app\FreeRTOSConfig.h</FilePath>
@@ -406,6 +401,38 @@
         </Group>
         <Group>
           <GroupName>bsp</GroupName>
+          <Files>
+            <File>
+              <FileName>bsp_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\bsp\bsp_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\bsp\bsp_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\bsp\bsp_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\bsp\bsp_uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\bsp\bsp_tim.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\bsp\bsp_clock.c</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>components</GroupName>
@@ -609,6 +636,13 @@
         </Group>
         <Group>
           <GroupName>fml</GroupName>
+          <Files>
+            <File>
+              <FileName>system_param.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\fml\system_param.c</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>mdl</GroupName>
@@ -681,6 +715,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>mdl/modbus</GroupName>
+          <Files>
+            <File>
+              <FileName>ModbusCRC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\mdl\ModbusRTU\ModbusCRC.c</FilePath>
+            </File>
+            <File>
+              <FileName>ModbusHardwareInit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\mdl\ModbusRTU\ModbusHardwareInit.c</FilePath>
+            </File>
+            <File>
+              <FileName>ModbusRTU_Slave.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\mdl\ModbusRTU\ModbusRTU_Slave.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>task</GroupName>
           <Files>
             <File>
@@ -697,6 +751,11 @@
               <FileName>task_list.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\task\task_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>modbus_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\task\modbus_task.c</FilePath>
             </File>
           </Files>
         </Group>

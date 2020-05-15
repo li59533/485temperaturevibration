@@ -24,7 +24,7 @@
 
 #include "clog.h"
 
-
+#include "modbus_task.h"
 /**
  * @addtogroup    task_list_Modules 
  * @{  
@@ -112,6 +112,7 @@ void RTOS_Init(void)
 	
 	basetype = First_Task_Init();
 	basetype = Second_Task_Init();
+	basetype = Modbus_Task_Init();
 	
 	if(pdPASS == basetype)
 	{

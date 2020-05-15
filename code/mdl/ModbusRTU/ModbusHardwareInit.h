@@ -1,8 +1,8 @@
 /**
  **************************************************************************************************
- * @file        version.h
+ * @file        ModbusHardwareInit.h
  * @author
- * @version
+ * @version    v0.1.0
  * @date        
  * @brief
  **************************************************************************************************
@@ -10,8 +10,8 @@
  *
  **************************************************************************************************
  */
-#ifndef _VERSION_H_
-#define _VERSION_H_
+#ifndef _MODBUSHARDWAREINIT_H_
+#define _MODBUSHARDWAREINIT_H_
 
 /**
  * @addtogroup    XXX 
@@ -19,28 +19,12 @@
  */
 #include "self_def.h"
 /**
- * @addtogroup    version_Modules 
+ * @addtogroup    ModbusHardwareInit_Modules 
  * @{  
  */
 
 /**
- * @defgroup      version_Exported_Macros 
- * @{  
- */
-#define VERSION_MAJOR		0   // 0~255
-#define VERSION_MINOR		0   // 0~255
-#define VERSION_LITE		1	// 0~255
-
-#define FRAME_VERSION_MAJOR		0   // 0~255
-#define FRAME_VERSION_MINOR		0   // 0~255
-#define FRAME_VERSION_LITE		3	// 0~255
-
-/**
- * @}
- */
-
-/**
- * @defgroup      version_Exported_Constants
+ * @defgroup      ModbusHardwareInit_Exported_Macros 
  * @{  
  */
 
@@ -49,7 +33,7 @@
  */
 
 /**
- * @defgroup      version_Exported_Types 
+ * @defgroup      ModbusHardwareInit_Exported_Constants
  * @{  
  */
 
@@ -58,7 +42,7 @@
  */
 
 /**
- * @defgroup      version_Exported_Variables 
+ * @defgroup      ModbusHardwareInit_Exported_Types 
  * @{  
  */
 
@@ -67,11 +51,20 @@
  */
 
 /**
- * @defgroup      version_Exported_Functions 
+ * @defgroup      ModbusHardwareInit_Exported_Variables 
  * @{  
  */
-uint32_t Version_Get_Bin(void);
-char * Version_Get_Str(void);
+
+/**
+ * @}
+ */
+
+/**
+ * @defgroup      ModbusHardwareInit_Exported_Functions 
+ * @{  
+ */
+void ModbusFunctionInit(void);
+void ModbusSend(uint8_t * Data,uint16_t Len);
 /**
  * @}
  */

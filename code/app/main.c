@@ -3,10 +3,9 @@
  */
 
 #include "board.h"
-#include "pin_mux.h"
 #include "clock_config.h"
-
-
+#include "bsp_init.h"
+#include "system_param.h"
 /* FreeRTOS kernel includes. */
 #include "FreeRTOS.h"
 #include "task.h"
@@ -20,12 +19,14 @@
 /*!
  * @brief Application entry point.
  */
-int main(void) {
-	/* Init board hardware. */
-	BOARD_InitPins();
-	BOARD_BootClockRUN();
-	
+int main(void) 
+{
+
 	DEBUG("Start\r\n");
+	BOARD_BootClockRUN();
+	BSP_Init();
+	SystemParam_Init();
+	
 	RTOS_Init();
 }
 
