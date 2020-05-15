@@ -1,6 +1,6 @@
 /**
  **************************************************************************************************
- * @file        bsp_init.c
+ * @file        app_sample.c
  * @author
  * @version
  * @date        
@@ -14,23 +14,20 @@
 #include "bsp_conf.h"
 
 #include "clog.h"
-#include "bsp_init.h"
+#include "app_sample.h"
 /**
  * @addtogroup    XXX 
  * @{  
  */
-#include "bsp_flash.h"
-#include "bsp_uart.h"
 #include "bsp_tim.h"
-#include "bsp_clock.h"
 #include "bsp_adc.h"
 /**
- * @addtogroup    bsp_init_Modules 
+ * @addtogroup    app_sample_Modules 
  * @{  
  */
 
 /**
- * @defgroup      bsp_init_IO_Defines 
+ * @defgroup      app_sample_IO_Defines 
  * @brief         
  * @{  
  */
@@ -40,7 +37,7 @@
  */
 
 /**
- * @defgroup       bsp_init_Macros_Defines 
+ * @defgroup       app_sample_Macros_Defines 
  * @brief         
  * @{  
  */
@@ -50,7 +47,7 @@
  */
 
 /**
- * @defgroup      bsp_init_Constants_Defines 
+ * @defgroup      app_sample_Constants_Defines 
  * @brief         
  * @{  
  */
@@ -60,7 +57,7 @@
  */
 
 /**
- * @defgroup       bsp_init_Private_Types
+ * @defgroup       app_sample_Private_Types
  * @brief         
  * @{  
  */
@@ -70,7 +67,7 @@
  */
 
 /**
- * @defgroup      bsp_init_Private_Variables 
+ * @defgroup      app_sample_Private_Variables 
  * @brief         
  * @{  
  */
@@ -80,7 +77,7 @@
  */
 
 /**
- * @defgroup      bsp_init_Public_Variables 
+ * @defgroup      app_sample_Public_Variables 
  * @brief         
  * @{  
  */
@@ -90,7 +87,7 @@
  */
 
 /**
- * @defgroup      bsp_init_Private_FunctionPrototypes 
+ * @defgroup      app_sample_Private_FunctionPrototypes 
  * @brief         
  * @{  
  */
@@ -100,18 +97,15 @@
  */
 
 /**
- * @defgroup      bsp_init_Functions 
+ * @defgroup      app_sample_Functions 
  * @brief         
  * @{  
  */
-void BSP_Init(void)
+void APP_Sample_Init(void)
 {
-	BSP_ShowClock();
-	BSP_Flash_Init();
-	//BSP_UART_Init(BSP_UART1);
-	//BSP_Tim_Init(BSP_TIM0);
-	//BSP_ADC_Init();
-	DEBUG("bsp init\r\n");
+	BSP_Tim_Init(BSP_TIM1);
+	BSP_ADC_Init();
+	BSP_Tim_1_Start();
 }
 
 /**

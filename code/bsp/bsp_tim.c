@@ -92,10 +92,8 @@
  * @brief         
  * @{  
  */
-static void bsp_lptmr_init(void);
-static void bsp_lptmr_deinit(void);
-static void bsp_tmp0_deinit(void);
 static void bsp_tmp0_init(void);
+static void bsp_tmp1_init(void);
 /**
  * @}
  */
@@ -112,33 +110,19 @@ void BSP_Tim_Init(uint8_t BSP_TIMx)
 	switch (BSP_TIMx)
 	{
 		case BSP_TIM0 :bsp_tmp0_init();break;
+		case BSP_TIM1 :bsp_tmp1_init();break;
 		default :break;
 	}
 }
 
 void BSP_Tim_DeInit(uint8_t BSP_TIMx)
 {
-	switch (BSP_TIMx)
-	{
-		case BSP_TIM0 :bsp_lptmr_deinit();break;
-		case BSP_TIM1 : bsp_tmp0_deinit();break;
-		default :break;
-	}
-}
-
-static void bsp_tmp0_deinit(void)
-{
 
 }
 
-static void bsp_lptmr_deinit(void)
-{
-	
-}
 
 static void bsp_tmp0_init(void)
 {
-	
 	//CLOCK_EnableClock(kCLOCK_Ftm0);
 	ftm_config_t ftmInfo;
     FTM_GetDefaultConfig(&ftmInfo);
@@ -148,20 +132,40 @@ static void bsp_tmp0_init(void)
 
     /* Initialize FTM module */
     FTM_Init(FTM0, &ftmInfo);
-
     /*
      * Set timer period.
     */
     FTM_SetTimerPeriod(FTM0, USEC_TO_COUNT(5000, CLOCK_GetFreq(kCLOCK_BusClk) * 4));
-
+	// -----IRQ-------
     FTM_EnableInterrupts(FTM0, kFTM_TimeOverflowInterruptEnable);
-
 	NVIC_SetPriority(FTM0_IRQn , 7);
     EnableIRQ(FTM0_IRQn);
-	
-    
+	// ---------------
 }
 
+static void bsp_tmp1_init(void)
+{
+	
+	CLOCK_EnableClock(kCLOCK_Ftm1);
+	ftm_config_t ftmInfo;
+    FTM_GetDefaultConfig(&ftmInfo);
+    /* Divide FTM clock by 4 */
+    ftmInfo.prescale = kFTM_Prescale_Divide_128;
+	//ftmInfo.extTriggers = kFTM_InitTrigger;
+    /* Initialize FTM module */
+    FTM_Init(FTM1, &ftmInfo);
+    /*
+     * Set timer period.
+    */
+    FTM_SetTimerPeriod(FTM1, 65530);
+
+	// -----IRQ-------
+    FTM_EnableInterrupts(FTM1, kFTM_TimeOverflowInterruptEnable);
+	NVIC_SetPriority(FTM1_IRQn , 7);
+    EnableIRQ(FTM1_IRQn);
+	// ---------------
+
+}
 
 void BSP_Tim_0_StartOnce(void)
 {
@@ -170,15 +174,15 @@ void BSP_Tim_0_StartOnce(void)
 	FTM_StartTimer(FTM0, kFTM_SystemClock);
 }
 
-static void bsp_lptmr_init(void)
+void BSP_Tim_1_Start(void)
 {
-
+	FTM_StartTimer(FTM1, kFTM_SystemClock);
 }
+
 void BSP_Tim_StartOnceTimer(uint8_t BSP_TIMx , uint32_t msec)
 {
 
 }
-
 
 uint32_t BSP_GetTimrCurCount(uint8_t BSP_TIMx)
 {
@@ -206,6 +210,16 @@ void FTM0_IRQHandler(void)
 			
 	}
 	DEBUG("FTM0_IRQHandler\r\n");
+}
+
+void FTM1_IRQHandler(void)
+{
+	if(FTM_GetStatusFlags(FTM1) & kFTM_TimeOverflowFlag )
+	{
+		/* Clear interrupt flag.*/
+		FTM_ClearStatusFlags(FTM1, kFTM_TimeOverflowFlag);
+	}
+	DEBUG("FTM1_IRQHandler\r\n");
 }
 
  // ---------------------------------------

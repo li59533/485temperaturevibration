@@ -397,6 +397,11 @@
               <FileType>5</FileType>
               <FilePath>..\app\FreeRTOSConfig.h</FilePath>
             </File>
+            <File>
+              <FileName>app_sample.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\app\app_sample.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -431,6 +436,11 @@
               <FileName>bsp_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\bsp\bsp_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\bsp\bsp_adc.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -756,6 +766,11 @@
               <FileName>modbus_task.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\task\modbus_task.c</FilePath>
+            </File>
+            <File>
+              <FileName>sample_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\task\sample_task.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -113,7 +113,7 @@ uint32_t First_Task_Init(void)
 	BaseType_t basetype = { 0 };
 	basetype = xTaskCreate(First_Task,\
 							"First Task",\
-							1024,
+							128,
 							NULL,
 							3,
 							&First_Task_Handle);

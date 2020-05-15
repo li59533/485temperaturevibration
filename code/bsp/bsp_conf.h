@@ -38,7 +38,7 @@
 #define BSP_GPIO_MODULE_ENABLE			1
 #define BSP_TIM_MODULE_ENABLE			1
 #define BSP_RTC_MODULE_ENABLE			0
-#define BSP_ADC_MODULE_ENABLE			0
+#define BSP_ADC_MODULE_ENABLE			1
 #define BSP_DMA_MODULE_ENABLE			1
 #define BSP_USART_MODULE_ENABLE			1
 #define BSP_FLASH_MODULE_ENABLE			1
@@ -59,10 +59,6 @@
 #if USING_MKL16_LIB == 1
 	#include "fsl_common.h"
 	#include "fsl_port.h"
-#endif
-
-#if BSP_ADC_MODULE_ENABLE == 1
-	#include "fsl_smc.h"
 #endif
 
 #if BSP_SMC_MODULE_ENABLE == 1

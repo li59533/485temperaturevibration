@@ -20,6 +20,7 @@
  * @{  
  */
 #include "bsp_uart.h"
+#include "bsp_adc.h"
 /**
  * @addtogroup    second_task_Modules 
  * @{  
@@ -121,7 +122,7 @@ void Second_Task(void * pvParameter)
 	{
 		DEBUG("Second Task Looping\r\n");
 		
-		//BSP_Uart_Test_Send();
+		//BSP_ADC_ShowValue();
 		
 		vTaskDelay(pdMS_TO_TICKS(3000));
 	}

@@ -18,13 +18,11 @@
  */
 #include "FreeRTOS.h"
 #include "task.h"
-
 #include "first_task.h"
 #include "second_task.h"
-
 #include "clog.h"
-
 #include "modbus_task.h"
+#include "sample_task.h"
 /**
  * @addtogroup    task_list_Modules 
  * @{  
@@ -113,6 +111,7 @@ void RTOS_Init(void)
 	basetype = First_Task_Init();
 	basetype = Second_Task_Init();
 	basetype = Modbus_Task_Init();
+	basetype = Sample_Task_Init();
 	
 	if(pdPASS == basetype)
 	{
