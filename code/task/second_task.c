@@ -110,7 +110,7 @@ uint32_t Second_Task_Init(void)
 							"Second_Task",\
 							1024,
 							NULL,
-							4,
+							2,
 							&Second_Task_Handle);
 	return basetype;
 }
@@ -123,7 +123,7 @@ void Second_Task(void * pvParameter)
 		DEBUG("Second Task Looping\r\n");
 		
 		//BSP_ADC_ShowValue();
-		
+		//BSP_ADC_TestTrig();
 		vTaskDelay(pdMS_TO_TICKS(3000));
 	}
 	

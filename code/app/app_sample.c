@@ -103,9 +103,10 @@
  */
 void APP_Sample_Init(void)
 {
+	DEBUG("APP_Sample_Init\r\n");
 	BSP_Tim_Init(BSP_TIM1);
-	BSP_ADC_Init();
 	BSP_Tim_1_Start();
+	BSP_ADC_Init();
 }
 
 /**

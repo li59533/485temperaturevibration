@@ -81,6 +81,7 @@
 
 #if BSP_ADC_MODULE_ENABLE == 1	
 	#include "fsl_adc16.h"
+	#include "fsl_pdb.h"
 #endif	
 
 #if BSP_DMA_MODULE_ENABLE == 1	

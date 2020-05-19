@@ -72,6 +72,8 @@ uint16_t BSP_ADC_GetAverageValue(uint8_t channel);
 void BSP_ADC_ShowValue(void);
 void BSP_ADC_DisableIRQ(void);
 void BSP_ADC_EnableIRQ(void);
+
+void BSP_ADC_TestTrig(void);
 /**
  * @}
  */

@@ -103,6 +103,7 @@ bsp_adc_data_t bsp_adc_data =
  * @{  
  */
 static void bsp_adc_addvalue(uint16_t value); 
+static void bsp_adc_trigger_init(void);
  
 //static void bsp_adcDMA_init(void);
 /**
@@ -135,25 +136,37 @@ void BSP_ADC_Init(void)
     PORT_SetPinMux(PORTD, 1U, kPORT_PinDisabledOrAnalog);	
 	PORT_SetPinMux(PORTD, 5U, kPORT_PinDisabledOrAnalog);	
 	PORT_SetPinMux(PORTD, 6U, kPORT_PinDisabledOrAnalog);	
+	
+	
+	
+	
 	// -------------------
 	
 	// -------ADC -------------
     ADC16_GetDefaultConfig(&adc16ConfigStruct);
     adc16ConfigStruct.referenceVoltageSource = kADC16_ReferenceVoltageSourceVref;
-    adc16ConfigStruct.clockSource = kADC16_ClockSourceAsynchronousClock;
-    adc16ConfigStruct.enableAsynchronousClock = true;
-    adc16ConfigStruct.clockDivider = kADC16_ClockDivider8;
+    adc16ConfigStruct.clockSource = kADC16_ClockSourceAlt2;
+    adc16ConfigStruct.enableAsynchronousClock = false;
+    adc16ConfigStruct.clockDivider = kADC16_ClockDivider1;
     adc16ConfigStruct.resolution = kADC16_Resolution16Bit;
     adc16ConfigStruct.longSampleMode = kADC16_LongSampleDisabled;
-    adc16ConfigStruct.enableHighSpeed = true;
+    adc16ConfigStruct.enableHighSpeed = true ;
     adc16ConfigStruct.enableLowPower = false;
     adc16ConfigStruct.enableContinuousConversion = false;  
     ADC16_Init(ADC0, &adc16ConfigStruct);	
 	
 	
 	//ADC16_EnableHardwareTrigger(ADC0, false); /* Make sure the software trigger is used. */
-	
 	ADC16_DoAutoCalibration(ADC0);
+	ADC16_SetChannelMuxMode(ADC0, kADC16_ChannelMuxB);	
+	// --------------------------------	
+	// ---------select trigger --------
+	
+	SIM->SOPT7 |= SIM_SOPT7_ADC0TRGSEL(0)| SIM_SOPT7_ADC0ALTTRGEN(0) |SIM_SOPT7_ADC0PRETRGSEL(1);    // need to look reference maunl  ,this is FTM 1
+	ADC16_EnableHardwareTrigger( ADC0 , true );
+
+	// --------------------------------
+	
 	
 	// -------IRQ---------
 	EnableIRQ(ADC0_IRQn);
@@ -165,7 +178,7 @@ void BSP_ADC_Init(void)
 //	
 
 
-	ADC16_SetChannelMuxMode(ADC0, kADC16_ChannelMuxB);	
+	
 //	
 	adc16ChannelConfigStruct.channelNumber = 5;
 	adc16ChannelConfigStruct.enableDifferentialConversion = false;
@@ -174,14 +187,45 @@ void BSP_ADC_Init(void)
 	ADC16_SetChannelConfig(ADC0, 0, &adc16ChannelConfigStruct);
 //	
 			// -----------------------------
+			
+	bsp_adc_trigger_init();		
+			
 	// ------------------------
+}
 
-	// --------------------------------	
-	// ---------select trigger --------
-	
-	SIM->SOPT7 = SIM_SOPT7_ADC0TRGSEL(9)| SIM_SOPT7_ADC0ALTTRGEN(1)|SIM_SOPT7_ADC0PRETRGSEL(1);    // need to look reference maunl  ,this is FTM 1
-	ADC16_EnableHardwareTrigger( ADC0 , true );
-	// --------------------------------
+
+static void bsp_adc_trigger_init(void)
+{
+	pdb_config_t pdbConfigStruct;
+    pdb_adc_pretrigger_config_t pdbAdcPreTriggerConfigStruct;
+    /* Configure the PDB counter. */
+    /*
+     * pdbConfigStruct.loadValueMode = kPDB_LoadValueImmediately;
+     * pdbConfigStruct.prescalerDivider = kPDB_PrescalerDivider1;
+     * pdbConfigStruct.dividerMultiplicationFactor = kPDB_DividerMultiplicationFactor1;
+     * pdbConfigStruct.triggerInputSource = kPDB_TriggerSoftware;
+     * pdbConfigStruct.enableContinuousMode = false;
+     */
+    PDB_GetDefaultConfig(&pdbConfigStruct);
+	pdbConfigStruct.triggerInputSource = kPDB_TriggerInput9;
+    PDB_Init(PDB0, &pdbConfigStruct);
+
+    /* Configure the delay interrupt. */
+    PDB_SetModulusValue(PDB0, 1000U);
+
+    /* The available delay value is less than or equal to the modulus value. */
+    PDB_SetCounterDelayValue(PDB0, 1000U);
+    PDB_EnableInterrupts(PDB0, kPDB_DelayInterruptEnable);
+	EnableIRQ(PDB0_IRQn);
+    /* Configure the ADC Pre-Trigger. */
+    pdbAdcPreTriggerConfigStruct.enablePreTriggerMask = 1U << 0;
+    pdbAdcPreTriggerConfigStruct.enableOutputMask = 1U << 0;
+    pdbAdcPreTriggerConfigStruct.enableBackToBackOperationMask = 0U;
+    PDB_SetADCPreTriggerConfig(PDB0, 0, &pdbAdcPreTriggerConfigStruct);
+    PDB_SetADCPreTriggerDelayValue(PDB0, 0, 0, 200U);
+    /* The available Pre-Trigger delay value is less than or equal to the modulus value. */
+
+    PDB_DoLoadValues(PDB0);
 
 }
 
@@ -285,6 +329,11 @@ void BSP_ADC_ShowValue(void)
 
 }
 
+void BSP_ADC_TestTrig(void)
+{
+	PDB_DoSoftwareTrigger(PDB0);
+}
+
 // ------------------------
 
 
@@ -295,7 +344,22 @@ void ADC0_IRQHandler(void)
 	value = ADC16_GetChannelConversionValue(ADC0, 0);
 	DEBUG("ADC0_IRQHandler : %d\r\n" , value);
 }
+
+
+void PDB0_IRQHandler(void)
+{
+    PDB_ClearStatusFlags(PDB0, kPDB_DelayEventFlag);
+	DEBUG("PDB0_IRQHandler\r\n");
+}
+
+
+
+
+
 // ---------------------------
+
+
+
 
 /**
  * @}

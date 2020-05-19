@@ -151,13 +151,17 @@ static void bsp_tmp1_init(void)
     FTM_GetDefaultConfig(&ftmInfo);
     /* Divide FTM clock by 4 */
     ftmInfo.prescale = kFTM_Prescale_Divide_128;
-	//ftmInfo.extTriggers = kFTM_InitTrigger;
+	ftmInfo.extTriggers = kFTM_InitTrigger;
     /* Initialize FTM module */
     FTM_Init(FTM1, &ftmInfo);
     /*
      * Set timer period.
     */
     FTM_SetTimerPeriod(FTM1, 65530);
+	
+	// -----trg----------
+	
+	// ------------------
 
 	// -----IRQ-------
     FTM_EnableInterrupts(FTM1, kFTM_TimeOverflowInterruptEnable);
