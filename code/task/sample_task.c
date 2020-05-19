@@ -24,6 +24,7 @@
  */
 
 #include "app_sample.h"
+#include "bsp_led.h"
 /**
  * @addtogroup    sample_task_Modules 
  * @{  
@@ -129,6 +130,7 @@ void Sample_Task(void * pvParameter)
 	UBaseType_t sampletask_ramainheap = 0;
 
 	// ----Init----
+	BSP_LED_Init();
 	APP_Sample_Init();
 	// ------------
 	

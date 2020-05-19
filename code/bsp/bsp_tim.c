@@ -135,7 +135,7 @@ static void bsp_tmp0_init(void)
     /*
      * Set timer period.
     */
-    FTM_SetTimerPeriod(FTM0, USEC_TO_COUNT(5000, CLOCK_GetFreq(kCLOCK_BusClk) * 4));
+    FTM_SetTimerPeriod(FTM0, 15000);
 	// -----IRQ-------
     FTM_EnableInterrupts(FTM0, kFTM_TimeOverflowInterruptEnable);
 	NVIC_SetPriority(FTM0_IRQn , 7);
@@ -150,23 +150,23 @@ static void bsp_tmp1_init(void)
 	ftm_config_t ftmInfo;
     FTM_GetDefaultConfig(&ftmInfo);
     /* Divide FTM clock by 4 */
-    ftmInfo.prescale = kFTM_Prescale_Divide_128;
+    ftmInfo.prescale = kFTM_Prescale_Divide_1;
 	ftmInfo.extTriggers = kFTM_InitTrigger;
     /* Initialize FTM module */
     FTM_Init(FTM1, &ftmInfo);
     /*
      * Set timer period.
     */
-    FTM_SetTimerPeriod(FTM1, 65530);
+    FTM_SetTimerPeriod(FTM1, 3662);
 	
 	// -----trg----------
 	
 	// ------------------
 
 	// -----IRQ-------
-    FTM_EnableInterrupts(FTM1, kFTM_TimeOverflowInterruptEnable);
-	NVIC_SetPriority(FTM1_IRQn , 7);
-    EnableIRQ(FTM1_IRQn);
+//    FTM_EnableInterrupts(FTM1, kFTM_TimeOverflowInterruptEnable);
+//	NVIC_SetPriority(FTM1_IRQn , 7);
+//    EnableIRQ(FTM1_IRQn);
 	// ---------------
 
 }
@@ -174,7 +174,7 @@ static void bsp_tmp1_init(void)
 void BSP_Tim_0_StartOnce(void)
 {
 	FTM_StopTimer(FTM0);
-	FTM_SetTimerPeriod(FTM0, USEC_TO_COUNT(5000, CLOCK_GetFreq(kCLOCK_BusClk) * 4));
+	FTM_SetTimerPeriod(FTM0, 15000);
 	FTM_StartTimer(FTM0, kFTM_SystemClock);
 }
 

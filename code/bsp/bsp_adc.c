@@ -18,7 +18,7 @@
  * @addtogroup    XXX 
  * @{  
  */
-
+#include "bsp_led.h"
 /**
  * @addtogroup    bsp_adc_Modules 
  * @{  
@@ -162,7 +162,7 @@ void BSP_ADC_Init(void)
 	// --------------------------------	
 	// ---------select trigger --------
 	
-	SIM->SOPT7 |= SIM_SOPT7_ADC0TRGSEL(0)| SIM_SOPT7_ADC0ALTTRGEN(0) |SIM_SOPT7_ADC0PRETRGSEL(1);    // need to look reference maunl  ,this is FTM 1
+	SIM->SOPT7 |= SIM_SOPT7_ADC0TRGSEL(9)| SIM_SOPT7_ADC0ALTTRGEN(0) |SIM_SOPT7_ADC0PRETRGSEL(1);    // need to look reference maunl  ,this is FTM 1
 	ADC16_EnableHardwareTrigger( ADC0 , true );
 
 	// --------------------------------
@@ -211,18 +211,18 @@ static void bsp_adc_trigger_init(void)
     PDB_Init(PDB0, &pdbConfigStruct);
 
     /* Configure the delay interrupt. */
-    PDB_SetModulusValue(PDB0, 1000U);
+//    PDB_SetModulusValue(PDB0, 1000U);
 
-    /* The available delay value is less than or equal to the modulus value. */
-    PDB_SetCounterDelayValue(PDB0, 1000U);
-    PDB_EnableInterrupts(PDB0, kPDB_DelayInterruptEnable);
-	EnableIRQ(PDB0_IRQn);
+//    /* The available delay value is less than or equal to the modulus value. */
+//    PDB_SetCounterDelayValue(PDB0, 1000U);
+//    PDB_EnableInterrupts(PDB0, kPDB_DelayInterruptEnable);
+//	EnableIRQ(PDB0_IRQn);
     /* Configure the ADC Pre-Trigger. */
     pdbAdcPreTriggerConfigStruct.enablePreTriggerMask = 1U << 0;
     pdbAdcPreTriggerConfigStruct.enableOutputMask = 1U << 0;
     pdbAdcPreTriggerConfigStruct.enableBackToBackOperationMask = 0U;
     PDB_SetADCPreTriggerConfig(PDB0, 0, &pdbAdcPreTriggerConfigStruct);
-    PDB_SetADCPreTriggerDelayValue(PDB0, 0, 0, 200U);
+    PDB_SetADCPreTriggerDelayValue(PDB0, 0, 0, 0U);
     /* The available Pre-Trigger delay value is less than or equal to the modulus value. */
 
     PDB_DoLoadValues(PDB0);
@@ -341,6 +341,7 @@ void BSP_ADC_TestTrig(void)
 void ADC0_IRQHandler(void)
 {
 	uint32_t value = 0 ;
+	BSP_LED_Toggle(BSP_LED_TEST);
 	value = ADC16_GetChannelConversionValue(ADC0, 0);
 	DEBUG("ADC0_IRQHandler : %d\r\n" , value);
 }
