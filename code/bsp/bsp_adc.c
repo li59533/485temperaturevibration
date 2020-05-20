@@ -19,6 +19,7 @@
  * @{  
  */
 #include "bsp_led.h"
+#include "app_sample.h"
 /**
  * @addtogroup    bsp_adc_Modules 
  * @{  
@@ -193,6 +194,16 @@ void BSP_ADC_Init(void)
 	// ------------------------
 }
 
+void BSP_ADC0_SetChannelConfig(uint8_t channel)
+{
+	adc16_channel_config_t adc16ChannelConfigStruct;
+	adc16ChannelConfigStruct.channelNumber = channel;
+	adc16ChannelConfigStruct.enableDifferentialConversion = false;
+	adc16ChannelConfigStruct.enableInterruptOnConversionCompleted =  true;
+	ADC16_SetChannelConfig(ADC0, 0, &adc16ChannelConfigStruct);
+}
+
+
 
 static void bsp_adc_trigger_init(void)
 {
@@ -341,9 +352,9 @@ void BSP_ADC_TestTrig(void)
 void ADC0_IRQHandler(void)
 {
 	uint32_t value = 0 ;
-	BSP_LED_Toggle(BSP_LED_TEST);
 	value = ADC16_GetChannelConversionValue(ADC0, 0);
-	DEBUG("ADC0_IRQHandler : %d\r\n" , value);
+	APP_GetOriginalData(value);
+	//DEBUG("ADC0_IRQHandler : %d\r\n" , value);
 }
 
 

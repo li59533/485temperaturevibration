@@ -151,14 +151,17 @@ static void bsp_tmp1_init(void)
     FTM_GetDefaultConfig(&ftmInfo);
     /* Divide FTM clock by 4 */
     ftmInfo.prescale = kFTM_Prescale_Divide_1;
+	//ftmInfo.prescale = kFTM_Prescale_Divide_128;
+	
 	ftmInfo.extTriggers = kFTM_InitTrigger;
     /* Initialize FTM module */
     FTM_Init(FTM1, &ftmInfo);
     /*
      * Set timer period.
     */
-    FTM_SetTimerPeriod(FTM1, 3662);
-	
+    //FTM_SetTimerPeriod(FTM1, 3662); // div_1 3622 -> 16384Hz
+	FTM_SetTimerPeriod(FTM1, 4883); // div_1 4883 -> 12288Hz
+	//FTM_SetTimerPeriod(FTM1, 65535); // test value
 	// -----trg----------
 	
 	// ------------------
@@ -181,6 +184,11 @@ void BSP_Tim_0_StartOnce(void)
 void BSP_Tim_1_Start(void)
 {
 	FTM_StartTimer(FTM1, kFTM_SystemClock);
+}
+
+void BSP_Tim_1_Stop(void)
+{
+	FTM_StopTimer(FTM1);
 }
 
 void BSP_Tim_StartOnceTimer(uint8_t BSP_TIMx , uint32_t msec)

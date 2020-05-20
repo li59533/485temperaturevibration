@@ -154,7 +154,7 @@
           <Type>0</Type>
           <LineNumber>107</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>2518</Address>
+          <Address>2502</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -170,7 +170,7 @@
           <Type>0</Type>
           <LineNumber>179</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>4140</Address>
+          <Address>4218</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -186,7 +186,7 @@
           <Type>0</Type>
           <LineNumber>120</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>3782</Address>
+          <Address>3902</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -202,7 +202,7 @@
           <Type>0</Type>
           <LineNumber>133</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>13742</Address>
+          <Address>13814</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -218,7 +218,7 @@
           <Type>0</Type>
           <LineNumber>193</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>3578</Address>
+          <Address>3698</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -234,7 +234,7 @@
           <Type>0</Type>
           <LineNumber>197</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>3586</Address>
+          <Address>3706</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -502,7 +502,7 @@
 
   <Group>
     <GroupName>components/dirver</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>

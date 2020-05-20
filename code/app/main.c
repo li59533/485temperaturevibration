@@ -14,14 +14,14 @@
 #include "clog.h"
 #include "rtos_tools.h"
 #include "task_list.h"
-
+#include "version.h"
 
 /*!
  * @brief Application entry point.
  */
 int main(void) 
 {
-
+	DEBUG("Version:%s\r\n" , Version_Get_Str());
 	DEBUG("Start\r\n");
 	BOARD_BootClockRUN();
 	BSP_Init();

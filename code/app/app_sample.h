@@ -65,6 +65,11 @@
  * @{  
  */
 void APP_Sample_Init(void);
+void APP_StartSample(void);
+void APP_StopSample(void);
+
+void APP_GetOriginalData( uint16_t data);
+void APP_SetNextQriginalChannel_Process(void);
 /**
  * @}
  */

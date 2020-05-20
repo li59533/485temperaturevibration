@@ -74,6 +74,7 @@ void BSP_Tim_StartOnceTimer(uint8_t BSP_TIMx , uint32_t msec);
 
 void BSP_Tim_0_StartOnce(void);
 void BSP_Tim_1_Start(void);
+void BSP_Tim_1_Stop(void);
 /**
  * @}
  */

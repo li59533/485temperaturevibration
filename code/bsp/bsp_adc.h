@@ -65,6 +65,8 @@
  * @{  
  */
 void BSP_ADC_Init(void);
+void BSP_ADC0_SetChannelConfig(uint8_t channel);
+
 void BSP_ADC_DeInit(void);
 uint32_t BSP_ADC_GetValue(uint8_t channel);
 
