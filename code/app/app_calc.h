@@ -1,48 +1,30 @@
 /**
  **************************************************************************************************
- * @file        clog.h
+ * @file        app_calc.h
  * @author
- * @version    v0.1.0
- * @date        
+ * @version
+ * @date        5/28/2016
  * @brief
  **************************************************************************************************
  * @attention
  *
  **************************************************************************************************
  */
-#ifndef _CLOG_H_
-#define _CLOG_H_
+#ifndef _APP_CALC_H_
+#define _APP_CALC_H_
 
 /**
  * @addtogroup    XXX 
  * @{ 
  */
-#include "SEGGER_RTT.h"
+
 /**
- * @addtogroup    clog_Modules 
+ * @addtogroup    app_calc_Modules 
  * @{  
  */
 
 /**
- * @defgroup      clog_Exported_Macros 
- * @{  
- */
-#define  DEBUG(arg...) 			SEGGER_RTT_printf(0, arg)
-/**
- * @}
- */
-
-/**
- * @defgroup      clog_Exported_Constants
- * @{  
- */
-
-/**
- * @}
- */
- 
-/**
- * @defgroup      clog_Exported_Types 
+ * @defgroup      app_calc_Exported_Macros 
  * @{  
  */
 
@@ -51,7 +33,7 @@
  */
 
 /**
- * @defgroup      clog_Exported_Variables 
+ * @defgroup      app_calc_Exported_Constants
  * @{  
  */
 
@@ -60,10 +42,31 @@
  */
 
 /**
- * @defgroup      clog_Exported_Functions 
+ * @defgroup      app_calc_Exported_Types 
  * @{  
  */
-void Clog_Float(const char * buf ,float  value);
+
+/**
+ * @}
+ */
+
+/**
+ * @defgroup      app_calc_Exported_Variables 
+ * @{  
+ */
+
+/**
+ * @}
+ */
+
+/**
+ * @defgroup      app_calc_Exported_Functions 
+ * @{  
+ */
+void APP_Calc_Process(void);
+
+
+
 /**
  * @}
  */
@@ -76,6 +79,3 @@ void Clog_Float(const char * buf ,float  value);
  * @}
  */
 #endif
-
-
-

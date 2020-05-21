@@ -19,6 +19,7 @@
  * @addtogroup    XXX 
  * @{  
  */
+#include "sample_task.h" 
 #include "bsp_tim.h"
 #include "bsp_adc.h"
 /**
@@ -41,18 +42,7 @@
  * @brief         
  * @{  
  */
-#define APP_SAMPLE_CHANNEL_0_RATE 4096
-#define APP_SAMPLE_CHANNEL_1_RATE 4096
-#define APP_SAMPLE_CHANNEL_2_RATE 4096
 
-
-#define APP_SAMPLE_X_RATE	APP_SAMPLE_CHANNEL_0_RATE
-#define APP_SAMPLE_Y_RATE	APP_SAMPLE_CHANNEL_1_RATE
-#define APP_SAMPLE_Z_RATE   APP_SAMPLE_CHANNEL_2_RATE
-
-#define APP_SAMPLE_X_INDEX   	0
-#define APP_SAMPLE_Y_INDEX		1
-#define APP_SAMPLE_Z_INDEX		2
 /**
  * @}
  */
@@ -72,18 +62,7 @@
  * @brief         
  * @{  
  */
-typedef struct
-{
-	uint16_t * originalData;
-	uint16_t rate ; 
-	uint16_t cur_dataPtr ; 
-}APP_Sample_Channel_buf_t;
 
-typedef struct
-{
-	APP_Sample_Channel_buf_t Sample_Channel_buf[3] ;
-	uint8_t cur_channel ; 
-}APP_Sample_buf_t ; 
 /**
  * @}
  */
@@ -150,9 +129,6 @@ void APP_StopSample(void)
 {
 	BSP_Tim_1_Stop();
 }
-
-
-
 static void app_samlpechannel_init(void)
 {
 	
@@ -161,14 +137,17 @@ static void app_samlpechannel_init(void)
 	APP_Sample_buf.Sample_Channel_buf[APP_SAMPLE_X_INDEX].originalData = app_sample_channel_0_buf;
 	APP_Sample_buf.Sample_Channel_buf[APP_SAMPLE_X_INDEX].rate = APP_SAMPLE_CHANNEL_0_RATE;
 	APP_Sample_buf.Sample_Channel_buf[APP_SAMPLE_X_INDEX].cur_dataPtr = 0;
+	APP_Sample_buf.Sample_Channel_buf[APP_SAMPLE_X_INDEX].data_complete = 0;
 
 	APP_Sample_buf.Sample_Channel_buf[APP_SAMPLE_Y_INDEX].originalData = app_sample_channel_1_buf;
 	APP_Sample_buf.Sample_Channel_buf[APP_SAMPLE_Y_INDEX].rate = APP_SAMPLE_CHANNEL_1_RATE;
 	APP_Sample_buf.Sample_Channel_buf[APP_SAMPLE_Y_INDEX].cur_dataPtr = 0;
-
+	APP_Sample_buf.Sample_Channel_buf[APP_SAMPLE_Y_INDEX].data_complete = 0;
+	
 	APP_Sample_buf.Sample_Channel_buf[APP_SAMPLE_Z_INDEX].originalData = app_sample_channel_2_buf;
 	APP_Sample_buf.Sample_Channel_buf[APP_SAMPLE_Z_INDEX].rate = APP_SAMPLE_CHANNEL_2_RATE;
 	APP_Sample_buf.Sample_Channel_buf[APP_SAMPLE_Z_INDEX].cur_dataPtr = 0;	
+	APP_Sample_buf.Sample_Channel_buf[APP_SAMPLE_Z_INDEX].data_complete = 0;
 }
 
 
@@ -179,13 +158,17 @@ void APP_GetOriginalData( uint16_t data)
 {
 	APP_Sample_buf.Sample_Channel_buf[app_sample_rank[APP_Sample_buf.cur_channel]].originalData[APP_Sample_buf.Sample_Channel_buf[app_sample_rank[APP_Sample_buf.cur_channel]].cur_dataPtr] = data ; 
 	APP_Sample_buf.Sample_Channel_buf[app_sample_rank[APP_Sample_buf.cur_channel]].cur_dataPtr ++;
-	
 	APP_Sample_buf.Sample_Channel_buf[app_sample_rank[APP_Sample_buf.cur_channel]].cur_dataPtr %= (APP_Sample_buf.Sample_Channel_buf[app_sample_rank[APP_Sample_buf.cur_channel]].rate << 1);
 
+	if((APP_Sample_buf.Sample_Channel_buf[2].cur_dataPtr == APP_SAMPLE_CHANNEL_2_RATE || APP_Sample_buf.Sample_Channel_buf[2].cur_dataPtr == 0) &&\
+		APP_Sample_buf.Sample_Channel_buf[2].cur_dataPtr == APP_Sample_buf.Sample_Channel_buf[1].cur_dataPtr && \
+		APP_Sample_buf.Sample_Channel_buf[1].cur_dataPtr == APP_Sample_buf.Sample_Channel_buf[0].cur_dataPtr)
+	{
+		Sample_Task_Event_Start(SAMPLE_TASK_CALC_EVENT, EVENT_FROM_ISR);
+	}
 	 // ---test code---
 	waveform[app_sample_rank[APP_Sample_buf.cur_channel]] = data;
 	 // ---------------
-	
 	APP_SetNextQriginalChannel_Process();
 }
 
@@ -202,6 +185,10 @@ void APP_SetNextQriginalChannel_Process(void) // this “通道（轴向） 要与ADC通道
 		default:break;
 	}
 }
+
+
+
+
 
 /**
  * @}

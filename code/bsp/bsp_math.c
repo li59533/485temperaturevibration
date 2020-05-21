@@ -1,29 +1,30 @@
 /**
  **************************************************************************************************
- * @file        clog.c
+ * @file        bsp_math.c
  * @author
- * @version   v0.1.0
- * @date        
+ * @version
+ * @date        5/28/2016
  * @brief
  **************************************************************************************************
  * @attention
  *
  **************************************************************************************************
  */
-#include "clog.h"
-#include "self_def.h"
+
+#include "bsp_math.h"
+
 /**
  * @addtogroup    XXX 
  * @{  
  */
 
 /**
- * @addtogroup    clog_Modules 
+ * @addtogroup    bsp_math_Modules 
  * @{  
  */
 
 /**
- * @defgroup      clog_IO_Defines 
+ * @defgroup      bsp_math_IO_Defines 
  * @brief         
  * @{  
  */
@@ -33,17 +34,7 @@
  */
 
 /**
- * @defgroup      clog_Macros_Defines 
- * @brief         
- * @{  
- */
-
-/**
- * @}
- */
- 
-/**
- * @defgroup      clog_Constants_Defines 
+ * @defgroup      bsp_math_Macros_Defines 
  * @brief         
  * @{  
  */
@@ -53,27 +44,7 @@
  */
 
 /**
- * @defgroup      clog_Private_Types
- * @brief         
- * @{  
- */
-
-/**
- * @}
- */
- 
-/**
- * @defgroup      clog_Private_Variables 
- * @brief         
- * @{  
- */
-
-/**
- * @}
- */
- 
-/**
- * @defgroup      clog_Public_Variables 
+ * @defgroup      bsp_math_Constants_Defines 
  * @brief         
  * @{  
  */
@@ -83,7 +54,7 @@
  */
 
 /**
- * @defgroup      clog_Private_FunctionPrototypes 
+ * @defgroup      bsp_math_Private_Types
  * @brief         
  * @{  
  */
@@ -93,16 +64,45 @@
  */
 
 /**
- * @defgroup      clog_Functions 
+ * @defgroup      bsp_math_Private_Variables 
  * @brief         
  * @{  
  */
-void Clog_Float(const char * buf ,float  value)
+
+/**
+ * @}
+ */
+
+/**
+ * @defgroup      bsp_math_Public_Variables 
+ * @brief         
+ * @{  
+ */
+
+/**
+ * @}
+ */
+
+/**
+ * @defgroup      bsp_math_Private_FunctionPrototypes 
+ * @brief         
+ * @{  
+ */
+
+/**
+ * @}
+ */
+
+/**
+ * @defgroup      bsp_math_Functions 
+ * @brief         
+ * @{  
+ */
+void bsp_math_mean(float * psrc , uint32_t count , float * result)
 {
-	char cbuf[30];
-	snprintf( cbuf , 30 , "%s%f\r\n" , buf , value);
-	DEBUG("%s" , cbuf);
+	arm_mean_f32(psrc, count, result); //Çó¾ùÖµ
 }
+
 /**
  * @}
  */

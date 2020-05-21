@@ -96,6 +96,7 @@
 
 #if BSP_FLASH_MODULE_ENABLE == 1	
 	#include "fsl_flash.h"
+	#include "fsl_sim.h"
 #endif	
 
 #if BSP_LPV_MODULE_ENABLE == 1	

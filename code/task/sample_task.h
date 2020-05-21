@@ -29,7 +29,7 @@
  */
 #define SAMPLE_TASK_TEST_EVENT 			(0X01 << 0)
 #define SAMPLE_TASK_TEST2_EVENT			(0X01 << 1)
-
+#define SAMPLE_TASK_CALC_EVENT			(0X01 << 2)
 /**
  * @}
  */

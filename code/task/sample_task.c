@@ -25,6 +25,7 @@
 
 #include "app_sample.h"
 #include "bsp_led.h"
+#include "app_calc.h"
 /**
  * @addtogroup    sample_task_Modules 
  * @{  
@@ -143,14 +144,14 @@ void Sample_Task(void * pvParameter)
 			DEBUG("Sample Task Looping\r\n");
 			sampletask_ramainheap = uxTaskGetStackHighWaterMark(NULL);
 			DEBUG("Sample Task ramain heap:%d %%\r\n",sampletask_ramainheap);
-	
 		}
-		if((event_flag & SAMPLE_TASK_TEST2_EVENT) != 0x00)
+
+		if((event_flag & SAMPLE_TASK_CALC_EVENT) != 0x00)
 		{
-			DEBUG("Sample Task SAMPLE_TASK_TEST2_EVENT\r\n");
-		}		
-		
-		
+			
+			DEBUG("Sample Task SAMPLE_TASK_CALC_EVENT\r\n");
+			APP_Calc_Process();
+		}				
 	}
 	
 }

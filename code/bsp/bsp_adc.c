@@ -103,7 +103,7 @@ bsp_adc_data_t bsp_adc_data =
  * @brief         
  * @{  
  */
-static void bsp_adc_addvalue(uint16_t value); 
+
 static void bsp_adc_trigger_init(void);
  
 //static void bsp_adcDMA_init(void);
@@ -171,6 +171,9 @@ void BSP_ADC_Init(void)
 	
 	// -------IRQ---------
 	EnableIRQ(ADC0_IRQn);
+	NVIC_SetPriority(ADC0_IRQn , 6);
+	
+	
 	// -------------------
 	
 	
@@ -304,17 +307,6 @@ uint32_t BSP_ADC_GetValue(uint8_t channel)
 }
 
 
-static void bsp_adc_addvalue(uint16_t value)
-{
-	uint32_t sum  = 0 ;
-	bsp_adc_data.adcbuf[bsp_adc_data.in ++] = value;
-	bsp_adc_data.in %= 8;
-	for(uint8_t i = 0 ; i < 8 ; i ++)
-	{
-		sum += bsp_adc_data.adcbuf[i];
-	}
-	bsp_adc_data.average  = sum >> 3;
-}
 
 uint16_t BSP_ADC_GetAverageValue(uint8_t channel)
 {

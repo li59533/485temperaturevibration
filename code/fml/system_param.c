@@ -13,6 +13,7 @@
 #include "self_def.h"
 #include "system_param.h"
 #include "bsp_flash.h"
+#include "bsp_conf.h"
 /**
  * @addtogroup    XXX 
  * @{  
@@ -73,7 +74,13 @@
  */
 const SystemParam_Config_t SystemParam_Config_Default = 
 {
-	.SNcode = {0x12 , 0x55},
+	.MB_Slave_ID = 0x01,
+	.X_Axial_Sensitivity = 1.0f,
+	.Y_Axial_Sensitivity = 1.0f,
+	.Z_Axial_Sensitivity = 1.0f,
+	.FFT_LowPass = 1000,
+	.FFT_HighPass = 10,
+	
 };
 /**
  * @}
@@ -133,34 +140,33 @@ void SystemParam_Init(void)
 // 12B -> 8B
 static void sys_makeUIDtoSNcode(void)
 {
-//	sim_uid_t sim_uid ; 
-//	uint8_t uid[12] = { 0 };
-//	uint8_t crc_temp[2] = { 0 };
-//	uint8_t sn_temp[8] = { 0 }; 
-//	uint16_t temp = 0;
-//	SIM_GetUniqueId(&sim_uid);
-//	memcpy(uid,(uint8_t *)&sim_uid , 12);
-//	
-//	crc_temp[0] = uid[0];
-//	crc_temp[1] = uid[11];
-//	temp = CRC16_Modbus(crc_temp,2);
-//	memcpy(&sn_temp[0] , (uint8_t *)&temp , 2);
-//	
-//	crc_temp[0] = uid[1];
-//	crc_temp[1] = uid[10];
-//	temp = CRC16_Modbus(crc_temp,2);
-//	memcpy(&sn_temp[2] , (uint8_t *)&temp , 2);	
-//	
-//	crc_temp[0] = uid[2];
-//	crc_temp[1] = uid[9];
-//	temp = CRC16_Modbus(crc_temp,2);
-//	memcpy(&sn_temp[4] , (uint8_t *)&temp , 2);	
-//		
-//	temp = CRC16_Modbus(&uid[3],6);
-//	memcpy(&sn_temp[6] , (uint8_t *)&temp , 2);	
-//			
-//	memcpy(g_SystemParam_Config.SNcode ,sn_temp , 8);
+	sim_uid_t sim_uid ; 
+	uint8_t uid[12] = { 0 };
+	uint8_t crc_temp[2] = { 0 };
+	uint8_t sn_temp[8] = { 0 }; 
+	uint16_t temp = 0;
+	SIM_GetUniqueId(&sim_uid);
+	memcpy(uid,(uint8_t *)&sim_uid , 12);
 	
+	crc_temp[0] = uid[0];
+	crc_temp[1] = uid[11];
+	temp = CRC16_Modbus(crc_temp,2);
+	memcpy(&sn_temp[0] , (uint8_t *)&temp , 2);
+	
+	crc_temp[0] = uid[1];
+	crc_temp[1] = uid[10];
+	temp = CRC16_Modbus(crc_temp,2);
+	memcpy(&sn_temp[2] , (uint8_t *)&temp , 2);	
+	
+	crc_temp[0] = uid[2];
+	crc_temp[1] = uid[9];
+	temp = CRC16_Modbus(crc_temp,2);
+	memcpy(&sn_temp[4] , (uint8_t *)&temp , 2);	
+		
+	temp = CRC16_Modbus(&uid[3],6);
+	memcpy(&sn_temp[6] , (uint8_t *)&temp , 2);	
+			
+	memcpy(g_SystemParam_Config.SNcode ,sn_temp , 8);
 }
 
 

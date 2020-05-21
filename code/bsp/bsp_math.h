@@ -1,48 +1,33 @@
 /**
  **************************************************************************************************
- * @file        clog.h
+ * @file        bsp_math.h
  * @author
- * @version    v0.1.0
- * @date        
+ * @version
+ * @date        5/28/2016
  * @brief
  **************************************************************************************************
  * @attention
  *
  **************************************************************************************************
  */
-#ifndef _CLOG_H_
-#define _CLOG_H_
+#ifndef _BSP_MATH_H_
+#define _BSP_MATH_H_
 
 /**
  * @addtogroup    XXX 
  * @{ 
  */
-#include "SEGGER_RTT.h"
+#include "self_def.h"
+#include "FreeRTOS.h"
+#include "MK24F25612.h"
+#include "arm_math.h"
 /**
- * @addtogroup    clog_Modules 
+ * @addtogroup    bsp_math_Modules 
  * @{  
  */
 
 /**
- * @defgroup      clog_Exported_Macros 
- * @{  
- */
-#define  DEBUG(arg...) 			SEGGER_RTT_printf(0, arg)
-/**
- * @}
- */
-
-/**
- * @defgroup      clog_Exported_Constants
- * @{  
- */
-
-/**
- * @}
- */
- 
-/**
- * @defgroup      clog_Exported_Types 
+ * @defgroup      bsp_math_Exported_Macros 
  * @{  
  */
 
@@ -51,7 +36,7 @@
  */
 
 /**
- * @defgroup      clog_Exported_Variables 
+ * @defgroup      bsp_math_Exported_Constants
  * @{  
  */
 
@@ -60,10 +45,28 @@
  */
 
 /**
- * @defgroup      clog_Exported_Functions 
+ * @defgroup      bsp_math_Exported_Types 
  * @{  
  */
-void Clog_Float(const char * buf ,float  value);
+
+/**
+ * @}
+ */
+
+/**
+ * @defgroup      bsp_math_Exported_Variables 
+ * @{  
+ */
+
+/**
+ * @}
+ */
+
+/**
+ * @defgroup      bsp_math_Exported_Functions 
+ * @{  
+ */
+void bsp_math_mean(float * psrc , uint32_t count , float * result); //  mean
 /**
  * @}
  */
@@ -76,6 +79,3 @@ void Clog_Float(const char * buf ,float  value);
  * @}
  */
 #endif
-
-
-
