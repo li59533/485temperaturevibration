@@ -161,7 +161,7 @@ void BSP_FFT_Integral_IFFT(uint32_t sample_rate,uint32_t pointcount ,uint8_t int
 	float *w_vec = 0;
 	uint32_t unit_conv = 1;
 	
-	w_vec = pvPortMalloc(sizeof(float) * sample_rate * 2);
+	w_vec = pvPortMalloc(sizeof(float) * sample_rate );
 	
 	integral_lowpass =  round((float)lowpass/df);
 	integral_highpass = round((float)highpass/df);

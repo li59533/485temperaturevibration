@@ -92,9 +92,6 @@ static void bsp_uart0_init(void);
 static void bsp_uart1_init(void);
 static void bsp_uart2_init(void);
 
-static void bsp_uart0_dma_init(void);
-static void bsp_uart2_dma_init(void);
-
 /**
  * @}
  */
@@ -274,20 +271,6 @@ static void bsp_uart2_init(void)
 {
 
 }
-
-
-static void bsp_uart0_dma_init(void)
-{
-						
-}
-
-
-static void bsp_uart2_dma_init(void)
-{
-
-						
-}
-
 
 // --------Function -------------
 

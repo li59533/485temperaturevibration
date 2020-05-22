@@ -68,42 +68,6 @@ extern uint32_t SystemCoreClock;
  ******************************************************************************/
 /*FUNCTION**********************************************************************
  *
- * Function Name : CLOCK_CONFIG_SetRtcClock
- * Description   : This function is used to configuring RTC clock including 
- * enabling RTC oscillator.
- * Param capLoad : RTC oscillator capacity load
- * Param enableOutPeriph : Enable (1U)/Disable (0U) clock to peripherals
- *
- *END**************************************************************************/
-static void CLOCK_CONFIG_SetRtcClock(uint32_t capLoad, uint8_t enableOutPeriph)
-{
-    /* RTC clock gate enable */
-    CLOCK_EnableClock(kCLOCK_Rtc0);
-    if ((RTC->CR & RTC_CR_OSCE_MASK) == 0u) { /* Only if the Rtc oscillator is not already enabled */
-        /* Set the specified capacitor configuration for the RTC oscillator */
-        RTC_SetOscCapLoad(RTC, capLoad);
-        /* Enable the RTC 32KHz oscillator */
-        RTC->CR |= RTC_CR_OSCE_MASK;
-    }
-    /* Output to other peripherals */
-    if (enableOutPeriph) {
-        RTC->CR &= ~RTC_CR_CLKO_MASK;
-    }
-    else {
-        RTC->CR |= RTC_CR_CLKO_MASK;
-    }
-    /* Set the XTAL32/RTC_CLKIN frequency based on board setting. */
-    CLOCK_SetXtal32Freq(BOARD_XTAL32K_CLK_HZ);
-    /* Set RTC_TSR if there is fault value in RTC */
-    if (RTC->SR & RTC_SR_TIF_MASK) {
-        RTC -> TSR = RTC -> TSR;
-    }
-    /* RTC clock gate disable */
-    CLOCK_DisableClock(kCLOCK_Rtc0);
-}
-
-/*FUNCTION**********************************************************************
- *
  * Function Name : CLOCK_CONFIG_SetFllExtRefDiv
  * Description   : Configure FLL external reference divider (FRDIV).
  * Param frdiv   : The value to set FRDIV.
