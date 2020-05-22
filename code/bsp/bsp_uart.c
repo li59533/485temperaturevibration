@@ -17,7 +17,7 @@
  * @addtogroup    XXX 
  * @{  
  */
-#include "ModbusRTU_Slave.h"
+#include "modbus_rtu.h"
 /**
  * @addtogroup    bsp_uart_Modules 
  * @{  
@@ -289,15 +289,18 @@ void BSP_UART_WriteBytes_Blocking(uint8_t BSP_UARTX , uint8_t *buf, uint16_t len
 	}
 }
 
+static uint8_t uart1_send_space[300] = {0};
+
 void BSP_UART_WriteBytes_DMA(uint8_t BSP_UARTX , uint8_t *buf, uint16_t len)
 {
 	uart_transfer_t  xfer;
-	xfer.data = buf;
-	xfer.dataSize = len;	
 	switch(BSP_UARTX)
 	{
 		case BSP_UART0:; break;
 		case BSP_UART1: 
+						memcpy(uart1_send_space , buf , len);
+						xfer.data = uart1_send_space;
+						xfer.dataSize = len;	
 						UART_EnableInterrupts( UART1 ,kUART_TransmissionCompleteInterruptEnable);
 						UART_SendEDMA(UART1, &g_uartEdmaHandle, &xfer);
 						break;

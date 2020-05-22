@@ -20,8 +20,8 @@
  * @addtogroup    XXX 
  * @{  
  */
-#include "ModbusRTU_Slave.h"
-#include "modbus_task.h"
+#include "modbus_task.h" 
+#include "modbus_rtu.h"
 /**
  * @addtogroup    bsp_tim_Modules 
  * @{  

@@ -47,7 +47,8 @@
  * @brief         
  * @{  
  */
-
+#define APP_CALC_ADC_SCALEFACTOR     0.050354f // 3300mv / 65536 =  0.050354
+ 
 /**
  * @}
  */
@@ -67,7 +68,16 @@
  * @brief         
  * @{  
  */
-
+typedef struct 
+{
+	float ACC_P;
+	float ACC_RMS;
+	float Velocity_RMS;
+	float Displace_PP;
+	float Kurtosis_Coefficient;
+	float Envelope;
+	uint32_t BaseFreq;
+}APP_CalcValue_t ;
 /**
  * @}
  */
@@ -77,6 +87,7 @@
  * @brief         
  * @{  
  */
+APP_CalcValue_t APP_CalcValue[3] ; 
 
 /**
  * @}
@@ -107,22 +118,7 @@
  * @brief         
  * @{  
  */
-#define APP_CALC_ADC_SCALEFACTOR     0.050354f // 3300mv / 65536 =  0.050354
- 
-typedef struct 
-{
-	float ACC_P;
-	float ACC_RMS;
-	float Velocity_RMS;
-	float Displace_PP;
-	float Kurtosis_Coefficient;
-	float Envelope;
-	uint32_t BaseFreq;
-}APP_CalcValue_t ; 	
 
-APP_CalcValue_t APP_CalcValue[3] ; 
-
- 
 void APP_Calc_Process(void)
 {
 	float *emu_inter_data = 0;
@@ -135,26 +131,53 @@ void APP_Calc_Process(void)
 	testOutput = pvPortMalloc(sizeof(float) * APP_SAMPLE_CHANNEL_0_RATE * 2 );	
 	testOutput_2 = pvPortMalloc(sizeof(float) * APP_SAMPLE_CHANNEL_0_RATE  );	
 	
+	float Axial_Sensitivity[3];
 	
+	if(g_SystemParam_Config.X_Axial_Sensitivity > 0)
+	{
+		Axial_Sensitivity[0] = 1.0f / g_SystemParam_Config.X_Axial_Sensitivity;
+	}
+	else
+	{
+		Axial_Sensitivity[0] = 1.0f;
+	}
 	
-	// ------------Get ACC with DC bias--------
+	if(g_SystemParam_Config.Y_Axial_Sensitivity > 0)
+	{
+		Axial_Sensitivity[1] = 1.0f / g_SystemParam_Config.Y_Axial_Sensitivity;
+	}
+	else
+	{
+		Axial_Sensitivity[1] = 1.0f;
+	}	
+	
+	if(g_SystemParam_Config.Z_Axial_Sensitivity > 0)
+	{
+		Axial_Sensitivity[2] = 1.0f / g_SystemParam_Config.Z_Axial_Sensitivity;
+	}
+	else
+	{
+		Axial_Sensitivity[2] = 1.0f;
+	}	
+
+	// --------Calc 3 Channels Charateristic Value------------
 	
 	for(uint8_t channel_index = 0 ; channel_index < 3 ; channel_index ++)
 	{
-		
+		// ------------Get ACC with DC bias--------
 		if(APP_Sample_buf.Sample_Channel_buf[channel_index].cur_dataPtr >=0 &&\
 			APP_Sample_buf.Sample_Channel_buf[channel_index].cur_dataPtr < APP_SAMPLE_CHANNEL_0_RATE)
 		{
 			for(uint16_t i = 0 ; i < APP_SAMPLE_CHANNEL_0_RATE ; i ++)
 			{
-				emu_inter_data[i] = APP_Sample_buf.Sample_Channel_buf[channel_index].originalData[i + 4096] * APP_CALC_ADC_SCALEFACTOR * g_SystemParam_Config.X_Axial_Sensitivity;
+				emu_inter_data[i] = APP_Sample_buf.Sample_Channel_buf[channel_index].originalData[i + 4096] * APP_CALC_ADC_SCALEFACTOR * Axial_Sensitivity[channel_index];
 			}
 		}
 		else
 		{
 			for(uint16_t i = 0 ; i < APP_SAMPLE_CHANNEL_0_RATE ; i ++)
 			{
-				emu_inter_data[i] = APP_Sample_buf.Sample_Channel_buf[channel_index].originalData[i] * APP_CALC_ADC_SCALEFACTOR * g_SystemParam_Config.X_Axial_Sensitivity;
+				emu_inter_data[i] = APP_Sample_buf.Sample_Channel_buf[channel_index].originalData[i] * APP_CALC_ADC_SCALEFACTOR * Axial_Sensitivity[channel_index];
 			}		
 		}
 		
@@ -213,11 +236,9 @@ void APP_Calc_Process(void)
 		BSP_FFT_Init(APP_SAMPLE_CHANNEL_0_RATE,APP_SAMPLE_CHANNEL_0_RATE , fftcalc_space); // sizeof fftcalc_space is sample double.
 		BSP_FFT_Func(APP_SAMPLE_CHANNEL_0_RATE,APP_SAMPLE_CHANNEL_0_RATE , emu_inter_data , testOutput);
 		APP_CalcValue[channel_index].BaseFreq =  BSP_FFT_GetBaseFreq(APP_SAMPLE_CHANNEL_0_RATE,APP_SAMPLE_CHANNEL_0_RATE , testOutput);
-		
 		DEBUG("Base Freq:%d\r\n" , APP_CalcValue[channel_index].BaseFreq );
 		
 		BSP_FFT_Integral_IFFT(APP_SAMPLE_CHANNEL_0_RATE,APP_SAMPLE_CHANNEL_0_RATE ,1,1000 ,10,testOutput , testOutput_2); // Velocity domain
-		
 		arm_rms_f32(testOutput_2, APP_SAMPLE_CHANNEL_0_RATE , &APP_CalcValue[channel_index].Velocity_RMS);    // Velocity_RMS
 		Clog_Float("Velocity_RMS:" , APP_CalcValue[channel_index].Velocity_RMS);
 		
@@ -228,18 +249,10 @@ void APP_Calc_Process(void)
 		arm_min_f32	(testOutput_2,APP_SAMPLE_CHANNEL_0_RATE, &displace_min, &pIndex );	
 		APP_CalcValue[channel_index].Displace_PP = displace_max - displace_min; 		// Displace_PP 
 		Clog_Float("Displace_PP:" , APP_CalcValue[channel_index].Displace_PP);		
-		
-		
-		
-		
+
 	}
 	
-	
-	
-
-	
 	// ----------------------------------------------
-	
 	vPortFree(emu_inter_data);
 	vPortFree(testOutput);
 	vPortFree(testOutput_2);

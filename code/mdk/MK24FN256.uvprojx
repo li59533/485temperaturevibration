@@ -748,19 +748,14 @@
           <GroupName>mdl/modbus</GroupName>
           <Files>
             <File>
-              <FileName>ModbusCRC.c</FileName>
+              <FileName>modbus_rtu.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\mdl\ModbusRTU\ModbusCRC.c</FilePath>
+              <FilePath>..\mdl\ModbusRTU\modbus_rtu.c</FilePath>
             </File>
             <File>
-              <FileName>ModbusHardwareInit.c</FileName>
+              <FileName>modbus_port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\mdl\ModbusRTU\ModbusHardwareInit.c</FilePath>
-            </File>
-            <File>
-              <FileName>ModbusRTU_Slave.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\mdl\ModbusRTU\ModbusRTU_Slave.c</FilePath>
+              <FilePath>..\mdl\ModbusRTU\modbus_port.c</FilePath>
             </File>
           </Files>
         </Group>

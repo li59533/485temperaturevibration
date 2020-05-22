@@ -22,8 +22,7 @@
  * @addtogroup    XXX 
  * @{  
  */
-#include "ModbusRTU_Slave.h"
-#include "ModbusHardwareInit.h"
+#include "modbus_rtu.h"
 /**
  * @addtogroup    modbus_task_Modules 
  * @{  
