@@ -26,6 +26,7 @@
 #include "app_sample.h"
 #include "bsp_led.h"
 #include "app_calc.h"
+#include "refresh_task.h"
 /**
  * @addtogroup    sample_task_Modules 
  * @{  
@@ -115,7 +116,7 @@ uint32_t Sample_Task_Init(void)
 	BaseType_t basetype = { 0 };
 	basetype = xTaskCreate(Sample_Task,\
 							"Sample Task",\
-							128,
+							256,
 							NULL,
 							3,
 							&Sample_Task_Handle);
@@ -151,9 +152,9 @@ void Sample_Task(void * pvParameter)
 			
 			DEBUG("Sample Task SAMPLE_TASK_CALC_EVENT\r\n");
 			APP_Calc_Process();
+			Refresh_Task_Event_Start(REFRESH_TASK_CHARATERISTIC_EVENT, EVENT_FROM_TASK);
 		}				
 	}
-	
 }
 
 

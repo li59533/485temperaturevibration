@@ -1,6 +1,6 @@
 /**
  **************************************************************************************************
- * @file        app_calc.h
+ * @file        app_refresh.h
  * @author
  * @version
  * @date        5/28/2016
@@ -10,30 +10,21 @@
  *
  **************************************************************************************************
  */
-#ifndef _APP_CALC_H_
-#define _APP_CALC_H_
+#ifndef _APP_REFRESH_H_
+#define _APP_REFRESH_H_
 
 /**
  * @addtogroup    XXX 
  * @{ 
  */
-#include "self_def.h"
+
 /**
- * @addtogroup    app_calc_Modules 
+ * @addtogroup    app_refresh_Modules 
  * @{  
  */
 
 /**
- * @defgroup      app_calc_Exported_Macros 
- * @{  
- */
-
-/**
- * @}
- */
-
-/**
- * @defgroup      app_calc_Exported_Constants
+ * @defgroup      app_refresh_Exported_Macros 
  * @{  
  */
 
@@ -42,38 +33,37 @@
  */
 
 /**
- * @defgroup      app_calc_Exported_Types 
+ * @defgroup      app_refresh_Exported_Constants
  * @{  
  */
-typedef struct 
-{
-	float ACC_P;
-	float ACC_RMS;
-	float Velocity_RMS;
-	float Displace_PP;
-	float Kurtosis_Coefficient;
-	float Envelope;
-	uint32_t BaseFreq;
-}APP_CalcValue_t ;
+
 /**
  * @}
  */
 
 /**
- * @defgroup      app_calc_Exported_Variables 
+ * @defgroup      app_refresh_Exported_Types 
  * @{  
  */
-extern APP_CalcValue_t APP_CalcValue[] ; 
+
 /**
  * @}
  */
 
 /**
- * @defgroup      app_calc_Exported_Functions 
+ * @defgroup      app_refresh_Exported_Variables 
  * @{  
  */
-void APP_Calc_Process(void);
 
+/**
+ * @}
+ */
+
+/**
+ * @defgroup      app_refresh_Exported_Functions 
+ * @{  
+ */
+void APP_Refresh_Charateristic(void);
 /**
  * @}
  */

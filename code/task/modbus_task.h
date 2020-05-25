@@ -27,8 +27,7 @@
  * @defgroup      modbus_task_Exported_Macros 
  * @{  
  */
-#define MODBUS_TASK_TEST_EVENT 			(0X01 << 0)
-#define MODBUS_TASK_TEST2_EVENT			(0X01 << 1)
+#define MODBUS_TASK_TEST_EVENT			(0x01 << 1)
 #define MODBUS_TASK_DATAPROCESS_EVENT	(0X01 << 2)
 #define MODBUS_TASK_REV_EVENT			(0x01 << 3)
 /**

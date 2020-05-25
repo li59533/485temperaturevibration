@@ -112,13 +112,12 @@ uint32_t Modbus_Task_Init(void)
 	BaseType_t basetype = { 0 };
 	basetype = xTaskCreate(Modbus_Task,\
 							"Modbus Task",\
-							1024,
+							256,
 							NULL,
 							3,
 							&Modbus_Task_Handle);
 	return basetype;
 }
-
 
 void Modbus_Task(void * pvParameter)
 {
@@ -141,8 +140,9 @@ void Modbus_Task(void * pvParameter)
 		
 		if((event_flag & MODBUS_TASK_DATAPROCESS_EVENT) != 0x00)
 		{
-			ModbusDataProcess();
 			DEBUG("MODBUS_TASK_DATAPROCESS_EVENT\r\n");
+			ModbusDataProcess();
+		
 		}		
 	}
 }

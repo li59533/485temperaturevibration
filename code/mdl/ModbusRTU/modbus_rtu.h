@@ -35,8 +35,8 @@
  
 #define MB_REG_COILS_COUNT          1
 #define MB_REG_DISCRETEINPUT_COUNT	1
-#define MB_REG_HOLDING_COUNT		6500
-#define MB_REG_INPUT_COUNT 			100 
+#define MB_REG_HOLDING_COUNT		100
+#define MB_REG_INPUT_COUNT 			6500 
 
 /**
  * @}

@@ -22,7 +22,7 @@
  * @addtogroup    XXX 
  * @{  
  */
-
+#include "app_calc.h"
 
 /**
  * @addtogroup    first_task_Modules 
@@ -142,6 +142,8 @@ void First_Task(void * pvParameter)
 		if((event_flag & FIRST_TASK_TEST2_EVENT) != 0x00)
 		{
 			DEBUG("First Task FIRST_TASK_TEST2_EVENT\r\n");
+			//APP_Calc_Process();
+			
 		}		
 		
 		

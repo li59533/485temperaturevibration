@@ -407,6 +407,11 @@
               <FileType>1</FileType>
               <FilePath>..\app\app_calc.c</FilePath>
             </File>
+            <File>
+              <FileName>app_refresh.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\app\app_refresh.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -763,6 +768,11 @@
           <GroupName>task</GroupName>
           <Files>
             <File>
+              <FileName>task_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\task\task_list.c</FilePath>
+            </File>
+            <File>
               <FileName>first_task.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\task\first_task.c</FilePath>
@@ -773,11 +783,6 @@
               <FilePath>..\task\second_task.c</FilePath>
             </File>
             <File>
-              <FileName>task_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\task\task_list.c</FilePath>
-            </File>
-            <File>
               <FileName>modbus_task.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\task\modbus_task.c</FilePath>
@@ -786,6 +791,11 @@
               <FileName>sample_task.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\task\sample_task.c</FilePath>
+            </File>
+            <File>
+              <FileName>refresh_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\task\refresh_task.c</FilePath>
             </File>
           </Files>
         </Group>

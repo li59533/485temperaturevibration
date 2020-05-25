@@ -22,6 +22,10 @@
  */
 #include "modbus_task.h" 
 #include "modbus_rtu.h"
+
+#include "sample_task.h"
+#include "first_task.h"
+
 /**
  * @addtogroup    bsp_tim_Modules 
  * @{  
@@ -138,7 +142,7 @@ static void bsp_tmp0_init(void)
     FTM_SetTimerPeriod(FTM0, 15000);
 	// -----IRQ-------
     FTM_EnableInterrupts(FTM0, kFTM_TimeOverflowInterruptEnable);
-	NVIC_SetPriority(FTM0_IRQn , 7);
+	NVIC_SetPriority(FTM0_IRQn , 6);
     EnableIRQ(FTM0_IRQn);
 	// ---------------
 }
@@ -215,13 +219,17 @@ void FTM0_IRQHandler(void)
 	if(FTM_GetStatusFlags(FTM0) & kFTM_TimeOverflowFlag )
 	{
 		rBufToRing();
-		Modbus_Task_Event_Start(MODBUS_TASK_DATAPROCESS_EVENT, EVENT_FROM_ISR);
 		/* Clear interrupt flag.*/
 		FTM_ClearStatusFlags(FTM0, kFTM_TimeOverflowFlag);
 		FTM_StopTimer(FTM0);	
-			
+		
+		
+		Modbus_Task_Event_Start(MODBUS_TASK_TEST_EVENT | MODBUS_TASK_DATAPROCESS_EVENT, EVENT_FROM_ISR);
+		
+		
+		DEBUG("FTM0_IRQHandler\r\n");	
 	}
-	DEBUG("FTM0_IRQHandler\r\n");
+	
 }
 
 void FTM1_IRQHandler(void)

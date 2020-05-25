@@ -253,7 +253,7 @@ uint32_t BSP_FFT_GetBaseFreq(uint32_t sample_rate ,uint32_t pointcount, float *i
 	float baseFreq_mag;
 	uint32_t pIndex ; 
 	arm_max_f32(bsp_fft_param.fft_space_1, sample_rate / 2 , &baseFreq_mag , &pIndex);
-	Clog_Float("baseFreq_mag:",baseFreq_mag);
+	//Clog_Float("baseFreq_mag:",baseFreq_mag);
 	return pIndex;
 }
 

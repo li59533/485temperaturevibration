@@ -68,16 +68,7 @@
  * @brief         
  * @{  
  */
-typedef struct 
-{
-	float ACC_P;
-	float ACC_RMS;
-	float Velocity_RMS;
-	float Displace_PP;
-	float Kurtosis_Coefficient;
-	float Envelope;
-	uint32_t BaseFreq;
-}APP_CalcValue_t ;
+
 /**
  * @}
  */
@@ -185,7 +176,7 @@ void APP_Calc_Process(void)
 		float * mean_value = 0;
 		mean_value = pvPortMalloc(sizeof(float) * 1); //vPortFree()
 		arm_mean_f32(emu_inter_data ,APP_SAMPLE_CHANNEL_0_RATE ,  mean_value);
-		Clog_Float("MeanValue:", *mean_value);
+		//Clog_Float("MeanValue:", *mean_value);
 		
 		for(uint16_t i = 0; i < APP_SAMPLE_CHANNEL_0_RATE ; i ++ )
 		{
@@ -202,8 +193,8 @@ void APP_Calc_Process(void)
 		arm_max_f32	(testOutput,APP_SAMPLE_CHANNEL_0_RATE, &APP_CalcValue[channel_index].ACC_P , &pIndex );	 // ACC_P
 		arm_rms_f32(emu_inter_data, APP_SAMPLE_CHANNEL_0_RATE , &APP_CalcValue[channel_index].ACC_RMS);    // ACC_RMS	
 		
-		Clog_Float("ACC_P:",APP_CalcValue[channel_index].ACC_P);
-		Clog_Float("ACC_RMS:",APP_CalcValue[channel_index].ACC_RMS);
+		//Clog_Float("ACC_P:",APP_CalcValue[channel_index].ACC_P);
+		//Clog_Float("ACC_RMS:",APP_CalcValue[channel_index].ACC_RMS);
 		// ----------------------------------------------
 		
 		
@@ -220,7 +211,7 @@ void APP_Calc_Process(void)
 		vPortFree(Kurtosis_Tempbuf);
 		APP_CalcValue[channel_index].Kurtosis_Coefficient = Kurtosis / (APP_CalcValue[channel_index].ACC_RMS * APP_CalcValue[channel_index].ACC_RMS * APP_CalcValue[channel_index].ACC_RMS * APP_CalcValue[channel_index].ACC_RMS); // Kurtosis_Coefficient
 		
-		Clog_Float("Kurtosis_Cof:",APP_CalcValue[channel_index].Kurtosis_Coefficient);
+		//Clog_Float("Kurtosis_Cof:",APP_CalcValue[channel_index].Kurtosis_Coefficient);
 		
 		// ----------------------------------------------
 		
@@ -236,11 +227,11 @@ void APP_Calc_Process(void)
 		BSP_FFT_Init(APP_SAMPLE_CHANNEL_0_RATE,APP_SAMPLE_CHANNEL_0_RATE , fftcalc_space); // sizeof fftcalc_space is sample double.
 		BSP_FFT_Func(APP_SAMPLE_CHANNEL_0_RATE,APP_SAMPLE_CHANNEL_0_RATE , emu_inter_data , testOutput);
 		APP_CalcValue[channel_index].BaseFreq =  BSP_FFT_GetBaseFreq(APP_SAMPLE_CHANNEL_0_RATE,APP_SAMPLE_CHANNEL_0_RATE , testOutput);
-		DEBUG("Base Freq:%d\r\n" , APP_CalcValue[channel_index].BaseFreq );
+		//DEBUG("Base Freq:%d\r\n" , APP_CalcValue[channel_index].BaseFreq );
 		
 		BSP_FFT_Integral_IFFT(APP_SAMPLE_CHANNEL_0_RATE,APP_SAMPLE_CHANNEL_0_RATE ,1,1000 ,10,testOutput , testOutput_2); // Velocity domain
 		arm_rms_f32(testOutput_2, APP_SAMPLE_CHANNEL_0_RATE , &APP_CalcValue[channel_index].Velocity_RMS);    // Velocity_RMS
-		Clog_Float("Velocity_RMS:" , APP_CalcValue[channel_index].Velocity_RMS);
+		//Clog_Float("Velocity_RMS:" , APP_CalcValue[channel_index].Velocity_RMS);
 		
 		BSP_FFT_Integral_IFFT(APP_SAMPLE_CHANNEL_0_RATE,APP_SAMPLE_CHANNEL_0_RATE ,2,1000 ,10,testOutput , testOutput_2); // Displace domain
 		float displace_max  ;
@@ -248,7 +239,7 @@ void APP_Calc_Process(void)
 		arm_max_f32	(testOutput_2,APP_SAMPLE_CHANNEL_0_RATE, &displace_max, &pIndex );	
 		arm_min_f32	(testOutput_2,APP_SAMPLE_CHANNEL_0_RATE, &displace_min, &pIndex );	
 		APP_CalcValue[channel_index].Displace_PP = displace_max - displace_min; 		// Displace_PP 
-		Clog_Float("Displace_PP:" , APP_CalcValue[channel_index].Displace_PP);		
+		//Clog_Float("Displace_PP:" , APP_CalcValue[channel_index].Displace_PP);		
 
 	}
 	

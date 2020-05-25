@@ -222,7 +222,7 @@ int8_t MB_WirteRegister(uint8_t Register, uint16_t Addr,uint16_t Data)       //S
 
 static int8_t mb_writeReg_coil(uint16_t addr , uint16_t data)
 {
-	if(addr >= Slave.Reg_coil.startAddr && addr < Slave.Reg_coil.startAddr)
+	if(addr >= Slave.Reg_coil.startAddr && addr < Slave.Reg_coil.endAddr)
 	{
 		Slave.Reg_coil.Addr.DataI[addr] = data;
 		
@@ -235,7 +235,7 @@ static int8_t mb_writeReg_coil(uint16_t addr , uint16_t data)
 }
 static int8_t mb_writeReg_discreteinput(uint16_t addr , uint16_t data)
 {
-	if(addr >= Slave.Reg_discreteinput.startAddr && addr < Slave.Reg_discreteinput.startAddr)
+	if(addr >= Slave.Reg_discreteinput.startAddr && addr < Slave.Reg_discreteinput.endAddr)
 	{
 		Slave.Reg_discreteinput.Addr.DataI[addr] = data;
 		
@@ -249,7 +249,7 @@ static int8_t mb_writeReg_discreteinput(uint16_t addr , uint16_t data)
 }
 static int8_t mb_writeReg_holding(uint16_t addr , uint16_t data)
 {
-	if(addr >= Slave.Reg_holding.startAddr && addr < Slave.Reg_holding.startAddr)
+	if(addr >= Slave.Reg_holding.startAddr && addr < Slave.Reg_holding.endAddr)
 	{
 		Slave.Reg_holding.Addr.DataI[addr] = data;
 		
@@ -262,7 +262,7 @@ static int8_t mb_writeReg_holding(uint16_t addr , uint16_t data)
 }
 static int8_t mb_writeReg_input(uint16_t addr , uint16_t data)
 {
-	if(addr >= Slave.Reg_input.startAddr && addr < Slave.Reg_input.startAddr)
+	if(addr >= Slave.Reg_input.startAddr && addr < Slave.Reg_input.endAddr)
 	{
 		Slave.Reg_input.Addr.DataI[addr] = data;
 		
@@ -291,7 +291,7 @@ uint16_t MB_ReadRegister(uint8_t Register, uint16_t Addr ,uint16_t *Data)       
 
 static int8_t mb_readReg_coil(uint16_t addr , uint16_t *data)
 {
-	if(addr >= Slave.Reg_coil.startAddr && addr < Slave.Reg_coil.startAddr)
+	if(addr >= Slave.Reg_coil.startAddr && addr < Slave.Reg_coil.endAddr)
 	{
 		*data = Slave.Reg_coil.Addr.DataI[addr];
 		return 1;
@@ -304,7 +304,7 @@ static int8_t mb_readReg_coil(uint16_t addr , uint16_t *data)
 }
 static int8_t mb_readReg_discreteinput(uint16_t addr , uint16_t *data)
 {
-	if(addr >= Slave.Reg_discreteinput.startAddr && addr < Slave.Reg_discreteinput.startAddr)
+	if(addr >= Slave.Reg_discreteinput.startAddr && addr < Slave.Reg_discreteinput.endAddr)
 	{
 		* data = Slave.Reg_discreteinput.Addr.DataI[addr] ;
 		return 1;
@@ -317,7 +317,7 @@ static int8_t mb_readReg_discreteinput(uint16_t addr , uint16_t *data)
 }
 static int8_t mb_readReg_holding(uint16_t addr , uint16_t *data)
 {
-	if(addr >= Slave.Reg_holding.startAddr && addr < Slave.Reg_holding.startAddr)
+	if(addr >= Slave.Reg_holding.startAddr && addr < Slave.Reg_holding.endAddr)
 	{
 		* data = Slave.Reg_holding.Addr.DataI[addr] ;
 		return 1;
@@ -330,7 +330,7 @@ static int8_t mb_readReg_holding(uint16_t addr , uint16_t *data)
 }
 static int8_t mb_readReg_input(uint16_t addr , uint16_t *data)
 {
-	if(addr >= Slave.Reg_input.startAddr && addr < Slave.Reg_input.startAddr)
+	if(addr >= Slave.Reg_input.startAddr && addr < Slave.Reg_input.endAddr)
 	{
 		* data = Slave.Reg_input.Addr.DataI[addr] ;
 		return 1;
