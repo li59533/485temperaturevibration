@@ -31,7 +31,7 @@
 #define REFRESH_TASK_TEST2_EVENT			(0X01 << 1)
 #define REFRESH_TASK_CHARATERISTIC_EVENT	(0X01 << 2)
 #define REFRESH_TASK_WAVE_EVENT				(0X01 << 3)
-
+#define REFRESH_TASK_CONF_EVENT				(0X01 << 4)
 /**
  * @}
  */

@@ -80,7 +80,8 @@ const SystemParam_Config_t SystemParam_Config_Default =
 	.Z_Axial_Sensitivity = 1.0f,
 	.FFT_LowPass = 1000,
 	.FFT_HighPass = 10,
-	
+	.Temperature_C = 0.0f,
+	.Waveform_Interval = 1,
 };
 /**
  * @}

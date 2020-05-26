@@ -63,7 +63,8 @@
  * @defgroup      app_refresh_Exported_Functions 
  * @{  
  */
-void APP_Refresh_Charateristic(void);
+void APP_RefreshMB_Charateristic(void);
+void APP_RefreshMB_ConfParam(void);
 /**
  * @}
  */

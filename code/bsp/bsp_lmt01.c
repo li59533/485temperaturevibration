@@ -18,7 +18,7 @@
  */
 #include "clog.h"
 #include "system_param.h"
-#include "osal.h"
+
 /**
  * @addtogroup    bsp_lmt01_Modules 
  * @{  

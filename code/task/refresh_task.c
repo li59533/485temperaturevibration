@@ -129,6 +129,9 @@ void Refresh_Task(void * pvParameter)
 	DEBUG("Refresh Task Enter\r\n");
 	UBaseType_t refreshtask_ramainheap = 0;
 
+	APP_RefreshMB_ConfParam();
+	
+	
 	while(1)
 	{
 		xTaskNotifyWait(0x00,ULONG_MAX,&event_flag , portMAX_DELAY);
@@ -142,12 +145,19 @@ void Refresh_Task(void * pvParameter)
 		if((event_flag & REFRESH_TASK_CHARATERISTIC_EVENT) != 0x00)
 		{
 			DEBUG("Refresh Task CHARATERISTIC_EVENT\r\n");
-			APP_Refresh_Charateristic();
+			APP_RefreshMB_Charateristic();
 		}	
+
 		if((event_flag & REFRESH_TASK_WAVE_EVENT) != 0x00)
 		{
 			DEBUG("Refresh Task WAVE_EVENT\r\n");
-		}			
+		}	
+		if((event_flag & REFRESH_TASK_CONF_EVENT) != 0x00)
+		{
+			DEBUG("Refresh Task CONF_EVENT\r\n");
+			APP_RefreshMB_ConfParam();
+		}	
+		
 	}
 }
 

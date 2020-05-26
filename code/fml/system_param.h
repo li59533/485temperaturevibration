@@ -77,6 +77,9 @@ typedef struct
 	uint32_t FFT_LowPass ; 
 	uint32_t FFT_HighPass;
 	
+	float Temperature_C;
+	
+	uint8_t Waveform_Interval;
 	
     uint16_t crc;           /*!< 所有的参数结构体必须按字节对其。且最后一个必须包
                                  含一个uint16_t类型的数据，该数据用于内部存储时的
