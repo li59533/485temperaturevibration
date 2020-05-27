@@ -13,9 +13,9 @@
 
 #include "limits.h"
 #include "clog.h"
-#include "FreeRTOS.h"
-#include "task.h"
-#include "timers.h"
+
+
+
 #include "refresh_task.h"
 #include "rtos_tools.h"
 /**
@@ -25,6 +25,7 @@
 #include "app_calc.h"
 #include "app_refresh.h"
 #include "system_param.h"
+#include "hal_task.h"
 
 /**
  * @addtogroup    refresh_task_Modules 
@@ -115,7 +116,7 @@ uint32_t Refresh_Task_Init(void)
 	BaseType_t basetype = { 0 };
 	basetype = xTaskCreate(Refresh_Task,\
 							"Refresh Task",\
-							256,
+							1024,
 							NULL,
 							3,
 							&Refresh_Task_Handle);
@@ -176,6 +177,7 @@ void Refresh_Task(void * pvParameter)
 		{
 			DEBUG("Refresh Task MBtoSYS_EVENT\r\n");
 			APP_Refresh_MBtoSys();
+			Hal_Task_Event_Start(HAL_TASK_SAVE_SYS_EVENT , EVENT_FROM_TASK);
 			
 		}			
 	}

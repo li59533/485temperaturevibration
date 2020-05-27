@@ -129,7 +129,7 @@ void BSP_Flash_Init(void)
     DEBUG("\r\n Program Flash Sector Size:\t%d KB, Hex: (0x%x) \r\n", (pflashSectorSize / 1024), pflashSectorSize);	
 	
 }	
-
+#include "cmsis_armcc.h"
 int8_t BSP_Flash_WriteBytes(uint32_t AddrStart,uint8_t *buf,uint16_t len)
 {
 	uint8_t flash_temp[0x400 * 4] = { 0 };
@@ -137,10 +137,12 @@ int8_t BSP_Flash_WriteBytes(uint32_t AddrStart,uint8_t *buf,uint16_t len)
 	
 	memcpy(flash_temp ,buf ,len );
 	
-	__disable_irq();
+	__set_PRIMASK(1);
+	//__disable_irq();
 	FLASH_Erase(&bsp_flashconfig, AddrStart , 0x400 * 4, kFLASH_ApiEraseKey);
 	FLASH_Program(&bsp_flashconfig, AddrStart ,(uint32_t *) flash_temp, 0x400 * 4);
-	__enable_irq();
+	//__enable_irq();
+	__set_PRIMASK(0);
 	return 0;
 }
 

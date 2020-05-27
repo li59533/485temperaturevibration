@@ -18,6 +18,9 @@
  * @{ 
  */
 #include "self_def.h"
+#include "FreeRTOS.h"
+#include "task.h"
+#include "timers.h"
 /**
  * @addtogroup    sample_task_Modules 
  * @{  
@@ -56,7 +59,7 @@
  * @defgroup      sample_task_Exported_Variables 
  * @{  
  */
-
+extern TaskHandle_t  Sample_Task_Handle ;
 /**
  * @}
  */

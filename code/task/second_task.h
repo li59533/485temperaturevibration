@@ -17,7 +17,9 @@
  * @addtogroup    XXX 
  * @{ 
  */
+#include "FreeRTOS.h"
 #include "self_def.h"
+#include "task.h"
 /**
  * @addtogroup    second_task_Modules 
  * @{  
@@ -54,7 +56,7 @@
  * @defgroup      second_task_Exported_Variables 
  * @{  
  */
-
+extern TaskHandle_t  Second_Task_Handle ;
 /**
  * @}
  */

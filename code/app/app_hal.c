@@ -1,29 +1,30 @@
 /**
  **************************************************************************************************
- * @file        rtos_tools.c
+ * @file        app_hal.c
  * @author
- * @version   v0.1.0
- * @date        
+ * @version
+ * @date        5/28/2016
  * @brief
  **************************************************************************************************
  * @attention
  *
  **************************************************************************************************
  */
-#include "rtos_tools.h"
+#include "self_def.h"
+#include "app_hal.h"
+#include "MK24F25612.h"
 /**
  * @addtogroup    XXX 
  * @{  
  */
-#include "FreeRTOS.h"
-#include "task.h"
+
 /**
- * @addtogroup    rtos_tools_Modules 
+ * @addtogroup    app_hal_Modules 
  * @{  
  */
 
 /**
- * @defgroup      rtos_tools_IO_Defines 
+ * @defgroup      app_hal_IO_Defines 
  * @brief         
  * @{  
  */
@@ -33,83 +34,76 @@
  */
 
 /**
- * @defgroup      rtos_tools_Macros_Defines 
+ * @defgroup      app_hal_Macros_Defines 
  * @brief         
  * @{  
  */
 
 /**
  * @}
+ */
+
+/**
+ * @defgroup      app_hal_Constants_Defines 
+ * @brief         
+ * @{  
+ */
+
+/**
+ * @}
+ */
+
+/**
+ * @defgroup      app_hal_Private_Types
+ * @brief         
+ * @{  
+ */
+
+/**
+ * @}
+ */
+
+/**
+ * @defgroup      app_hal_Private_Variables 
+ * @brief         
+ * @{  
+ */
+
+/**
+ * @}
+ */
+
+/**
+ * @defgroup      app_hal_Public_Variables 
+ * @brief         
+ * @{  
+ */
+
+/**
+ * @}
+ */
+
+/**
+ * @defgroup      app_hal_Private_FunctionPrototypes 
+ * @brief         
+ * @{  
+ */
+
+/**
+ * @}
+ */
+
+/**
+ * @defgroup      app_hal_Functions 
+ * @brief         
+ * @{  
  */
  
-/**
- * @defgroup      rtos_tools_Constants_Defines 
- * @brief         
- * @{  
- */
 
-/**
- * @}
- */
-
-/**
- * @defgroup      rtos_tools_Private_Types
- * @brief         
- * @{  
- */
-
-/**
- * @}
- */
- 
-/**
- * @defgroup      rtos_tools_Private_Variables 
- * @brief         
- * @{  
- */
-
-/**
- * @}
- */
- 
-/**
- * @defgroup      rtos_tools_Public_Variables 
- * @brief         
- * @{  
- */
-
-/**
- * @}
- */
-
-/**
- * @defgroup      rtos_tools_Private_FunctionPrototypes 
- * @brief         
- * @{  
- */
-
-/**
- * @}
- */
-
-/**
- * @defgroup      rtos_tools_Functions 
- * @brief         
- * @{  
- */
- 
-void RTOS_Delay_ms(uint32_t count)
+void APP_Hal_Rest(void)
 {
-	vTaskDelay(pdMS_TO_TICKS(count));	
-}	
-
-
-uint32_t RTOS_Get_FreeHeapSize(void)
-{
-	return xPortGetFreeHeapSize();
+	NVIC_SystemReset();	
 }
-
-
 
 /**
  * @}

@@ -18,6 +18,7 @@
  * @{ 
  */
 #include "self_def.h"
+#include "task.h"
 /**
  * @addtogroup    first_task_Modules 
  * @{  
@@ -55,7 +56,7 @@
  * @defgroup      first_task_Exported_Variables 
  * @{  
  */
-
+extern TaskHandle_t  First_Task_Handle ;
 /**
  * @}
  */

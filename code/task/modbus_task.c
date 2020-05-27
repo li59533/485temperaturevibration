@@ -13,9 +13,8 @@
 
 #include "limits.h"
 #include "clog.h"
-#include "FreeRTOS.h"
-#include "task.h"
-#include "timers.h"
+
+
 #include "modbus_task.h"
 
 /**
@@ -112,7 +111,7 @@ uint32_t Modbus_Task_Init(void)
 	BaseType_t basetype = { 0 };
 	basetype = xTaskCreate(Modbus_Task,\
 							"Modbus Task",\
-							256,
+							1024,
 							NULL,
 							3,
 							&Modbus_Task_Handle);

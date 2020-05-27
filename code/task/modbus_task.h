@@ -18,6 +18,9 @@
  * @{ 
  */
 #include "self_def.h"
+#include "FreeRTOS.h"
+#include "task.h"
+#include "timers.h"
 /**
  * @addtogroup    modbus_task_Modules 
  * @{  
@@ -56,7 +59,7 @@
  * @defgroup      modbus_task_Exported_Variables 
  * @{  
  */
-
+extern TaskHandle_t  Modbus_Task_Handle;
 /**
  * @}
  */

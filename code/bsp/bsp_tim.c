@@ -224,7 +224,7 @@ void FTM0_IRQHandler(void)
 		FTM_StopTimer(FTM0);	
 		
 		
-		Modbus_Task_Event_Start(MODBUS_TASK_TEST_EVENT | MODBUS_TASK_DATAPROCESS_EVENT, EVENT_FROM_ISR);
+		Modbus_Task_Event_Start(MODBUS_TASK_DATAPROCESS_EVENT, EVENT_FROM_ISR);
 		
 		
 		DEBUG("FTM0_IRQHandler\r\n");	

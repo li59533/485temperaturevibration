@@ -412,6 +412,11 @@
               <FileType>1</FileType>
               <FilePath>..\app\app_refresh.c</FilePath>
             </File>
+            <File>
+              <FileName>app_hal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\app\app_hal.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -852,6 +857,11 @@
               <FileName>sample_task.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\task\sample_task.c</FilePath>
+            </File>
+            <File>
+              <FileName>hal_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\task\hal_task.c</FilePath>
             </File>
             <File>
               <FileName>refresh_task.c</FileName>

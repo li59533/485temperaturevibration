@@ -13,9 +13,8 @@
 
 #include "limits.h"
 #include "clog.h"
-#include "FreeRTOS.h"
-#include "task.h"
-#include "timers.h"
+
+
 #include "sample_task.h"
 #include "rtos_tools.h"
 /**
@@ -116,7 +115,7 @@ uint32_t Sample_Task_Init(void)
 	BaseType_t basetype = { 0 };
 	basetype = xTaskCreate(Sample_Task,\
 							"Sample Task",\
-							256,
+							1024,
 							NULL,
 							3,
 							&Sample_Task_Handle);

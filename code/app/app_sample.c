@@ -164,7 +164,7 @@ void APP_GetOriginalData( uint16_t data)
 		APP_Sample_buf.Sample_Channel_buf[2].cur_dataPtr == APP_Sample_buf.Sample_Channel_buf[1].cur_dataPtr && \
 		APP_Sample_buf.Sample_Channel_buf[1].cur_dataPtr == APP_Sample_buf.Sample_Channel_buf[0].cur_dataPtr)
 	{
-		Sample_Task_Event_Start(SAMPLE_TASK_TEST_EVENT | SAMPLE_TASK_CALC_EVENT, EVENT_FROM_ISR);
+		Sample_Task_Event_Start( SAMPLE_TASK_CALC_EVENT, EVENT_FROM_ISR);
 	}
 	 // ---test code---
 	waveform[app_sample_rank[APP_Sample_buf.cur_channel]] = data;

@@ -18,6 +18,9 @@
  * @{ 
  */
 #include "self_def.h"
+#include "FreeRTOS.h"
+#include "task.h"
+#include "timers.h"
 /**
  * @addtogroup    refresh_task_Modules 
  * @{  
@@ -59,7 +62,7 @@
  * @defgroup      refresh_task_Exported_Variables 
  * @{  
  */
-
+extern TaskHandle_t  Refresh_Task_Handle;
 /**
  * @}
  */
