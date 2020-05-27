@@ -70,6 +70,8 @@ void ModbusRevOneByte(uint8_t byte);
 void ModbusSend(uint8_t * Data,uint16_t Len);
 void ModbusUartIRQn(void) ;
 void ModbusTimIRQn(void);
+void Modbus_485en_R(void);
+void Modbus_485en_T(void);
 
 
 unsigned short ModbusCRC(unsigned char *ptr, unsigned char size);

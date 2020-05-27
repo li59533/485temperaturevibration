@@ -18,6 +18,7 @@
  * @{  
  */
 #include "system_param.h"
+#include "refresh_task.h"
 /**
  * @addtogroup    modbus_rtu_Modules 
  * @{  
@@ -188,6 +189,11 @@ void ModbusDataProcess(void)
         {           
             if (checkCRC(Modbus.RingData[Modbus.RingOut].Buf, Modbus.RingData[Modbus.RingOut].Len) == 0x0000) //check CRC
             {
+				
+				// ---485en------ 
+				Modbus_485en_T();
+				// ----------
+				
                switch (Modbus.RingData[Modbus.RingOut].Buf[1])  //choose function
                {
                    case 0x03:MBFunction_03(); break;
@@ -501,6 +507,9 @@ static void MBFunction_06(void)
 
     ModbusSend(modbus_send_buf,8);
 
+	
+	Refresh_Task_Event_Start(REFRESH_TASK_MBTOSYS_EVENT, EVENT_FROM_TASK);
+	
     //BSP_Pro_Info_UpData();
     //Slave.ID=MB_ReadRegister(MBREGISTERHOLDING, 5);
 }

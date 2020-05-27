@@ -73,7 +73,7 @@
  * @brief         
  * @{  
  */
-
+static uint8_t app_refresh_waveFalg = 0;
 /**
  * @}
  */
@@ -277,26 +277,163 @@ void APP_RefreshMB_ConfParam(void)
 	{
 	}		
 
-	// ----------- FFT LowPass ----------
-	data_temp = (uint16_t)(g_SystemParam_Config.FFT_LowPass );
-	if( MB_WirteRegister(MBREGISTERHOLDING, MB_REGHOLD_FFT_LOWPASS , data_temp) != 1)
+	// ----------- FFT V_LowPass ----------
+	data_temp = (uint16_t)(g_SystemParam_Config.FFT_V_LowPass );
+	if( MB_WirteRegister(MBREGISTERHOLDING, MB_REGHOLD_FFT_V_LOWPASS , data_temp) != 1)
 	{
 	}	
-	// ----------- FFT HighPass ----------
-	data_temp = (uint16_t)(g_SystemParam_Config.FFT_HighPass );
-	if( MB_WirteRegister(MBREGISTERHOLDING, MB_REGHOLD_FFT_HIGHPASS , data_temp) != 1)
+	// ----------- FFT V_HighPass ----------
+	data_temp = (uint16_t)(g_SystemParam_Config.FFT_V_HighPass );
+	if( MB_WirteRegister(MBREGISTERHOLDING, MB_REGHOLD_FFT_V_HIGHPASS , data_temp) != 1)
 	{
 	}	
+	// ----------- FFT X_LowPass ----------
+	data_temp = (uint16_t)(g_SystemParam_Config.FFT_X_LowPass );
+	if( MB_WirteRegister(MBREGISTERHOLDING, MB_REGHOLD_FFT_X_LOWPASS , data_temp) != 1)
+	{
+	}	
+	// ----------- FFT X_HighPass ----------
+	data_temp = (uint16_t)(g_SystemParam_Config.FFT_X_HighPass );
+	if( MB_WirteRegister(MBREGISTERHOLDING, MB_REGHOLD_FFT_X_HIGHPASS , data_temp) != 1)
+	{
+	}		
+	
 	// ----------- Temperature_C ----------
-	data_temp = (uint16_t)(g_SystemParam_Config.Temperature_C );
+	data_temp = (uint16_t)(g_SystemParam_Config.Temperature_C * 100);
 	if( MB_WirteRegister(MBREGISTERHOLDING, MB_REGHOLD_TEMPTERATURE , data_temp) != 1)
+	{
+	}		
+	
+	// ----------- Waveform Interal ----------
+	data_temp = (uint16_t)(g_SystemParam_Config.Waveform_Interval );
+	if( MB_WirteRegister(MBREGISTERHOLDING, MB_REGHOLD_WAVE_INTERVAL , data_temp) != 1)
 	{
 	}		
 	
 }
 
+void APP_Refresh_MBtoSys(void)
+{
+
+	uint16_t data_temp = 0;
+	// ----------- Slave_ID ----------
+	
+	if( MB_ReadRegister(MBREGISTERHOLDING, MB_REGHOLD_SLAVE_ID , &data_temp) == 1)
+	{
+		g_SystemParam_Config.MB_Slave_ID = (uint8_t)data_temp;
+	}
+	// ----------- SN_Code ----------
+	
+	for(uint8_t i = 0 ; i < 8 ; i ++)
+	{
+		if( MB_ReadRegister(MBREGISTERHOLDING, MB_REGHOLD_SNCODE + i , &data_temp) == 1)
+		{
+			g_SystemParam_Config.SNcode[i] = (uint8_t)data_temp;
+		}
+	}
+	
+	// ----------- Z_Sensitivity ----------
+	if( MB_ReadRegister(MBREGISTERHOLDING, MB_REGHOLD_Z_SENSITIVITY , &data_temp) == 1)
+	{
+		g_SystemParam_Config.Z_Axial_Sensitivity = (float)(data_temp / 100);
+	}	
+	// ----------- X_Sensitivity ----------
+
+	if( MB_ReadRegister(MBREGISTERHOLDING, MB_REGHOLD_X_SENSITIVITY , &data_temp) == 1)
+	{
+		g_SystemParam_Config.X_Axial_Sensitivity = (float)(data_temp / 100);
+	}		
+	// ----------- Y_Sensitivity ----------
+
+	if( MB_ReadRegister(MBREGISTERHOLDING, MB_REGHOLD_Y_SENSITIVITY , &data_temp) == 1)
+	{
+		g_SystemParam_Config.Y_Axial_Sensitivity = (float)(data_temp / 100);
+	}		
+
+	// ----------- FFT V_LowPass ----------
+	
+	if( MB_ReadRegister(MBREGISTERHOLDING, MB_REGHOLD_FFT_V_LOWPASS , &data_temp) == 1)
+	{
+		g_SystemParam_Config.FFT_V_LowPass = data_temp;
+	}	
+	// ----------- FFT V_HighPass ----------
+	if( MB_ReadRegister(MBREGISTERHOLDING, MB_REGHOLD_FFT_V_HIGHPASS , &data_temp) == 1)
+	{
+		g_SystemParam_Config.FFT_V_HighPass = data_temp;
+	}	
+	// ----------- FFT X_LowPass ----------
+	if( MB_ReadRegister(MBREGISTERHOLDING, MB_REGHOLD_FFT_X_LOWPASS , &data_temp) == 1)
+	{
+		g_SystemParam_Config.FFT_X_LowPass = data_temp;
+	}	
+	// ----------- FFT X_HighPass ----------
+	if( MB_ReadRegister(MBREGISTERHOLDING, MB_REGHOLD_FFT_X_HIGHPASS , &data_temp) == 1)
+	{
+		g_SystemParam_Config.FFT_X_HighPass = data_temp;
+	}		
+	
+	// ----------- Temperature_C ----------
+	if( MB_ReadRegister(MBREGISTERHOLDING, MB_REGHOLD_TEMPTERATURE , &data_temp) == 1)
+	{
+		g_SystemParam_Config.Temperature_C = (float)(data_temp / 100);
+	}		
+	
+	// ----------- Waveform Interal ----------
+	if( MB_ReadRegister(MBREGISTERHOLDING, MB_REGHOLD_WAVE_INTERVAL , &data_temp) == 1)
+	{
+		g_SystemParam_Config.Waveform_Interval = (uint8_t) data_temp;
+	}		
+
+	//SystemParam_Save();	
+}
 
 
+void APP_RefreshMB_Waveform(void)
+{
+	app_refresh_waveFalg = 1;
+}
+
+void APP_Refresh_MoveWavetoMB(uint8_t channel , float * buf  )
+{
+	if(app_refresh_waveFalg == 1)
+	{
+		uint16_t data_temp = 0;
+		if(channel == APP_SAMPLE_X_INDEX)
+		{
+			for(uint16_t i = 0 ; i < 2000; i ++)
+			{
+				data_temp = (uint16_t)(buf[i] * 100);
+				if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_X_WAVEFORM + i, data_temp) != 1)
+				{
+				}				
+			}			
+		}
+		if(channel == APP_SAMPLE_Y_INDEX)
+		{
+			for(uint16_t i = 0 ; i < 2000; i ++)
+			{
+				data_temp = (uint16_t)(buf[i] * 100);
+				if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_Y_WAVEFORM + i, data_temp) != 1)
+				{
+				}				
+			}			
+		}
+		if(channel == APP_SAMPLE_Z_INDEX)
+		{
+			for(uint16_t i = 0 ; i < 2000; i ++)
+			{
+				data_temp = (uint16_t)(buf[i] * 100);
+				if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_Z_WAVEFORM + i, data_temp) != 1)
+				{
+				}				
+			}	
+
+			app_refresh_waveFalg = 0;
+				
+		}		
+		
+	}
+}
 
 
 /**

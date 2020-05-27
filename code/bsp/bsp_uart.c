@@ -177,6 +177,7 @@ void UART_UserCallback(UART_Type *base, uart_edma_handle_t *handle, status_t sta
 
     if (kStatus_UART_TxIdle == status)
     {
+		Modbus_485en_R();
 		DEBUG("kStatus_UART_TxIdle\r\n");
 //        txBufferFull = false;
 //        txOnGoing = false;

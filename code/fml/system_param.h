@@ -74,8 +74,11 @@ typedef struct
 	float Y_Axial_Sensitivity;
 	float Z_Axial_Sensitivity;
 	
-	uint32_t FFT_LowPass ; 
-	uint32_t FFT_HighPass;
+	uint32_t FFT_V_LowPass ; 
+	uint32_t FFT_V_HighPass;
+
+	uint32_t FFT_X_LowPass ; 
+	uint32_t FFT_X_HighPass;
 	
 	float Temperature_C;
 	

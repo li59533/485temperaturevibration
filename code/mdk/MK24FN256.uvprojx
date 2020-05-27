@@ -418,14 +418,14 @@
           <GroupName>bsp</GroupName>
           <Files>
             <File>
-              <FileName>bsp_flash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\bsp\bsp_flash.c</FilePath>
-            </File>
-            <File>
               <FileName>bsp_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\bsp\bsp_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\bsp\bsp_flash.c</FilePath>
             </File>
             <File>
               <FileName>bsp_init.c</FileName>

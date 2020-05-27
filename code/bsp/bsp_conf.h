@@ -18,9 +18,6 @@
  * @{ 
  */
 
-
-
-
 /**
  * @addtogroup    bsp_conf_Modules 
  * @{  
@@ -43,7 +40,7 @@
 #define BSP_USART_MODULE_ENABLE			1
 #define BSP_FLASH_MODULE_ENABLE			1
 #define BSP_LPV_MODULE_ENABLE			0
-
+#define BSP_CMP_MODULE_ENABLE			0
 
 #define BSP_CAN_MODULE_ENABLE 			0
 #define BSP_DAC_MODULE_ENABLE			0
@@ -104,8 +101,9 @@
 	#include "fsl_pmc.h"
 #endif	
 
-
-
+#if BSP_CMP_MODULE_ENABLE == 1	
+	#include "fsl_cmp.h"
+#endif	
 
 
 /**

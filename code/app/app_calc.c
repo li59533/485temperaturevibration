@@ -25,7 +25,7 @@
 //#include "bsp_fft_integral.h"
 
 #include "bsp_fft_integral_freertos.h"
-
+#include "app_refresh.h"
 
 /**
  * @addtogroup    app_calc_Modules 
@@ -184,6 +184,10 @@ void APP_Calc_Process(void)
 		}
 		vPortFree(mean_value);
 		
+		
+		// ------------Enter MB REG----------------------
+		APP_Refresh_MoveWavetoMB(channel_index , emu_inter_data);
+		
 		// ----------------------------------------------
 		
 		// ------------Calc ACC_P ACC_RMS----------------
@@ -229,11 +233,11 @@ void APP_Calc_Process(void)
 		APP_CalcValue[channel_index].BaseFreq =  BSP_FFT_GetBaseFreq(APP_SAMPLE_CHANNEL_0_RATE,APP_SAMPLE_CHANNEL_0_RATE , testOutput);
 		//DEBUG("Base Freq:%d\r\n" , APP_CalcValue[channel_index].BaseFreq );
 		
-		BSP_FFT_Integral_IFFT(APP_SAMPLE_CHANNEL_0_RATE,APP_SAMPLE_CHANNEL_0_RATE ,1,1000 ,10,testOutput , testOutput_2); // Velocity domain
+		BSP_FFT_Integral_IFFT(APP_SAMPLE_CHANNEL_0_RATE,APP_SAMPLE_CHANNEL_0_RATE ,1,g_SystemParam_Config.FFT_V_LowPass ,g_SystemParam_Config.FFT_V_HighPass,testOutput , testOutput_2); // Velocity domain
 		arm_rms_f32(testOutput_2, APP_SAMPLE_CHANNEL_0_RATE , &APP_CalcValue[channel_index].Velocity_RMS);    // Velocity_RMS
 		//Clog_Float("Velocity_RMS:" , APP_CalcValue[channel_index].Velocity_RMS);
 		
-		BSP_FFT_Integral_IFFT(APP_SAMPLE_CHANNEL_0_RATE,APP_SAMPLE_CHANNEL_0_RATE ,2,1000 ,10,testOutput , testOutput_2); // Displace domain
+		BSP_FFT_Integral_IFFT(APP_SAMPLE_CHANNEL_0_RATE,APP_SAMPLE_CHANNEL_0_RATE ,2,g_SystemParam_Config.FFT_X_LowPass ,g_SystemParam_Config.FFT_X_HighPass,testOutput , testOutput_2); // Displace domain
 		float displace_max  ;
 		float displace_min ; 
 		arm_max_f32	(testOutput_2,APP_SAMPLE_CHANNEL_0_RATE, &displace_max, &pIndex );	

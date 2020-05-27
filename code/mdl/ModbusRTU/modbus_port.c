@@ -17,6 +17,7 @@
  * @addtogroup    XXX 
  * @{  
  */
+#include "bsp_conf.h" 
 #include "bsp_tim.h"
 #include "bsp_uart.h"
 
@@ -117,7 +118,15 @@ void ModbusFunctionInit(void)
 
 static void modbusGPIOInit(void)
 {
-
+	gpio_pin_config_t config =
+	{
+		kGPIO_DigitalOutput,
+		0,
+	};
+	CLOCK_EnableClock(kCLOCK_PortE);
+	PORT_SetPinMux( PORTE , 4, kPORT_MuxAsGpio  );
+	GPIO_PinInit( GPIOE , 4, &config);
+	Modbus_485en_R();
 }
 
 static void modbusUartInit(void)
@@ -179,6 +188,16 @@ void ModbusTimIRQn(void)
 //	}
 }
 
+
+void Modbus_485en_R(void)
+{
+	GPIO_WritePinOutput( GPIOE, 4, 1);	
+}
+
+void Modbus_485en_T(void)
+{
+	GPIO_WritePinOutput( GPIOE, 4, 0);	
+}
 
 unsigned short ModbusCRC(unsigned char *ptr, unsigned char size)
 {
