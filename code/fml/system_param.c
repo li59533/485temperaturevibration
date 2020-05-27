@@ -85,6 +85,9 @@ const SystemParam_Config_t SystemParam_Config_Default =
 	
 	.Temperature_C = 0.0f,
 	.Waveform_Interval = 1,
+	.BaudRate_Bps = 2 ,
+	.ParityMode = 0,
+	.StopBitCount = 1,
 };
 /**
  * @}

@@ -101,34 +101,9 @@ typedef enum
 typedef enum
 {
 	
-	CMD_Conf_Stop	 	= 0x00 ,
-	CMD_Conf_Start	 	= 0x01,
-	CMD_Conf_ID		 	= 0x02,
-	CMD_Conf_ChannelKind = 0x03,
-	CMD_Conf_Reply_Conf	= 0x04,
-	CMD_Conf_Set_Conf	= 0x05,
-	CMD_Conf_Reply_Sample_Rate	= 0x06,
-	CMD_Conf_Set_Sample_Rate = 0x07,
-	CMD_Conf_Reply_SelfStart = 0x08,
-	CMD_Conf_Set_SelfStart	= 0x09,
-	CMD_Conf_Set_EQ		= 0x0a,
-	
-	CMD_ReportData	 = 0x45,
-	CMD_Conf_GotoLowpower = 0x46,
-	CMD_Conf_Reply_AlarmTime = 0x47,
-	CMD_Conf_Set_AlarmTime = 0x49,
-	CMD_ReportDataACK = 0x50,
-	
-	CMD_Conf_Calibration = 0x69,
-	
-	CMD_Conf_ADCToRealValue = 0x6A,
-	
-	CMD_Conf_Set_SNcode = 0x88,
-	// ------
-	
-	CMD_Conf_GetVersion = 0xA0
-	
-	// ------
+	CMD_GetSlaveID_Req	 	= 128 ,
+	CMD_GetSlaveID_Resp		= 129 ,
+	CMD_Param_Rest			= 130 ,
 }LN_Protocol_Cmd_e;
 
 

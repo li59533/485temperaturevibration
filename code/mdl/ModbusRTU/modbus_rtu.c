@@ -19,6 +19,8 @@
  */
 #include "system_param.h"
 #include "refresh_task.h"
+#include "app_lnprotocol.h"
+#include "modbus_task.h"
 /**
  * @addtogroup    modbus_rtu_Modules 
  * @{  
@@ -204,10 +206,19 @@ void ModbusDataProcess(void)
                }
             }
         }
+		else
+		{
+			APP_Lnprotocol_Process(Modbus.RingData[Modbus.RingOut].Buf , Modbus.RingData[Modbus.RingOut].Len );
+		}
         
         Modbus.RingOut++;                           //deal with ringbuf
         Modbus.RingOut %= Modbus.RingSize;
         Modbus.RingCount--;
+	}
+	
+	if(Modbus.RingCount>0)
+	{
+		Modbus_Task_Event_Start(MODBUS_TASK_DATAPROCESS_EVENT, EVENT_FROM_TASK);
 	}
 }
 

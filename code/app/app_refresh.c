@@ -310,6 +310,21 @@ void APP_RefreshMB_ConfParam(void)
 	{
 	}		
 	
+	// ----------- Baudrate Bps ----------
+	data_temp = (uint16_t)(g_SystemParam_Config.BaudRate_Bps );
+	if( MB_WirteRegister(MBREGISTERHOLDING, MB_REGHOLD_BAUDRATE_BPS , data_temp) != 1)
+	{
+	}			
+	// ----------- ParityMode ----------
+	data_temp = (uint16_t)(g_SystemParam_Config.ParityMode );
+	if( MB_WirteRegister(MBREGISTERHOLDING, MB_REGHOLD_PARITYMODE , data_temp) != 1)
+	{
+	}				
+	// ----------- StopbitCount ----------
+	data_temp = (uint16_t)(g_SystemParam_Config.StopBitCount );
+	if( MB_WirteRegister(MBREGISTERHOLDING, MB_REGHOLD_STOPBITCOUNT , data_temp) != 1)
+	{
+	}			
 }
 
 void APP_Refresh_MBtoSys(void)
@@ -384,6 +399,22 @@ void APP_Refresh_MBtoSys(void)
 		g_SystemParam_Config.Waveform_Interval = (uint8_t) data_temp;
 	}		
 
+	// ----------- Baudrate Bps ----------
+	if( MB_ReadRegister(MBREGISTERHOLDING, MB_REGHOLD_BAUDRATE_BPS , &data_temp) == 1)
+	{
+		g_SystemParam_Config.BaudRate_Bps  = (uint8_t)data_temp;
+	}			
+	// ----------- ParityMode ----------
+	if( MB_ReadRegister(MBREGISTERHOLDING, MB_REGHOLD_PARITYMODE , &data_temp) == 1)
+	{
+		g_SystemParam_Config.ParityMode = (uint8_t)data_temp;
+	}				
+	// ----------- StopbitCount ----------
+	if( MB_ReadRegister(MBREGISTERHOLDING, MB_REGHOLD_STOPBITCOUNT , &data_temp) == 1)
+	{
+		g_SystemParam_Config.StopBitCount = (uint8_t)data_temp ; 
+	}		
+	
 	//SystemParam_Save();	
 }
 

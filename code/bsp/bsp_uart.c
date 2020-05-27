@@ -18,6 +18,7 @@
  * @{  
  */
 #include "modbus_rtu.h"
+#include "system_param.h"
 /**
  * @addtogroup    bsp_uart_Modules 
  * @{  
@@ -144,7 +145,7 @@ void BSP_Uart0_Close(void)
 void BSP_Uart0_Open(void)
 {
 	BSP_UART_Init( BSP_UART0 );
-	BSP_UART_SetBaudRate(BSP_UART0 , 115200);
+	//BSP_UART_SetBaudRate(BSP_UART0 , 115200);
 }
 
 
@@ -231,7 +232,34 @@ static void bsp_uart1_init(void)
      * uartConfig.enableRx = false;
      */
     UART_GetDefaultConfig(&uartConfig);
-    uartConfig.baudRate_Bps = 115200;
+	
+	switch(g_SystemParam_Config.BaudRate_Bps)
+	{
+		case 0 : uartConfig.baudRate_Bps = 2400;break;
+		case 1 : uartConfig.baudRate_Bps = 4800;break;
+		case 2 : uartConfig.baudRate_Bps = 9600;break;
+		case 3 : uartConfig.baudRate_Bps = 14400;break;
+		case 4 : uartConfig.baudRate_Bps = 19200;break;
+		case 5 : uartConfig.baudRate_Bps = 38400;break;
+		case 6 : uartConfig.baudRate_Bps = 56000;break;
+		case 7 : uartConfig.baudRate_Bps = 115200;break;
+		default : uartConfig.baudRate_Bps = 9600;break;
+	}	
+	
+	switch(g_SystemParam_Config.ParityMode)
+	{
+		case 0 : uartConfig.parityMode = kUART_ParityDisabled;break;
+		case 1 : uartConfig.parityMode = kUART_ParityEven;break;
+		case 2 : uartConfig.parityMode = kUART_ParityOdd;break;
+		default : uartConfig.parityMode = kUART_ParityDisabled;break;
+	}
+	switch(g_SystemParam_Config.StopBitCount)
+	{
+		case 1 : uartConfig.stopBitCount = kUART_OneStopBit;break;
+		case 2 : uartConfig.stopBitCount = kUART_TwoStopBit;break;
+		default : uartConfig.stopBitCount = kUART_OneStopBit;break;
+	}
+	
     uartConfig.enableTx = true;
     uartConfig.enableRx = true;
 

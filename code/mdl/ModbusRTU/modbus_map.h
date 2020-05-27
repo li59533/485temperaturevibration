@@ -49,6 +49,10 @@ typedef enum
 	MB_REGHOLD_FFT_X_HIGHPASS		= 15 ,	
 	MB_REGHOLD_TEMPTERATURE		= 16 ,
 	MB_REGHOLD_WAVE_INTERVAL	= 17 ,
+	MB_REGHOLD_BAUDRATE_BPS     = 18 , 
+	MB_REGHOLD_PARITYMODE		= 19 ,
+	MB_REGHOLD_STOPBITCOUNT     = 20 ,
+	
 }MB_Reg_Hold_e;
 
 // -----------------------------

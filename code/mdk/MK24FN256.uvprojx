@@ -417,6 +417,11 @@
               <FileType>1</FileType>
               <FilePath>..\app\app_hal.c</FilePath>
             </File>
+            <File>
+              <FileName>app_lnprotocol.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\app\app_lnprotocol.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -737,6 +742,16 @@
               <FileName>system_param.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\fml\system_param.c</FilePath>
+            </File>
+            <File>
+              <FileName>lnprotocol.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\fml\lnprotocol.c</FilePath>
+            </File>
+            <File>
+              <FileName>lnprotocol_std.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\fml\lnprotocol_std.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -25,6 +25,7 @@
 
 #include "sample_task.h"
 #include "first_task.h"
+#include "system_param.h"
 
 /**
  * @addtogroup    bsp_tim_Modules 
@@ -132,14 +133,25 @@ static void bsp_tmp0_init(void)
     FTM_GetDefaultConfig(&ftmInfo);
 
     /* Divide FTM clock by 4 */
-    ftmInfo.prescale = kFTM_Prescale_Divide_4;
+    ftmInfo.prescale = kFTM_Prescale_Divide_32;
 
     /* Initialize FTM module */
     FTM_Init(FTM0, &ftmInfo);
     /*
      * Set timer period.
     */
-    FTM_SetTimerPeriod(FTM0, 15000);
+	switch(g_SystemParam_Config.BaudRate_Bps)
+	{
+		case 0 : FTM_SetTimerPeriod(FTM0, 27187);break;
+		case 1 : FTM_SetTimerPeriod(FTM0, 13670);break;
+		case 2 : FTM_SetTimerPeriod(FTM0, 6750);break;
+		case 3 : FTM_SetTimerPeriod(FTM0, 4556);break;
+		case 4 : FTM_SetTimerPeriod(FTM0, 3416);break;
+		case 5 : FTM_SetTimerPeriod(FTM0, 1708);break;
+		case 6 : FTM_SetTimerPeriod(FTM0, 1171);break;
+		case 7 : FTM_SetTimerPeriod(FTM0, 562);break;
+		default : FTM_SetTimerPeriod(FTM0, 6750);break;		
+	}
 	// -----IRQ-------
     FTM_EnableInterrupts(FTM0, kFTM_TimeOverflowInterruptEnable);
 	NVIC_SetPriority(FTM0_IRQn , 6);
@@ -181,7 +193,20 @@ static void bsp_tmp1_init(void)
 void BSP_Tim_0_StartOnce(void)
 {
 	FTM_StopTimer(FTM0);
-	FTM_SetTimerPeriod(FTM0, 15000);
+	
+	FTM_ClearQuadDecoderCounterValue(FTM0);
+//	switch(g_SystemParam_Config.BaudRate_Bps)
+//	{
+//		case 0 : FTM_SetTimerPeriod(FTM0, 27187);break;
+//		case 1 : FTM_SetTimerPeriod(FTM0, 13670);break;
+//		case 2 : FTM_SetTimerPeriod(FTM0, 6750);break;
+//		case 3 : FTM_SetTimerPeriod(FTM0, 4556);break;
+//		case 4 : FTM_SetTimerPeriod(FTM0, 3416);break;
+//		case 5 : FTM_SetTimerPeriod(FTM0, 1708);break;
+//		case 6 : FTM_SetTimerPeriod(FTM0, 1171);break;
+//		case 7 : FTM_SetTimerPeriod(FTM0, 562);break;
+//		default : FTM_SetTimerPeriod(FTM0, 6750);break;		
+//	}
 	FTM_StartTimer(FTM0, kFTM_SystemClock);
 }
 

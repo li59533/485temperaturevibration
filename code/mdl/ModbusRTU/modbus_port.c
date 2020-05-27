@@ -132,7 +132,7 @@ static void modbusGPIOInit(void)
 static void modbusUartInit(void)
 {
 	BSP_UART_Init(BSP_485COM);
-	BSP_UART_SetBaudRate(BSP_485COM, 115200);
+//	BSP_UART_SetBaudRate(BSP_485COM, 115200);
 } 
 
 static void modbusTimInit(void)
@@ -146,6 +146,9 @@ void ModbusRevOneByte(uint8_t byte)
 	{
 		Uart2RBuf[Uart2RBuf_Ptr++]= byte;
 		BSP_Tim_0_StartOnce();	
+		
+	//	DEBUG("FTM COUNT:%d\r\n" , FTM_GetCurrentTimerCount(FTM0));
+		
 	}	
 }
 
@@ -153,10 +156,6 @@ void ModbusSend(uint8_t * Data,uint16_t Len)
 {
 	BSP_UART_WriteBytes_DMA(BSP_485COM ,Data, Len);
 	
-	if(*Data == 0x04)
-	{
-		DEBUG("something err\r\n");
-	}
 }
 
 
