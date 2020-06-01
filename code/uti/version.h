@@ -28,8 +28,8 @@
  * @{  
  */
 #define VERSION_MAJOR		0   // 0~255
-#define VERSION_MINOR		0   // 0~255
-#define VERSION_LITE		12	// 0~255
+#define VERSION_MINOR		1   // 0~255
+#define VERSION_LITE		0	// 0~255
 
 #define FRAME_VERSION_MAJOR		0   // 0~255
 #define FRAME_VERSION_MINOR		0   // 0~255
