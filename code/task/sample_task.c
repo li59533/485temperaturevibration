@@ -131,7 +131,6 @@ void Sample_Task(void * pvParameter)
 	UBaseType_t sampletask_ramainheap = 0;
 
 	// ----Init----
-	BSP_LED_Init();
 	APP_Sample_Init();
 	// ------------
 	

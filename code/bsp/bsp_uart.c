@@ -17,6 +17,7 @@
  * @addtogroup    XXX 
  * @{  
  */
+#include "modbus_task.h"
 #include "modbus_rtu.h"
 #include "system_param.h"
 /**
@@ -178,17 +179,15 @@ void UART_UserCallback(UART_Type *base, uart_edma_handle_t *handle, status_t sta
 
     if (kStatus_UART_TxIdle == status)
     {
-		Modbus_485en_R();
+		//Modbus_485en_R();
 		DEBUG("kStatus_UART_TxIdle\r\n");
-//        txBufferFull = false;
-//        txOnGoing = false;
+		Modbus_Task_Event_Start(MODBUS_TASK_SET485EN_EVENT, EVENT_FROM_ISR);
+
     }
 
     if (kStatus_UART_RxIdle == status)
     {
 		DEBUG("kStatus_UART_RxIdle\r\n");
-//        rxBufferEmpty = false;
-//        rxOnGoing = false;
     }
 }
 
@@ -271,7 +270,7 @@ static void bsp_uart1_init(void)
 	// --------open irq-------
 	UART_EnableInterrupts( UART1 ,kUART_TransmissionCompleteInterruptEnable);
 	UART_EnableInterrupts( UART1 ,kUART_RxDataRegFullInterruptEnable);
-	NVIC_SetPriority(UART1_RX_TX_IRQn , 6);
+	NVIC_SetPriority(UART1_RX_TX_IRQn , 7);
 	EnableIRQ(UART1_RX_TX_IRQn);
 	// -----------------------
 	
@@ -292,6 +291,7 @@ static void bsp_uart1_init(void)
     /* Create UART DMA handle. */
     UART_TransferCreateHandleEDMA(UART1, &g_uartEdmaHandle, UART_UserCallback, NULL, &g_uartTxEdmaHandle,
                                   &g_uartRxEdmaHandle);
+	NVIC_SetPriority(DMA0_IRQn , 7);
 // ---------------------------------------	
 	
 }
@@ -382,7 +382,6 @@ void UART1_RX_TX_IRQHandler(void)
 {
 	if(UART_GetStatusFlags(UART1) &kUART_TransmissionCompleteFlag )
 	{
-
 		//DEBUG("kUART_TransmissionCompleteFlag\r\n");
 		UART_EnableTx(UART1, false);
 		UART1->C2 |= 0x01;

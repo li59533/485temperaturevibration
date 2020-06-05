@@ -127,6 +127,7 @@ static void modbusGPIOInit(void)
 	PORT_SetPinMux( PORTE , 4, kPORT_MuxAsGpio  );
 	GPIO_PinInit( GPIOE , 4, &config);
 	Modbus_485en_R();
+
 }
 
 static void modbusUartInit(void)
@@ -187,15 +188,14 @@ void ModbusTimIRQn(void)
 //	}
 }
 
-
 void Modbus_485en_R(void)
 {
-	GPIO_WritePinOutput( GPIOE, 4, 1);	
+	GPIO_WritePinOutput( GPIOE, 4, 0);	
 }
 
 void Modbus_485en_T(void)
 {
-	GPIO_WritePinOutput( GPIOE, 4, 0);	
+	GPIO_WritePinOutput( GPIOE, 4, 1);	
 }
 
 unsigned short ModbusCRC(unsigned char *ptr, unsigned char size)

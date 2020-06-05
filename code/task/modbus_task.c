@@ -16,7 +16,8 @@
 
 
 #include "modbus_task.h"
-
+#include "rtos_tools.h"
+#include "system_param.h"
 /**
  * @addtogroup    XXX 
  * @{  
@@ -142,7 +143,26 @@ void Modbus_Task(void * pvParameter)
 			DEBUG("MODBUS_TASK_DATAPROCESS_EVENT\r\n");
 			ModbusDataProcess();
 		
-		}		
+		}	
+		
+		if((event_flag & MODBUS_TASK_SET485EN_EVENT) != 0x00)
+		{
+			
+			switch(g_SystemParam_Config.BaudRate_Bps)
+			{
+				case 0 : RTOS_Delay_ms((uint32_t )40);break;
+				case 1 : RTOS_Delay_ms((uint32_t )20);break;
+				case 2 : RTOS_Delay_ms((uint32_t )2);break;
+				case 3 : RTOS_Delay_ms((uint32_t )6);break;
+				case 4 : RTOS_Delay_ms((uint32_t )2);break;
+				case 5 : RTOS_Delay_ms((uint32_t )1);break;
+				case 6 : RTOS_Delay_ms((uint32_t )1);break;
+				case 7 :break;
+				default : RTOS_Delay_ms((uint32_t )10);break;
+			}	
+			
+			Modbus_485en_R();
+		}			
 	}
 }
 

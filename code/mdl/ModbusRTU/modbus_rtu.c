@@ -442,7 +442,7 @@ static void MBFunction_04(void)
         crctemp = ModbusCRC(modbus_send_buf,ask_data_count*2+3);
         modbus_send_buf[ask_data_count*2+3]=crctemp>>8;
         modbus_send_buf[ask_data_count*2+3+1]=(uint8_t)(crctemp&0x00ff);
-        ModbusSend(modbus_send_buf,ask_data_count*2+3+2);
+        ModbusSend(modbus_send_buf,ask_data_count * 2 + 3 + 2);
     }
 }
 
