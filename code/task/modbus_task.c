@@ -157,7 +157,7 @@ void Modbus_Task(void * pvParameter)
 				case 4 : RTOS_Delay_ms((uint32_t )2);break;
 				case 5 : RTOS_Delay_ms((uint32_t )1);break;
 				case 6 : RTOS_Delay_ms((uint32_t )1);break;
-				case 7 :break;
+				case 7 : RTOS_Delay_ms((uint32_t )1);break;
 				default : RTOS_Delay_ms((uint32_t )10);break;
 			}	
 			

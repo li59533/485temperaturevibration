@@ -161,14 +161,14 @@ void APP_Calc_Process(void)
 		{
 			for(uint16_t i = 0 ; i < APP_SAMPLE_CHANNEL_0_RATE ; i ++)
 			{
-				emu_inter_data[i] = APP_Sample_buf.Sample_Channel_buf[channel_index].originalData[i + 4096] * APP_CALC_ADC_SCALEFACTOR * Axial_Sensitivity[channel_index];
+				emu_inter_data[i] = (float)APP_Sample_buf.Sample_Channel_buf[channel_index].originalData[i + 4096] * APP_CALC_ADC_SCALEFACTOR * Axial_Sensitivity[channel_index];
 			}
 		}
 		else
 		{
 			for(uint16_t i = 0 ; i < APP_SAMPLE_CHANNEL_0_RATE ; i ++)
 			{
-				emu_inter_data[i] = APP_Sample_buf.Sample_Channel_buf[channel_index].originalData[i] * APP_CALC_ADC_SCALEFACTOR * Axial_Sensitivity[channel_index];
+				emu_inter_data[i] = (float)APP_Sample_buf.Sample_Channel_buf[channel_index].originalData[i] * APP_CALC_ADC_SCALEFACTOR * Axial_Sensitivity[channel_index];
 			}		
 		}
 		
