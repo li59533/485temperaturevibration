@@ -245,6 +245,18 @@ void APP_Calc_Process(void)
 		APP_CalcValue[channel_index].Displace_PP = displace_max - displace_min; 		// Displace_PP 
 		//Clog_Float("Displace_PP:" , APP_CalcValue[channel_index].Displace_PP);		
 
+		APP_CalcValue[channel_index].BaseFreq = 0 ;
+		if(APP_CalcValue[channel_index].ACC_RMS  <= 0.25f)
+		{
+			APP_CalcValue[channel_index].ACC_P = 0;
+			APP_CalcValue[channel_index].BaseFreq = 1;
+			APP_CalcValue[channel_index].Displace_PP = 0;
+			APP_CalcValue[channel_index].Envelope = 0;
+			APP_CalcValue[channel_index].Kurtosis_Coefficient = 0;
+			APP_CalcValue[channel_index].Velocity_RMS = 0;
+		}
+
+
 	}
 	
 	// ----------------------------------------------
