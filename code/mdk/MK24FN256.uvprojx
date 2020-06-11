@@ -533,6 +533,11 @@
                 </FileArmAds>
               </FileOption>
             </File>
+            <File>
+              <FileName>bsp_calctools.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\bsp\bsp_calctools.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

@@ -112,6 +112,12 @@ APP_CalcValue_t APP_CalcValue[3] ;
 
 void APP_Calc_Process(void)
 {
+
+}
+
+
+void APP_Calc_Process_1(void)
+{
 	float *emu_inter_data = 0;
 	float *testOutput = 0;
 	float *testOutput_2 = 0;
