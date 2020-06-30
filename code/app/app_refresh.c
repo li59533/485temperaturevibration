@@ -304,7 +304,7 @@ void APP_RefreshMB_ConfParam(void)
 	{
 	}		
 	
-	// ----------- Waveform Interal ----------
+	// ----------- Waveform Trigger ----------
 	data_temp = (uint16_t)(g_SystemParam_Config.Waveform_Interval );
 	if( MB_WirteRegister(MBREGISTERHOLDING, MB_REGHOLD_WAVE_TRIGGER , data_temp) != 1)
 	{
