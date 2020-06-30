@@ -22,11 +22,10 @@
 #include "clog.h"
 #include "system_param.h"
 #include "bsp_math.h"
-//#include "bsp_fft_integral.h"
-
 #include "bsp_fft_integral_freertos.h"
 #include "app_refresh.h"
-
+#include "bsp_fdacoefs.h"
+#include "bsp_calctools.h"
 /**
  * @addtogroup    app_calc_Modules 
  * @{  
@@ -112,7 +111,168 @@ APP_CalcValue_t APP_CalcValue[3] ;
 
 void APP_Calc_Process(void)
 {
+	float *emu_inter_data = 0;
+	float *testOutput = 0;
+	
+	emu_inter_data = pvPortMalloc(sizeof(float) * APP_SAMPLE_CHANNEL_0_RATE); //vPortFree()	
+	testOutput = pvPortMalloc(sizeof(float) * APP_SAMPLE_CHANNEL_0_RATE); 	  //vPortFree()	
+	
 
+	float Axial_Sensitivity[3];
+	
+	if(g_SystemParam_Config.X_Axial_Sensitivity > 0)
+	{
+		Axial_Sensitivity[0] = 1.0f / g_SystemParam_Config.X_Axial_Sensitivity;
+	}
+	else
+	{
+		Axial_Sensitivity[0] = 1.0f;
+	}
+	
+	if(g_SystemParam_Config.Y_Axial_Sensitivity > 0)
+	{
+		Axial_Sensitivity[1] = 1.0f / g_SystemParam_Config.Y_Axial_Sensitivity;
+	}
+	else
+	{
+		Axial_Sensitivity[1] = 1.0f;
+	}	
+	
+	if(g_SystemParam_Config.Z_Axial_Sensitivity > 0)
+	{
+		Axial_Sensitivity[2] = 1.0f / g_SystemParam_Config.Z_Axial_Sensitivity;
+	}
+	else
+	{
+		Axial_Sensitivity[2] = 1.0f;
+	}	
+	
+	// --------Calc 3 Channels Charateristic Value------------
+	
+	for(uint8_t channel_index = 0 ; channel_index < 3 ; channel_index ++)
+	{
+		// ------------Get ACC with DC bias--------
+		if(APP_Sample_buf.Sample_Channel_buf[channel_index].cur_dataPtr >=0 &&\
+			APP_Sample_buf.Sample_Channel_buf[channel_index].cur_dataPtr < APP_SAMPLE_CHANNEL_0_RATE)
+		{
+			for(uint16_t i = 0 ; i < APP_SAMPLE_CHANNEL_0_RATE ; i ++)
+			{
+				emu_inter_data[i] = (float)APP_Sample_buf.Sample_Channel_buf[channel_index].originalData[i + 4096] * APP_CALC_ADC_SCALEFACTOR * Axial_Sensitivity[channel_index];
+			}
+		}
+		else
+		{
+			for(uint16_t i = 0 ; i < APP_SAMPLE_CHANNEL_0_RATE ; i ++)
+			{
+				emu_inter_data[i] = (float)APP_Sample_buf.Sample_Channel_buf[channel_index].originalData[i] * APP_CALC_ADC_SCALEFACTOR * Axial_Sensitivity[channel_index];
+			}		
+		}
+		
+		// --------------Get ACC without bias -----------
+		float * mean_value = 0;
+		mean_value = pvPortMalloc(sizeof(float) * 1); //vPortFree()
+		arm_mean_f32(emu_inter_data ,APP_SAMPLE_CHANNEL_0_RATE ,  mean_value);
+		//Clog_Float("MeanValue:", *mean_value);
+		
+		for(uint16_t i = 0; i < APP_SAMPLE_CHANNEL_0_RATE ; i ++ )
+		{
+			emu_inter_data[i] -= *mean_value;
+		}
+		vPortFree(mean_value);
+		
+		
+		// ------------Enter MB REG----------------------
+		APP_Refresh_MoveWavetoMB(channel_index , emu_inter_data);
+		
+		// ----------------------------------------------
+		
+		// ----------- LowPass IIR Filter ---------------
+		BSP_Calctools_IIR_Filter(BSP_IIR_4096LowPass1_3K_Param.iir_order , \
+								 (float *)BSP_IIR_4096LowPass1_3K_Param.iir_coeffs , \
+								 emu_inter_data , \
+								 emu_inter_data, \
+								 APP_SAMPLE_CHANNEL_0_RATE);		
+
+		// ----------------------------------------------
+
+		// ------------Calc ACC_P ACC_RMS----------------
+		
+		arm_abs_f32(emu_inter_data,testOutput,APP_SAMPLE_CHANNEL_0_RATE);
+		uint32_t pIndex = 0;
+		arm_max_f32	(testOutput,APP_SAMPLE_CHANNEL_0_RATE, &APP_CalcValue[channel_index].ACC_P , &pIndex );	 // ACC_P
+		arm_rms_f32(emu_inter_data, APP_SAMPLE_CHANNEL_0_RATE , &APP_CalcValue[channel_index].ACC_RMS);    // ACC_RMS	
+		
+		//Clog_Float("ACC_P:",APP_CalcValue[channel_index].ACC_P);
+		//Clog_Float("ACC_RMS:",APP_CalcValue[channel_index].ACC_RMS);
+		// ----------------------------------------------
+		
+		
+		// ------------Calc Kurtosis---------------------
+		float *Kurtosis_Tempbuf = 0;
+		
+		Kurtosis_Tempbuf = pvPortMalloc(sizeof(float) * 4096); //vPortFree();
+		for(uint16_t i = 0 ; i < APP_SAMPLE_CHANNEL_0_RATE ; i ++)
+		{
+			Kurtosis_Tempbuf[i] = emu_inter_data[i]*emu_inter_data[i]*emu_inter_data[i]*emu_inter_data[i];
+		}
+		float Kurtosis ;
+		arm_mean_f32(Kurtosis_Tempbuf, APP_SAMPLE_CHANNEL_0_RATE, &Kurtosis);
+		vPortFree(Kurtosis_Tempbuf);
+		APP_CalcValue[channel_index].Kurtosis_Coefficient = Kurtosis / (APP_CalcValue[channel_index].ACC_RMS * APP_CalcValue[channel_index].ACC_RMS * APP_CalcValue[channel_index].ACC_RMS * APP_CalcValue[channel_index].ACC_RMS); // Kurtosis_Coefficient
+		
+		//Clog_Float("Kurtosis_Cof:",APP_CalcValue[channel_index].Kurtosis_Coefficient);
+		
+		// ----------------------------------------------
+		// ------------ BandPass IIR Filter ---------------
+							//---- 4 ~ 1k -----
+		BSP_Calctools_IIR_Filter(BSP_IIR_4096BandPass4_1K_Param.iir_order , \
+								 (float *)BSP_IIR_4096BandPass4_1K_Param.iir_coeffs , \
+								 emu_inter_data , \
+								 emu_inter_data, \
+								 APP_SAMPLE_CHANNEL_0_RATE);			
+		// -------------Time Domain Intergial Get Velocity RMS-----------------
+		BSP_Calctools_TimeDomainIntergral(emu_inter_data , testOutput , APP_SAMPLE_CHANNEL_0_RATE);
+		
+		arm_rms_f32(testOutput, APP_SAMPLE_CHANNEL_0_RATE , &APP_CalcValue[channel_index].Velocity_RMS);    // Velocity_RMS
+		
+		// ------------ HighPass IIR Filter -------------------
+							// ---- 10Hz------	 
+		BSP_Calctools_IIR_Filter(BSP_IIR_4096HighPass10_Param.iir_order , \
+								 (float *)BSP_IIR_4096HighPass10_Param.iir_coeffs , \
+								 testOutput , \
+								 testOutput, \
+								 APP_SAMPLE_CHANNEL_0_RATE);			
+		
+								 
+		// ------------Time Domain Intergial Get Displace_PP RMS -------
+		BSP_Calctools_TimeDomainIntergral(testOutput , testOutput , APP_SAMPLE_CHANNEL_0_RATE);
+
+		arm_rms_f32(testOutput, APP_SAMPLE_CHANNEL_0_RATE , &APP_CalcValue[channel_index].Displace_RMS);    // Velocity_RMS
+		float displace_max  ;
+		float displace_min ; 
+		arm_max_f32	(testOutput,APP_SAMPLE_CHANNEL_0_RATE, &displace_max, &pIndex );	
+		arm_min_f32	(testOutput,APP_SAMPLE_CHANNEL_0_RATE, &displace_min, &pIndex );	
+		APP_CalcValue[channel_index].Displace_PP = displace_max - displace_min; 		// Displace_PP 
+								 
+		// --------------------------------------------------------------
+		APP_CalcValue[channel_index].BaseFreq = 0 ;
+		if(APP_CalcValue[channel_index].ACC_RMS  <= 0.25f)
+		{
+			APP_CalcValue[channel_index].ACC_P = 0;
+			APP_CalcValue[channel_index].BaseFreq = 1;
+			APP_CalcValue[channel_index].Displace_PP = 0;
+			APP_CalcValue[channel_index].Envelope = 0;
+			APP_CalcValue[channel_index].Kurtosis_Coefficient = 0;
+			APP_CalcValue[channel_index].Velocity_RMS = 0;
+		}
+
+
+	}	
+	
+	vPortFree(testOutput);
+	vPortFree(emu_inter_data);
+	
+	
 }
 
 

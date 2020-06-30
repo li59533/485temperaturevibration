@@ -51,6 +51,7 @@ typedef struct
 	float ACC_RMS;
 	float Velocity_RMS;
 	float Displace_PP;
+	float Displace_RMS;
 	float Kurtosis_Coefficient;
 	float Envelope;
 	uint32_t BaseFreq;

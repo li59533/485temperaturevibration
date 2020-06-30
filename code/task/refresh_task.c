@@ -131,19 +131,7 @@ void Refresh_Task(void * pvParameter)
 	DEBUG("Refresh Task Enter\r\n");
 	UBaseType_t refreshtask_ramainheap = 0;
 
-	Refresh_Task_Tim_Init();
-	
-	if(g_SystemParam_Config.Waveform_Interval >=1 && g_SystemParam_Config.Waveform_Interval <= 10)
-	{
-		Refresh_Task_StartTim(1000 * g_SystemParam_Config.Waveform_Interval);
-	}
-	else
-	{
-		Refresh_Task_StartTim(2000);
-	}
-	
 	APP_RefreshMB_ConfParam();
-	
 	
 	while(1)
 	{
@@ -219,16 +207,7 @@ void Refresh_Task_StartTim(uint16_t time_count)
 
 static void refresh_task_tim_callback(TimerHandle_t xTimer)
 {
-	APP_RefreshMB_Waveform();
-	if(g_SystemParam_Config.Waveform_Interval >=1 && g_SystemParam_Config.Waveform_Interval <= 10)
-	{
-		Refresh_Task_StartTim(1000 * g_SystemParam_Config.Waveform_Interval);
-	}
-	else
-	{
-		Refresh_Task_StartTim(2000);
-	}	
-	//Refresh_Task_Event_Start(Refresh_TASK_SEND_AT_EVENT, EVENT_FROM_TASK);
+
 }
 
 

@@ -34,6 +34,8 @@
 #define MODBUS_TASK_DATAPROCESS_EVENT	(0X01 << 2)
 #define MODBUS_TASK_REV_EVENT			(0x01 << 3)
 #define MODBUS_TASK_SET485EN_EVENT		(0x01 << 4)
+#define MODBUS_TASK_MBREG_CHECK_EVENT	(0X01 << 5)
+
 /**
  * @}
  */

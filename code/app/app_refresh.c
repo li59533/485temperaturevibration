@@ -306,7 +306,7 @@ void APP_RefreshMB_ConfParam(void)
 	
 	// ----------- Waveform Interal ----------
 	data_temp = (uint16_t)(g_SystemParam_Config.Waveform_Interval );
-	if( MB_WirteRegister(MBREGISTERHOLDING, MB_REGHOLD_WAVE_INTERVAL , data_temp) != 1)
+	if( MB_WirteRegister(MBREGISTERHOLDING, MB_REGHOLD_WAVE_TRIGGER , data_temp) != 1)
 	{
 	}		
 	
@@ -393,8 +393,8 @@ void APP_Refresh_MBtoSys(void)
 		g_SystemParam_Config.Temperature_C = (float)((float)data_temp / 100.0f);
 	}		
 	
-	// ----------- Waveform Interal ----------
-	if( MB_ReadRegister(MBREGISTERHOLDING, MB_REGHOLD_WAVE_INTERVAL , &data_temp) == 1)
+	// ----------- Waveform Trigger ----------
+	if( MB_ReadRegister(MBREGISTERHOLDING, MB_REGHOLD_WAVE_TRIGGER , &data_temp) == 1)
 	{
 		g_SystemParam_Config.Waveform_Interval = (uint8_t) data_temp;
 	}		
@@ -418,6 +418,11 @@ void APP_Refresh_MBtoSys(void)
 	//SystemParam_Save();	
 }
 
+
+void APP_RefreshMB_Check(void)
+{
+	
+}
 
 void APP_RefreshMB_Waveform(void)
 {

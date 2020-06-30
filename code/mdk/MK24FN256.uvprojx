@@ -538,6 +538,11 @@
               <FileType>1</FileType>
               <FilePath>..\bsp\bsp_calctools.c</FilePath>
             </File>
+            <File>
+              <FileName>bsp_fdacoefs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\bsp\bsp_fdacoefs.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

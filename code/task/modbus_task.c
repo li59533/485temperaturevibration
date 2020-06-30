@@ -142,9 +142,15 @@ void Modbus_Task(void * pvParameter)
 		{
 			DEBUG("MODBUS_TASK_DATAPROCESS_EVENT\r\n");
 			ModbusDataProcess();
-		
+			Modbus_Task_Event_Start(MODBUS_TASK_MBREG_CHECK_EVENT, EVENT_FROM_TASK);
 		}	
 		
+		if((event_flag & MODBUS_TASK_MBREG_CHECK_EVENT) != 0x00)
+		{
+			DEBUG("MODBUS_TASK_MBREG_CHECK_EVENT\r\n");
+			
+		}			
+				
 		if((event_flag & MODBUS_TASK_SET485EN_EVENT) != 0x00)
 		{
 			
