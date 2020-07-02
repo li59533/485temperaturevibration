@@ -23,6 +23,8 @@
 #include "version.h"
 #include "system_param.h"
 #include "modbus_map.h"
+
+#include "bsp_lmt01.h"
 /**
  * @addtogroup    app_refresh_Modules 
  * @{  
@@ -219,7 +221,11 @@ void APP_RefreshMB_Charateristic(void)
 	
 	
 	// ----------- Temperature ----------
-	
+	float temperature = BSP_LMT01_GetValue();
+	data_temp = (int16_t)(temperature * 100);
+	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_TEMPERATURE , (uint16_t)data_temp) != 1)
+	{
+	}	
 	// ----------- Version --------------
 
 	app_refresh_version();
@@ -350,19 +356,19 @@ void APP_Refresh_MBtoSys(void)
 	// ----------- Z_Sensitivity ----------
 	if( MB_ReadRegister(MBREGISTERHOLDING, MB_REGHOLD_Z_SENSITIVITY , &data_temp) == 1)
 	{
-		g_SystemParam_Config.Z_Axial_Sensitivity = (float)((float)data_temp / 100.0);
+		g_SystemParam_Config.Z_Axial_Sensitivity = (float)((float)data_temp / 100.0f);
 	}	
 	// ----------- X_Sensitivity ----------
 
 	if( MB_ReadRegister(MBREGISTERHOLDING, MB_REGHOLD_X_SENSITIVITY , &data_temp) == 1)
 	{
-		g_SystemParam_Config.X_Axial_Sensitivity = (float)((float)data_temp / 100.0);
+		g_SystemParam_Config.X_Axial_Sensitivity = (float)((float)data_temp / 100.0f);
 	}		
 	// ----------- Y_Sensitivity ----------
 
 	if( MB_ReadRegister(MBREGISTERHOLDING, MB_REGHOLD_Y_SENSITIVITY , &data_temp) == 1)
 	{
-		g_SystemParam_Config.Y_Axial_Sensitivity = (float)((float)data_temp / 100.0);
+		g_SystemParam_Config.Y_Axial_Sensitivity = (float)((float)data_temp / 100.0f);
 	}		
 
 	// ----------- FFT V_LowPass ----------
@@ -390,7 +396,7 @@ void APP_Refresh_MBtoSys(void)
 	// ----------- Temperature_C ----------
 	if( MB_ReadRegister(MBREGISTERHOLDING, MB_REGHOLD_TEMPTERATURE , &data_temp) == 1)
 	{
-		g_SystemParam_Config.Temperature_C = (float)((float)data_temp / 100.0);
+		g_SystemParam_Config.Temperature_C = (float)((float)data_temp / 100.0f);
 	}		
 	
 	// ----------- Waveform Interal ----------

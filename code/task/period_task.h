@@ -1,8 +1,8 @@
 /**
  **************************************************************************************************
- * @file        version.h
+ * @file        period_task.h
  * @author
- * @version
+ * @version    v0.1.0
  * @date        
  * @brief
  **************************************************************************************************
@@ -10,37 +10,23 @@
  *
  **************************************************************************************************
  */
-#ifndef _VERSION_H_
-#define _VERSION_H_
+#ifndef _PERIOD_TASK_H_
+#define _PERIOD_TASK_H_
 
 /**
  * @addtogroup    XXX 
  * @{ 
  */
+#include "FreeRTOS.h"
 #include "self_def.h"
+#include "task.h"
 /**
- * @addtogroup    version_Modules 
+ * @addtogroup    period_task_Modules 
  * @{  
  */
 
 /**
- * @defgroup      version_Exported_Macros 
- * @{  
- */
-#define VERSION_MAJOR		0   // 0~255
-#define VERSION_MINOR		2   // 0~255
-#define VERSION_LITE		1	// 0~255
-
-#define FRAME_VERSION_MAJOR		0   // 0~255
-#define FRAME_VERSION_MINOR		0   // 0~255
-#define FRAME_VERSION_LITE		3	// 0~255
-
-/**
- * @}
- */
-
-/**
- * @defgroup      version_Exported_Constants
+ * @defgroup      period_task_Exported_Macros 
  * @{  
  */
 
@@ -49,7 +35,16 @@
  */
 
 /**
- * @defgroup      version_Exported_Types 
+ * @defgroup      period_task_Exported_Constants
+ * @{  
+ */
+
+/**
+ * @}
+ */
+ 
+/**
+ * @defgroup      period_task_Exported_Types 
  * @{  
  */
 
@@ -58,20 +53,21 @@
  */
 
 /**
- * @defgroup      version_Exported_Variables 
+ * @defgroup      period_task_Exported_Variables 
  * @{  
  */
-
+extern TaskHandle_t  Period_Task_Handle ;
 /**
  * @}
  */
 
 /**
- * @defgroup      version_Exported_Functions 
+ * @defgroup      period_task_Exported_Functions 
  * @{  
  */
-uint32_t Version_Get_Bin(void);
-char * Version_Get_Str(void);
+
+void Period_Task(void * pvParameter);	
+uint32_t Period_Task_Init(void);
 /**
  * @}
  */
@@ -84,3 +80,5 @@ char * Version_Get_Str(void);
  * @}
  */
 #endif
+
+

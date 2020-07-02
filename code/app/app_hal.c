@@ -17,7 +17,7 @@
  * @addtogroup    XXX 
  * @{  
  */
-
+#include "clog.h"
 /**
  * @addtogroup    app_hal_Modules 
  * @{  
@@ -102,6 +102,7 @@
 
 void APP_Hal_Rest(void)
 {
+	DEBUG("Hal Rest\r\n");
 	NVIC_SystemReset();	
 }
 

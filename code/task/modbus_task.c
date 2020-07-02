@@ -107,15 +107,30 @@ static void modbus_task_tim_callback(TimerHandle_t xTimer);
  * @{  
  */
 
+#define 		MODBUS_STK_SIZE 		1024  							//任务堆栈大小	
+StackType_t 	Modbus_TaskStack[MODBUS_STK_SIZE];			//任务堆栈
+StaticTask_t 	Modbus_TaskTCB;												//任务控制块
+
+
 uint32_t Modbus_Task_Init(void)
 {
 	BaseType_t basetype = { 0 };
-	basetype = xTaskCreate(Modbus_Task,\
-							"Modbus Task",\
-							1024,
-							NULL,
-							3,
-							&Modbus_Task_Handle);
+//	basetype = xTaskCreate(Modbus_Task,\
+//							"Modbus Task",\
+//							256,
+//							NULL,
+//							configMAX_PRIORITIES - 1,
+//							&Modbus_Task_Handle);
+	
+	Modbus_Task_Handle=xTaskCreateStatic((TaskFunction_t	)Modbus_Task,		//任务函数
+										(const char* 	)"Modbus Task",		//任务名称
+										(uint32_t 		)MODBUS_STK_SIZE,	//任务堆栈大小
+										(void* 		  	)NULL,				//传递给任务函数的参数
+										(UBaseType_t 	)configMAX_PRIORITIES - 1, 	//任务优先级
+										(StackType_t*   )Modbus_TaskStack,	//任务堆栈
+										(StaticTask_t*  )&Modbus_TaskTCB);	//任务控制块              
+			
+	
 	return basetype;
 }
 
@@ -140,6 +155,11 @@ void Modbus_Task(void * pvParameter)
 		
 		if((event_flag & MODBUS_TASK_DATAPROCESS_EVENT) != 0x00)
 		{
+			
+			DEBUG("Modbus Task Looping\r\n");
+			modbustask_ramainheap = uxTaskGetStackHighWaterMark(NULL);
+			DEBUG("Modbus Task ramain heap:%d %%\r\n",modbustask_ramainheap);
+			
 			DEBUG("MODBUS_TASK_DATAPROCESS_EVENT\r\n");
 			ModbusDataProcess();
 		

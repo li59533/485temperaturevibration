@@ -89,6 +89,7 @@ extern APP_Sample_buf_t APP_Sample_buf;
  * @{  
  */
 void APP_Sample_Init(void);
+void APP_Sample_DeInit(void);
 void APP_StartSample(void);
 void APP_StopSample(void);
 

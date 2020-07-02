@@ -126,23 +126,16 @@ PD6 -> ADC0_SE7b  Y 111 7
 void BSP_ADC_Init(void)
 {
 	adc16_config_t adc16ConfigStruct;
-    adc16_channel_config_t adc16ChannelConfigStruct;
-	
-	
+    //adc16_channel_config_t adc16ChannelConfigStruct;
 	// -------GPIO -------
     /* Port D Clock Gate Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortD);
-
     /* PORTD 1 5 6  is configured as ADC0_SE 5 6 7*/
     PORT_SetPinMux(PORTD, 1U, kPORT_PinDisabledOrAnalog);	
 	PORT_SetPinMux(PORTD, 5U, kPORT_PinDisabledOrAnalog);	
 	PORT_SetPinMux(PORTD, 6U, kPORT_PinDisabledOrAnalog);	
-	
-	
-	
-	
+
 	// -------------------
-	
 	// -------ADC -------------
     ADC16_GetDefaultConfig(&adc16ConfigStruct);
     adc16ConfigStruct.referenceVoltageSource = kADC16_ReferenceVoltageSourceVref;
@@ -156,57 +149,32 @@ void BSP_ADC_Init(void)
     adc16ConfigStruct.enableContinuousConversion = false;  
     ADC16_Init(ADC0, &adc16ConfigStruct);	
 	
-	
 	//ADC16_EnableHardwareTrigger(ADC0, false); /* Make sure the software trigger is used. */
 	ADC16_DoAutoCalibration(ADC0);
 	ADC16_SetChannelMuxMode(ADC0, kADC16_ChannelMuxB);	
 	// --------------------------------	
 	// ---------select trigger --------
-	
 	SIM->SOPT7 |= SIM_SOPT7_ADC0TRGSEL(9)| SIM_SOPT7_ADC0ALTTRGEN(0) |SIM_SOPT7_ADC0PRETRGSEL(1);    // need to look reference maunl  ,this is FTM 1
 	ADC16_EnableHardwareTrigger( ADC0 , true );
 
 	// --------------------------------
-	
-	
 	// -------IRQ---------
 	EnableIRQ(ADC0_IRQn);
 	NVIC_SetPriority(ADC0_IRQn , 6);
-	
-	
 	// -------------------
-	
-	
 			// ----------channel------------
-			
 //	
-
-
-	
 //	
-	adc16ChannelConfigStruct.channelNumber = 5;
-	adc16ChannelConfigStruct.enableDifferentialConversion = false;
-	adc16ChannelConfigStruct.enableInterruptOnConversionCompleted =  true;
-
-	ADC16_SetChannelConfig(ADC0, 0, &adc16ChannelConfigStruct);
+//	adc16ChannelConfigStruct.channelNumber = 5;
+//	adc16ChannelConfigStruct.enableDifferentialConversion = false;
+//	adc16ChannelConfigStruct.enableInterruptOnConversionCompleted =  true;
+//	ADC16_SetChannelConfig(ADC0, 0, &adc16ChannelConfigStruct);
 //	
 			// -----------------------------
-			
 	bsp_adc_trigger_init();		
 			
 	// ------------------------
 }
-
-void BSP_ADC0_SetChannelConfig(uint8_t channel)
-{
-	adc16_channel_config_t adc16ChannelConfigStruct;
-	adc16ChannelConfigStruct.channelNumber = channel;
-	adc16ChannelConfigStruct.enableDifferentialConversion = false;
-	adc16ChannelConfigStruct.enableInterruptOnConversionCompleted =  true;
-	ADC16_SetChannelConfig(ADC0, 0, &adc16ChannelConfigStruct);
-}
-
-
 
 static void bsp_adc_trigger_init(void)
 {
@@ -245,48 +213,17 @@ static void bsp_adc_trigger_init(void)
 
 void BSP_ADC_DeInit(void)
 {
-	adc16_config_t config;
-	gpio_pin_config_t gpio_pin_config;
-	
-	// ---------GPIO Init ----------------------
-	
-	PORT_SetPinMux(PORTC, 2, kPORT_PinDisabledOrAnalog);
-	gpio_pin_config.outputLogic = 0;
-	gpio_pin_config.pinDirection = kGPIO_DigitalInput;
-	GPIO_PinInit(GPIOC, 2, &gpio_pin_config);
-	CLOCK_DisableClock(kCLOCK_PortC);	
-	// -----------------------------------------	
-	
-	
-/*
- *   config->referenceVoltageSource     = kADC16_ReferenceVoltageSourceVref;
- *   config->clockSource                = kADC16_ClockSourceAsynchronousClock;
- *   config->enableAsynchronousClock    = true;
- *   config->clockDivider               = kADC16_ClockDivider8;
- *   config->resolution                 = kADC16_ResolutionSE12Bit;
- *   config->longSampleMode             = kADC16_LongSampleDisabled;
- *   config->enableHighSpeed            = false;
- *   config->enableLowPower             = false;
- *   config->enableContinuousConversion = false;
-*/
-
-//	config.clockDivider = ;
-//	config.clockSource = ;
-	config.enableAsynchronousClock = false;
-//	config.enableContinuousConversion = ;
-//	config.enableHighSpeed = ;
-//	config.enableLowPower = ;
-//	config.longSampleMode = kADC16_LongSampleCycle24;
-//	config.referenceVoltageSource = ;
-//	config.resolution = kADC16_Resolution16Bit;
-	ADC16_Init( ADC0, &config);	
-	
-	ADC16_Deinit(ADC0);
-	CLOCK_DisableClock(kCLOCK_Adc0);
-	DisableIRQ(ADC0_IRQn);
-	
+	PDB_Deinit(PDB0);
+	ADC16_Deinit(ADC0);	
 }
-
+void BSP_ADC0_SetChannelConfig(uint8_t channel)
+{
+	adc16_channel_config_t adc16ChannelConfigStruct;
+	adc16ChannelConfigStruct.channelNumber = channel;
+	adc16ChannelConfigStruct.enableDifferentialConversion = false;
+	adc16ChannelConfigStruct.enableInterruptOnConversionCompleted =  true;
+	ADC16_SetChannelConfig(ADC0, 0, &adc16ChannelConfigStruct);
+}
 
 void BSP_ADC_DisableIRQ(void)
 {
@@ -352,8 +289,9 @@ void ADC0_IRQHandler(void)
 
 void PDB0_IRQHandler(void)
 {
-    PDB_ClearStatusFlags(PDB0, kPDB_DelayEventFlag);
 	DEBUG("PDB0_IRQHandler\r\n");
+    PDB_ClearStatusFlags(PDB0, kPDB_DelayEventFlag);
+	
 }
 
 

@@ -21,6 +21,7 @@
 #include "refresh_task.h"
 #include "app_lnprotocol.h"
 #include "modbus_task.h"
+#include "hal_task.h"
 /**
  * @addtogroup    modbus_rtu_Modules 
  * @{  
@@ -520,7 +521,7 @@ static void MBFunction_06(void)
 
 	
 	Refresh_Task_Event_Start(REFRESH_TASK_MBTOSYS_EVENT, EVENT_FROM_TASK);
-	
+	//Hal_Task_Event_Start(HAL_TASK_SAVE_SYS_EVENT , EVENT_FROM_TASK);
     //BSP_Pro_Info_UpData();
     //Slave.ID=MB_ReadRegister(MBREGISTERHOLDING, 5);
 }

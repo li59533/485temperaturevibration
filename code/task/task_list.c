@@ -25,6 +25,7 @@
 #include "sample_task.h"
 #include "refresh_task.h"
 #include "hal_task.h"
+#include "period_task.h"
 /**
  * @addtogroup    task_list_Modules 
  * @{  
@@ -110,26 +111,28 @@ void RTOS_Init(void)
 {
 	BaseType_t basetype = { 0 };
 	
-	basetype = First_Task_Init();
-	basetype = Second_Task_Init();
 	basetype = Modbus_Task_Init();
 	basetype = Sample_Task_Init();
+	//basetype = Second_Task_Init();
 	basetype = Refresh_Task_Init();
+
 	basetype = Hal_Task_Init();
+	//basetype = First_Task_Init();
+	basetype = Period_Task_Init();
 	
-	
-	if(pdPASS == basetype)
-	{
-		vTaskStartScheduler();
-	}
-	else
-	{
-		while(1)
-		{
-			blockling_delay();
-			DEBUG("RTOS is not start\r\n");
-		}
-	}
+	vTaskStartScheduler();
+//	if(pdPASS == basetype)
+//	{
+//		vTaskStartScheduler();
+//	}
+//	else
+//	{
+//		while(1)
+//		{
+//			blockling_delay();
+//			DEBUG("RTOS is not start\r\n");
+//		}
+//	}
 	
 }
 
@@ -141,6 +144,24 @@ static void blockling_delay(void)
 	}
 }
 
+static StackType_t 		IdleTaskStack[configMINIMAL_STACK_SIZE];			//空闲任务任务堆栈
+static StaticTask_t 	IdleTaskTCB;																	//空闲任务控制块
+static StackType_t 		TimerTaskStack[configTIMER_TASK_STACK_DEPTH];	//定时器服务任务堆栈
+static StaticTask_t 	TimerTaskTCB;	
+
+void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize)
+{
+	*ppxIdleTaskTCBBuffer=&IdleTaskTCB;
+	*ppxIdleTaskStackBuffer=IdleTaskStack;
+	*pulIdleTaskStackSize=configMINIMAL_STACK_SIZE;
+}
+
+void vApplicationGetTimerTaskMemory(StaticTask_t **ppxTimerTaskTCBBuffer, StackType_t **ppxTimerTaskStackBuffer, uint32_t *pulTimerTaskStackSize)
+{
+	*ppxTimerTaskTCBBuffer=&TimerTaskTCB;
+	*ppxTimerTaskStackBuffer=TimerTaskStack;
+	*pulTimerTaskStackSize=configTIMER_TASK_STACK_DEPTH;
+}
 
 
 /**

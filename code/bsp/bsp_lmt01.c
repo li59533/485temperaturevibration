@@ -39,9 +39,9 @@
  * @brief         
  * @{  
  */
-
-#define LMT01_POWER_ON	GPIO_WritePinOutput(GPIOE, 1, 1)
-#define LMT01_POWER_OFF	GPIO_WritePinOutput(GPIOE, 1, 0)
+						
+#define LMT01_POWER_ON	GPIO_WritePinOutput(GPIOB, 7, 1)
+#define LMT01_POWER_OFF	GPIO_WritePinOutput(GPIOB, 7, 0)
 
 
 
@@ -123,8 +123,8 @@ static bsp_lmt01_data_t bsp_lmt01_data =
  */
  
 /*
-Power -> PE1
-pulse -> PD7
+Power -> PB7
+pulse -> PB8
 */ 
  
  
@@ -154,22 +154,21 @@ void BSP_LMT01_Power_ON(void)
 {
 	// ------GPIO --------
 	gpio_pin_config_t gpio_pin_config ;
-	CLOCK_EnableClock(kCLOCK_PortD);
-	CLOCK_EnableClock(kCLOCK_PortE);
+	CLOCK_EnableClock(kCLOCK_PortB);
 	
-	PORT_SetPinMux(PORTD, 7,kPORT_MuxAsGpio);
+	PORT_SetPinMux(PORTB, 8,kPORT_MuxAsGpio);
 	gpio_pin_config.outputLogic = 0;
 	gpio_pin_config.pinDirection = kGPIO_DigitalInput;
-	GPIO_PinInit(GPIOD, 7, &gpio_pin_config);
+	GPIO_PinInit(GPIOD, 8, &gpio_pin_config);
 
-	PORT_SetPinMux(PORTE, 1,kPORT_MuxAsGpio);
+	PORT_SetPinMux(PORTB, 7,kPORT_MuxAsGpio);
 	gpio_pin_config.outputLogic = 0;
 	gpio_pin_config.pinDirection = kGPIO_DigitalOutput;
-	GPIO_PinInit(GPIOE, 1, &gpio_pin_config);	
+	GPIO_PinInit(GPIOB, 7, &gpio_pin_config);	
 	
-	PORT_SetPinInterruptConfig(PORTD, 7, kPORT_InterruptRisingEdge)	;
+	PORT_SetPinInterruptConfig(PORTB, 8, kPORT_InterruptRisingEdge)	;
 	
-	EnableIRQ(PORTC_PORTD_IRQn);		
+	EnableIRQ(PORTB_IRQn);		
 	
 	LMT01_POWER_ON;
 }
@@ -179,21 +178,21 @@ void BSP_LMT01_Power_OFF(void)
 	gpio_pin_config_t gpio_pin_config ;
 	LMT01_POWER_OFF;
 
-	DisableIRQ(PORTC_PORTD_IRQn);
-	PORT_SetPinInterruptConfig(PORTD, 7, kPORT_InterruptOrDMADisabled)	;
+	DisableIRQ(PORTB_IRQn);
+	PORT_SetPinInterruptConfig(PORTB, 8, kPORT_InterruptOrDMADisabled)	;
 
-	PORT_SetPinMux(PORTD, 7,kPORT_MuxAsGpio);
+	PORT_SetPinMux(PORTB, 8,kPORT_MuxAsGpio);
 	gpio_pin_config.outputLogic = 0;
 	gpio_pin_config.pinDirection = kGPIO_DigitalOutput;
-	GPIO_PinInit(GPIOD, 7, &gpio_pin_config);
+	GPIO_PinInit(GPIOB, 8, &gpio_pin_config);
 
-	PORT_SetPinMux(PORTE, 1,kPORT_MuxAsGpio);
+	PORT_SetPinMux(PORTB, 7,kPORT_MuxAsGpio);
 	gpio_pin_config.outputLogic = 0;
 	gpio_pin_config.pinDirection = kGPIO_DigitalOutput;
-	GPIO_PinInit(GPIOE, 1, &gpio_pin_config);	
+	GPIO_PinInit(GPIOB, 7, &gpio_pin_config);	
 
-	CLOCK_DisableClock(kCLOCK_PortD);
-	CLOCK_DisableClock(kCLOCK_PortE);	
+	CLOCK_DisableClock(kCLOCK_PortB);
+
 }
 
 
@@ -213,7 +212,7 @@ void BSP_LMT01_CoreLoop(void)  //call this func in 20ms
 			bsp_lmt01_data.lmt01_pulse_status = LMT01_Pulse_Wait;
 			bsp_lmt01_data.lmt01_pulse_count_record = bsp_lmt01_data.lmt01_pulse_count;
 			bsp_lmt01_data.lmt01_pulse_count  = 0;
-			bsp_lmt01_data.lmt01_value = ((float)bsp_lmt01_data.lmt01_pulse_count_record * 0.0625f - 50) + g_SystemParam_Config.tempCompensation*0.1f; //²¹³¥Öµ
+			bsp_lmt01_data.lmt01_value = ((float)bsp_lmt01_data.lmt01_pulse_count_record * 0.0625f - 50) + g_SystemParam_Config.Temperature_C*0.1f; //²¹³¥Öµ
 			bsp_lmt01_data.lmt01_updata_status = LMT01_Updata_HasUp;			
 		}
 		break;
@@ -240,14 +239,14 @@ float BSP_LMT01_GetValue(void)
 
 // -------------------IRQ-------------
 
-void PORTC_PORTD_IRQHandler(void)
+void PORTB_IRQHandler(void)
 {
-	if((PORT_GetPinsInterruptFlags(PORTD) & (0x01 << 7) )== (0x01 << 7))
+	if((PORT_GetPinsInterruptFlags(PORTB) & (0x01 << 7) )== (0x01 << 7))
 	{
 		//DEBUG("PORTC_PORTD_IRQHandler");
 		bsp_lmt01_data.lmt01_pulse_count ++;
 		bsp_lmt01_data.lmt01_pulse_status = LMT01_Pulse_ON;
-		PORT_ClearPinsInterruptFlags( PORTD, (0x01 << 7));
+		PORT_ClearPinsInterruptFlags( PORTB, (0x01 << 7));
 	}
 }
 

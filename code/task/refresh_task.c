@@ -111,18 +111,33 @@ static void refresh_task_tim_callback(TimerHandle_t xTimer);
  * @{  
  */
 
+#define 		REFRESH_STK_SIZE 		512  							//任务堆栈大小	
+StackType_t 	Refresh_TaskStack[REFRESH_STK_SIZE];			//任务堆栈
+StaticTask_t 	Refresh_TaskTCB;												//任务控制块
+
+
 uint32_t Refresh_Task_Init(void)
 {
 	BaseType_t basetype = { 0 };
-	basetype = xTaskCreate(Refresh_Task,\
-							"Refresh Task",\
-							1024,
-							NULL,
-							3,
-							&Refresh_Task_Handle);
+//	basetype = xTaskCreate(Refresh_Task,\
+//							"Refresh Task",\
+//							128,
+//							NULL,
+//							1,
+//							&Refresh_Task_Handle);
+	
+	Refresh_Task_Handle = xTaskCreateStatic((TaskFunction_t	)Refresh_Task,		//任务函数
+										(const char* 	)"Refresh Task",		//任务名称
+										(uint32_t 		)REFRESH_STK_SIZE,	//任务堆栈大小
+										(void* 		  	)NULL,				//传递给任务函数的参数
+										(UBaseType_t 	) 1, 	//任务优先级
+										(StackType_t*   )Refresh_TaskStack,	//任务堆栈
+										(StaticTask_t*  )&Refresh_TaskTCB);	//任务控制块              
+			
+	
+	
 	return basetype;
 }
-
 
 void Refresh_Task(void * pvParameter)
 {
@@ -131,24 +146,12 @@ void Refresh_Task(void * pvParameter)
 	DEBUG("Refresh Task Enter\r\n");
 	UBaseType_t refreshtask_ramainheap = 0;
 
-	Refresh_Task_Tim_Init();
-	
-	if(g_SystemParam_Config.Waveform_Interval >=1 && g_SystemParam_Config.Waveform_Interval <= 10)
-	{
-		Refresh_Task_StartTim(1000 * g_SystemParam_Config.Waveform_Interval);
-	}
-	else
-	{
-		Refresh_Task_StartTim(2000);
-	}
-	
 	APP_RefreshMB_ConfParam();
-	
 	
 	while(1)
 	{
 		xTaskNotifyWait(0x00,ULONG_MAX,&event_flag , portMAX_DELAY);
-		
+
 		if((event_flag & REFRESH_TASK_TEST_EVENT) != 0x00)
 		{
 			DEBUG("Refresh Task Looping\r\n");
@@ -157,8 +160,14 @@ void Refresh_Task(void * pvParameter)
 		}
 		if((event_flag & REFRESH_TASK_CHARATERISTIC_EVENT) != 0x00)
 		{
+			DEBUG("Refresh Task Looping\r\n");
+			refreshtask_ramainheap = uxTaskGetStackHighWaterMark(NULL);
+			DEBUG("Refresh Task ramain heap:%d %%\r\n",refreshtask_ramainheap);
+			
+			
 			DEBUG("Refresh Task CHARATERISTIC_EVENT\r\n");
 			APP_RefreshMB_Charateristic();
+			APP_RefreshMB_ConfParam();
 		}	
 
 		if((event_flag & REFRESH_TASK_WAVE_EVENT) != 0x00)
@@ -219,16 +228,7 @@ void Refresh_Task_StartTim(uint16_t time_count)
 
 static void refresh_task_tim_callback(TimerHandle_t xTimer)
 {
-	APP_RefreshMB_Waveform();
-	if(g_SystemParam_Config.Waveform_Interval >=1 && g_SystemParam_Config.Waveform_Interval <= 10)
-	{
-		Refresh_Task_StartTim(1000 * g_SystemParam_Config.Waveform_Interval);
-	}
-	else
-	{
-		Refresh_Task_StartTim(2000);
-	}	
-	//Refresh_Task_Event_Start(Refresh_TASK_SEND_AT_EVENT, EVENT_FROM_TASK);
+
 }
 
 

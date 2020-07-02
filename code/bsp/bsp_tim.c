@@ -99,6 +99,8 @@
  */
 static void bsp_tmp0_init(void);
 static void bsp_tmp1_init(void);
+static void bsp_tmp0_deinit(void);
+static void bsp_tmp1_deinit(void);
 /**
  * @}
  */
@@ -122,7 +124,12 @@ void BSP_Tim_Init(uint8_t BSP_TIMx)
 
 void BSP_Tim_DeInit(uint8_t BSP_TIMx)
 {
-
+	switch (BSP_TIMx)
+	{
+		case BSP_TIM0 :bsp_tmp0_deinit();break;
+		case BSP_TIM1 :bsp_tmp1_deinit();break;
+		default :break;
+	}
 }
 
 
@@ -189,6 +196,19 @@ static void bsp_tmp1_init(void)
 	// ---------------
 
 }
+
+
+static void bsp_tmp0_deinit(void)
+{
+	FTM_StopTimer(FTM0);
+	FTM_Deinit(FTM0);
+}
+static void bsp_tmp1_deinit(void)
+{
+	FTM_StopTimer(FTM1);
+	FTM_Deinit(FTM1);
+}
+
 
 void BSP_Tim_0_StartOnce(void)
 {
@@ -263,8 +283,9 @@ void FTM1_IRQHandler(void)
 	{
 		/* Clear interrupt flag.*/
 		FTM_ClearStatusFlags(FTM1, kFTM_TimeOverflowFlag);
+		DEBUG("FTM1_IRQHandler\r\n");
 	}
-	DEBUG("FTM1_IRQHandler\r\n");
+
 }
 
  // ---------------------------------------

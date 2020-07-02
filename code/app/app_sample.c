@@ -113,12 +113,20 @@ static void app_samlpechannel_init(void);
 void APP_Sample_Init(void)
 {
 	DEBUG("APP_Sample_Init\r\n");
-	app_samlpechannel_init();
-	
 	BSP_Tim_Init(BSP_TIM1);
 	BSP_ADC_Init();
+	app_samlpechannel_init();
 	APP_StartSample();
 }
+
+void APP_Sample_DeInit(void)
+{
+	DEBUG("APP_Sample_Deinit\r\n");
+	BSP_Tim_DeInit(BSP_TIM1);
+	BSP_ADC_DeInit();
+
+}
+
 
 void APP_StartSample(void)
 {
@@ -131,9 +139,8 @@ void APP_StopSample(void)
 }
 static void app_samlpechannel_init(void)
 {
-	
 	APP_Sample_buf.cur_channel = 0;
-	//BSP_ADC0_SetChannelConfig(5);
+	BSP_ADC0_SetChannelConfig(5);
 	APP_Sample_buf.Sample_Channel_buf[APP_SAMPLE_X_INDEX].originalData = app_sample_channel_0_buf;
 	APP_Sample_buf.Sample_Channel_buf[APP_SAMPLE_X_INDEX].rate = APP_SAMPLE_CHANNEL_0_RATE;
 	APP_Sample_buf.Sample_Channel_buf[APP_SAMPLE_X_INDEX].cur_dataPtr = 0;
@@ -162,8 +169,9 @@ void APP_GetOriginalData( uint16_t data)
 
 	if((APP_Sample_buf.Sample_Channel_buf[2].cur_dataPtr == APP_SAMPLE_CHANNEL_2_RATE || APP_Sample_buf.Sample_Channel_buf[2].cur_dataPtr == 0) &&\
 		APP_Sample_buf.Sample_Channel_buf[2].cur_dataPtr == APP_Sample_buf.Sample_Channel_buf[1].cur_dataPtr && \
-		APP_Sample_buf.Sample_Channel_buf[1].cur_dataPtr == APP_Sample_buf.Sample_Channel_buf[0].cur_dataPtr)
+		APP_Sample_buf.Sample_Channel_buf[1].cur_dataPtr == APP_Sample_buf.Sample_Channel_buf[0].cur_dataPtr)	
 	{
+		DEBUG("READ Enter Clac\r\n");
 		Sample_Task_Event_Start( SAMPLE_TASK_CALC_EVENT, EVENT_FROM_ISR);
 	}
 	 // ---test code---

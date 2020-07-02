@@ -33,6 +33,7 @@
 #define HAL_TASK_TEST_EVENT 			(0X01 << 0)
 #define HAL_TASK_TEST2_EVENT			(0X01 << 1)
 #define HAL_TASK_SAVE_SYS_EVENT			(0X01 << 2)
+#define HAL_TASK_REST_EVENT				(0X01 << 3)
 /**
  * @}
  */

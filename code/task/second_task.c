@@ -28,6 +28,11 @@
 #include "sample_task.h"
 #include "refresh_task.h"
 #include "hal_task.h"
+#include "system_param.h"
+
+
+#include "crc.h"
+#include "bsp_flash.h"
 
 /**
  * @addtogroup    second_task_Modules 
@@ -109,26 +114,45 @@ TaskHandle_t  Second_Task_Handle = NULL;
  * @brief         
  * @{  
  */
+#define 		SECOND_STK_SIZE 		512  							//任务堆栈大小	
+StackType_t 	Second_TaskStack[SECOND_STK_SIZE];			//任务堆栈
+StaticTask_t 	Second_TaskTCB;												//任务控制块
+
 
 
 uint32_t Second_Task_Init(void)
 {
 	BaseType_t basetype = { 0 };
-	basetype = xTaskCreate(Second_Task,\
-							"Second_Task",\
-							256,
-							NULL,
-							1,
-							&Second_Task_Handle);
+//	basetype = xTaskCreate(Second_Task,\
+//							"Second_Task",\
+//							256,
+//							NULL,
+//							1,
+//							&Second_Task_Handle);
+	
+	Second_Task_Handle=xTaskCreateStatic((TaskFunction_t	)Second_Task,		//任务函数
+										(const char* 	)"Second Task",		//任务名称
+										(uint32_t 		)SECOND_STK_SIZE,	//任务堆栈大小
+										(void* 		  	)NULL,				//传递给任务函数的参数
+										(UBaseType_t 	) 4, 	//任务优先级
+										(StackType_t*   )Second_TaskStack,	//任务堆栈
+										(StaticTask_t*  )&Second_TaskTCB);	//任务控制块              
+		
+	
+	
 	return basetype;
 }
-
+#include "cmsis_armcc.h"
 void Second_Task(void * pvParameter)
 {
+	UBaseType_t secondtask_ramainheap = 0;
 	//UBaseType_t ramainheap = 0;
 	DEBUG("Second Task Enter\r\n");
 	while(1)
 	{
+		secondtask_ramainheap = uxTaskGetStackHighWaterMark(NULL);
+		DEBUG("Second Task ramain heap:%d %%\r\n",secondtask_ramainheap);		
+		
 		DEBUG("Second Task Looping\r\n");
 		DEBUG("Free Heap:%d\r\n" , RTOS_Get_FreeHeapSize());
 		
@@ -151,6 +175,28 @@ void Second_Task(void * pvParameter)
 //		ramainheap = uxTaskGetStackHighWaterMark(Hal_Task_Handle);
 //		DEBUG("Hal Task ramain heap:%d\r\n",ramainheap);
 		vTaskDelay(pdMS_TO_TICKS(3000));
+
+		g_SystemParam_Config.SNcode[0] ++;
+		DEBUG("SystemParam_Save Will Enter!!!\r\n");
+		vTaskDelay(pdMS_TO_TICKS(50));	
+		
+		
+		taskENTER_CRITICAL();
+
+		SystemParam_Save();
+		
+		taskEXIT_CRITICAL();
+
+
+
+		DEBUG("SystemParam_Save PASS!!!\r\n");	
+		vTaskDelay(pdMS_TO_TICKS(1000));
+		DEBUG("SystemParam_Save PASS!!!\r\n");		
+//		while(1)
+//		{
+//			;
+//		}
+		
 	}
 	
 }
