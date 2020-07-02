@@ -109,28 +109,28 @@ static void hal_task_tim_callback(TimerHandle_t xTimer);
  */
 
 
-#define 		HAL_STK_SIZE 		512  							//任务堆栈大小	
-StackType_t 	Hal_TaskStack[HAL_STK_SIZE];			//任务堆栈
-StaticTask_t 	Hal_TaskTCB;												//任务控制块
+//#define 		HAL_STK_SIZE 		512  							//任务堆栈大小	
+//StackType_t 	Hal_TaskStack[HAL_STK_SIZE];			//任务堆栈
+//StaticTask_t 	Hal_TaskTCB;												//任务控制块
 
 uint32_t Hal_Task_Init(void)
 {
 	BaseType_t basetype = { 0 };
-//	basetype = xTaskCreate(Hal_Task,\
-//							"Hal Task",\
-//							512,
-//							NULL,
-//							1,
-//							&Hal_Task_Handle);
+	basetype = xTaskCreate(Hal_Task,\
+							"Hal Task",\
+							512,
+							NULL,
+							1,
+							&Hal_Task_Handle);
 	
-	Hal_Task_Handle=xTaskCreateStatic((TaskFunction_t	)Hal_Task,		//任务函数
-										(const char* 	)"Hal Task",		//任务名称
-										(uint32_t 		)HAL_STK_SIZE,	//任务堆栈大小
-										(void* 		  	)NULL,				//传递给任务函数的参数
-										(UBaseType_t 	) configMAX_PRIORITIES - 1, 	//任务优先级
-										(StackType_t*   )Hal_TaskStack,	//任务堆栈
-										(StaticTask_t*  )&Hal_TaskTCB);	//任务控制块              
-		
+//	Hal_Task_Handle=xTaskCreateStatic((TaskFunction_t	)Hal_Task,		//任务函数
+//										(const char* 	)"Hal Task",		//任务名称
+//										(uint32_t 		)HAL_STK_SIZE,	//任务堆栈大小
+//										(void* 		  	)NULL,				//传递给任务函数的参数
+//										(UBaseType_t 	) configMAX_PRIORITIES - 1, 	//任务优先级
+//										(StackType_t*   )Hal_TaskStack,	//任务堆栈
+//										(StaticTask_t*  )&Hal_TaskTCB);	//任务控制块              
+//		
 		
 	
 	return basetype;
@@ -169,10 +169,6 @@ void Hal_Task(void * pvParameter)
 		
 		if((event_flag & HAL_TASK_SAVE_SYS_EVENT) != 0x00)
 		{
-			DEBUG("Hal Task Looping\r\n");
-			haltask_ramainheap = uxTaskGetStackHighWaterMark(NULL);
-			DEBUG("Hal Task ramain heap:%d %%\r\n",haltask_ramainheap);
-
 			DEBUG("Hal Task Save System EVENT\r\n");
 			
 			APP_Sample_DeInit();

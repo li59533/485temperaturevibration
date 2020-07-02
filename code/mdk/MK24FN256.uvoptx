@@ -152,34 +152,18 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>38</LineNumber>
+          <LineNumber>215</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>13102</Address>
+          <Address>14786</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\app\main.c</Filename>
+          <Filename>..\bsp\bsp_lmt01.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\MK24FN256\../app/main.c\38</Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
-          <LineNumber>178</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>17510</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\task\second_task.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\MK24FN256\../task/second_task.c\178</Expression>
+          <Expression>\\MK24FN256\../bsp/bsp_lmt01.c\215</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -197,6 +181,11 @@
           <count>2</count>
           <WinNumber>1</WinNumber>
           <ItemText>APP_CalcValue</ItemText>
+        </Ww>
+        <Ww>
+          <count>3</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>bsp_lmt01_data</ItemText>
         </Ww>
       </WatchWindow1>
       <MemoryWindow1>

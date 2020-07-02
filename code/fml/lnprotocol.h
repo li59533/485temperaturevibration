@@ -85,8 +85,7 @@ typedef enum
 	TAG_Z_ENVELOPE_VALUE = 15,	
 	TAG_TEMPERATURE    	 = 16,
 	TAG_BATTERY			 = 17,	
-	
-	
+
 }LN_Protocol_ReportData_Tag_e;
 
 
@@ -101,9 +100,9 @@ typedef enum
 typedef enum
 {
 	
-	CMD_GetSlaveID_Req	 	= 128 ,
-	CMD_GetSlaveID_Resp		= 129 ,
-	CMD_Param_Rest			= 130 ,
+	CMD_GetSlaveID_Req	 	= 0x80 ,
+	CMD_GetSlaveID_Resp		= 0x81 ,
+	CMD_Param_Rest			= 0x82 ,
 }LN_Protocol_Cmd_e;
 
 

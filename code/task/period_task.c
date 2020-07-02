@@ -112,28 +112,28 @@ TaskHandle_t  Period_Task_Handle = NULL;
  * @{  
  */
 
-#define 		PERIOD_STK_SIZE 		128  							//任务堆栈大小	
-StackType_t 	Period_TaskStack[PERIOD_STK_SIZE];			//任务堆栈
-StaticTask_t 	Period_TaskTCB;												//任务控制块
+//#define 		PERIOD_STK_SIZE 		128  							//任务堆栈大小	
+//StackType_t 	Period_TaskStack[PERIOD_STK_SIZE];			//任务堆栈
+//StaticTask_t 	Period_TaskTCB;												//任务控制块
 
 uint32_t Period_Task_Init(void)
 {
 	BaseType_t basetype = { 0 };
-//	basetype = xTaskCreate(Period_Task,\
-//							"Period_Task",\
-//							64,
-//							NULL,
-//							1,
-//							&Period_Task_Handle);
+	basetype = xTaskCreate(Period_Task,\
+							"Period_Task",\
+							64,
+							NULL,
+							1,
+							&Period_Task_Handle);
 	
-	Period_Task_Handle=xTaskCreateStatic((TaskFunction_t	)Period_Task,		//任务函数
-										(const char* 	)"Period Task",		//任务名称
-										(uint32_t 		)PERIOD_STK_SIZE,	//任务堆栈大小
-										(void* 		  	)NULL,				//传递给任务函数的参数
-										(UBaseType_t 	) 1, 	//任务优先级
-										(StackType_t*   )Period_TaskStack,	//任务堆栈
-										(StaticTask_t*  )&Period_TaskTCB);	//任务控制块              
-		
+//	Period_Task_Handle=xTaskCreateStatic((TaskFunction_t	)Period_Task,		//任务函数
+//										(const char* 	)"Period Task",		//任务名称
+//										(uint32_t 		)PERIOD_STK_SIZE,	//任务堆栈大小
+//										(void* 		  	)NULL,				//传递给任务函数的参数
+//										(UBaseType_t 	) 1, 	//任务优先级
+//										(StackType_t*   )Period_TaskStack,	//任务堆栈
+//										(StaticTask_t*  )&Period_TaskTCB);	//任务控制块              
+//		
 		
 	
 	
@@ -142,7 +142,6 @@ uint32_t Period_Task_Init(void)
 
 void Period_Task(void * pvParameter)
 {
-	//UBaseType_t ramainheap = 0;
 	DEBUG("Period Task Enter\r\n");
 	while(1)
 	{

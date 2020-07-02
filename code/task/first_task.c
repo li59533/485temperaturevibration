@@ -108,31 +108,28 @@ static void first_task_tim_callback(TimerHandle_t xTimer);
  * @brief         
  * @{  
  */
-#define 		FIRST_STK_SIZE 		256  							//任务堆栈大小	
-StackType_t 	First_TaskStack[FIRST_STK_SIZE];			//任务堆栈
-StaticTask_t 	First_TaskTCB;												//任务控制块
-
-
-
+//#define 		FIRST_STK_SIZE 		256  							//任务堆栈大小	
+//StackType_t 	First_TaskStack[FIRST_STK_SIZE];			//任务堆栈
+//StaticTask_t 	First_TaskTCB;												//任务控制块
 
 uint32_t First_Task_Init(void)
 {
 	BaseType_t basetype = { 0 };
-//	basetype = xTaskCreate(First_Task,\
-//							"First Task",\
-//							128,
-//							NULL,
-//							3,
-//							&First_Task_Handle);
-//	
-	First_Task_Handle=xTaskCreateStatic((TaskFunction_t	)First_Task,		//任务函数
-										(const char* 	)"First Task",		//任务名称
-										(uint32_t 		)FIRST_STK_SIZE,	//任务堆栈大小
-										(void* 		  	)NULL,				//传递给任务函数的参数
-										(UBaseType_t 	) 1, 	//任务优先级
-										(StackType_t*   )First_TaskStack,	//任务堆栈
-										(StaticTask_t*  )&First_TaskTCB);	//任务控制块              
-			
+	basetype = xTaskCreate(First_Task,\
+							"First Task",\
+							128,
+							NULL,
+							3,
+							&First_Task_Handle);
+	
+//	First_Task_Handle=xTaskCreateStatic((TaskFunction_t	)First_Task,		//任务函数
+//										(const char* 	)"First Task",		//任务名称
+//										(uint32_t 		)FIRST_STK_SIZE,	//任务堆栈大小
+//										(void* 		  	)NULL,				//传递给任务函数的参数
+//										(UBaseType_t 	) 1, 	//任务优先级
+//										(StackType_t*   )First_TaskStack,	//任务堆栈
+//										(StaticTask_t*  )&First_TaskTCB);	//任务控制块              
+//			
 	
 	return basetype;
 }
@@ -155,13 +152,11 @@ void First_Task(void * pvParameter)
 			DEBUG("First Task Looping\r\n");
 			firsttask_ramainheap = uxTaskGetStackHighWaterMark(NULL);
 			DEBUG("First Task ramain heap:%d %%\r\n",firsttask_ramainheap);
-			APP_RefreshMB_Charateristic();
 	
 		}
 		if((event_flag & FIRST_TASK_TEST2_EVENT) != 0x00)
 		{
 			DEBUG("First Task FIRST_TASK_TEST2_EVENT\r\n");
-			//APP_Calc_Process();
 			
 		}		
 		

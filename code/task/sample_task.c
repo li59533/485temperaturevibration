@@ -112,28 +112,28 @@ static void sample_task_tim_callback(TimerHandle_t xTimer);
  * @{  
  */
 
-#define 		SAMPLE_STK_SIZE 		800  							//任务堆栈大小	
-StackType_t 	Sample_TaskStack[SAMPLE_STK_SIZE];			//任务堆栈
-StaticTask_t 	Sample_TaskTCB;												//任务控制块
+//#define 		SAMPLE_STK_SIZE 		800  							//任务堆栈大小	
+//StackType_t 	Sample_TaskStack[SAMPLE_STK_SIZE];			//任务堆栈
+//StaticTask_t 	Sample_TaskTCB;												//任务控制块
 
 uint32_t Sample_Task_Init(void)
 {
 	BaseType_t basetype = { 0 };
-//	basetype = xTaskCreate(Sample_Task,\
-//							"Sample Task",\
-//							800,
-//							NULL,
-//							configMAX_PRIORITIES - 1,
-//							&Sample_Task_Handle);
-//	
+	basetype = xTaskCreate(Sample_Task,\
+							"Sample Task",\
+							256,
+							NULL,
+							configMAX_PRIORITIES - 1,
+							&Sample_Task_Handle);
+	
 
-	Sample_Task_Handle=xTaskCreateStatic((TaskFunction_t	)Sample_Task,		//任务函数
-										(const char* 	)"Sample Task",		//任务名称
-										(uint32_t 		)SAMPLE_STK_SIZE,	//任务堆栈大小
-										(void* 		  	)NULL,				//传递给任务函数的参数
-										(UBaseType_t 	)configMAX_PRIORITIES - 1, 	//任务优先级
-										(StackType_t*   )Sample_TaskStack,	//任务堆栈
-										(StaticTask_t*  )&Sample_TaskTCB);	//任务控制块              
+//	Sample_Task_Handle=xTaskCreateStatic((TaskFunction_t	)Sample_Task,		//任务函数
+//										(const char* 	)"Sample Task",		//任务名称
+//										(uint32_t 		)SAMPLE_STK_SIZE,	//任务堆栈大小
+//										(void* 		  	)NULL,				//传递给任务函数的参数
+//										(UBaseType_t 	)configMAX_PRIORITIES - 1, 	//任务优先级
+//										(StackType_t*   )Sample_TaskStack,	//任务堆栈
+//										(StaticTask_t*  )&Sample_TaskTCB);	//任务控制块              
 
 	return basetype;
 }
@@ -163,11 +163,6 @@ void Sample_Task(void * pvParameter)
 
 		if((event_flag & SAMPLE_TASK_CALC_EVENT) != 0x00)
 		{
-			
-			DEBUG("Sample Task Looping\r\n");
-			sampletask_ramainheap = uxTaskGetStackHighWaterMark(NULL);
-			DEBUG("Sample Task ramain heap:%d %%\r\n",sampletask_ramainheap);
-			
 			DEBUG("Sample Task SAMPLE_TASK_CALC_EVENT\r\n");
 			//taskENTER_CRITICAL();
 			APP_Calc_Process();

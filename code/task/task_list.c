@@ -120,19 +120,19 @@ void RTOS_Init(void)
 	//basetype = First_Task_Init();
 	basetype = Period_Task_Init();
 	
-	vTaskStartScheduler();
-//	if(pdPASS == basetype)
-//	{
-//		vTaskStartScheduler();
-//	}
-//	else
-//	{
-//		while(1)
-//		{
-//			blockling_delay();
-//			DEBUG("RTOS is not start\r\n");
-//		}
-//	}
+	//vTaskStartScheduler();
+	if(pdPASS == basetype)
+	{
+		vTaskStartScheduler();
+	}
+	else
+	{
+		while(1)
+		{
+			blockling_delay();
+			DEBUG("RTOS is not start\r\n");
+		}
+	}
 	
 }
 

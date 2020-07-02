@@ -25,6 +25,7 @@
 #include "modbus_map.h"
 
 #include "bsp_lmt01.h"
+#include "app_hal.h"
 /**
  * @addtogroup    app_refresh_Modules 
  * @{  
@@ -144,6 +145,11 @@ void APP_RefreshMB_Charateristic(void)
 	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_Z_ENVELOPE , data_temp) != 1)
 	{
 	}	
+	// ----------- Z Displace_RMS -------
+	data_temp = (uint16_t)(APP_CalcValue[APP_SAMPLE_Z_INDEX].Displace_RMS * 100);
+	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_Z_DISPLACE_RMS , data_temp) != 1)
+	{
+	}		
 
 	// -----------------------------------------------------
 	// ----------- X base Freq ----------
@@ -181,7 +187,11 @@ void APP_RefreshMB_Charateristic(void)
 	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_X_ENVELOPE , data_temp) != 1)
 	{
 	}	
-
+	// ----------- X Displace_RMS -------
+	data_temp = (uint16_t)(APP_CalcValue[APP_SAMPLE_X_INDEX].Displace_RMS * 100);
+	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_X_DISPLACE_RMS , data_temp) != 1)
+	{
+	}
 	// ------------------------------------------------------
 	// ----------- Y base Freq ----------
 	data_temp = (uint16_t)APP_CalcValue[APP_SAMPLE_Y_INDEX].BaseFreq;
@@ -218,7 +228,11 @@ void APP_RefreshMB_Charateristic(void)
 	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_Y_ENVELOPE , data_temp) != 1)
 	{
 	}	
-	
+	// ----------- Y Displace_RMS -------
+	data_temp = (uint16_t)(APP_CalcValue[APP_SAMPLE_Y_INDEX].Displace_RMS * 100);
+	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_Y_DISPLACE_RMS , data_temp) != 1)
+	{
+	}	
 	
 	// ----------- Temperature ----------
 	float temperature = BSP_LMT01_GetValue();
@@ -420,6 +434,20 @@ void APP_Refresh_MBtoSys(void)
 	{
 		g_SystemParam_Config.StopBitCount = (uint8_t)data_temp ; 
 	}		
+	
+	// ----------- StopbitCount ----------
+	if( MB_ReadRegister(MBREGISTERHOLDING, MB_REGHOLD_DEVICE_REST , &data_temp) == 1)
+	{
+		if(data_temp == 0x0001)
+		{
+			APP_Hal_Rest();
+		}
+		else
+		{
+			MB_WirteRegister(MBREGISTERHOLDING, MB_REGHOLD_DEVICE_REST , 0x0000); 
+		}
+	}		
+	
 	
 	//SystemParam_Save();	
 }
