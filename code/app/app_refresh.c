@@ -26,6 +26,7 @@
 
 #include "bsp_lmt01.h"
 #include "app_hal.h"
+#include "clog.h"
 /**
  * @addtogroup    app_refresh_Modules 
  * @{  
@@ -112,41 +113,49 @@ void APP_RefreshMB_Charateristic(void)
 	
 	// ----------- Z base Freq ----------
 	data_temp = (uint16_t)APP_CalcValue[APP_SAMPLE_Z_INDEX].BaseFreq;
+	DEBUG("Z BaseFreq:%d\r\n" ,APP_CalcValue[APP_SAMPLE_Z_INDEX].BaseFreq );
 	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_Z_BASE_FREQ , data_temp) != 1)
 	{
 	}
 	// ----------- Z ACC_P --------------
 	data_temp = (uint16_t)(APP_CalcValue[APP_SAMPLE_Z_INDEX].ACC_P * 100);
+	Clog_Float("Z ACC_P:" ,APP_CalcValue[APP_SAMPLE_Z_INDEX].ACC_P);
 	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_Z_ACC_P , data_temp) != 1)
 	{
 	}
 	// ----------- Z ACC_RMS ------------
 	data_temp = (uint16_t)(APP_CalcValue[APP_SAMPLE_Z_INDEX].ACC_RMS * 100);
+	Clog_Float("Z ACC_RMS:" ,APP_CalcValue[APP_SAMPLE_Z_INDEX].ACC_RMS);
 	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_Z_ACC_RMS , data_temp) != 1)
 	{
 	}	
 	// ----------- Z Velocity_RMS -------
 	data_temp = (uint16_t)(APP_CalcValue[APP_SAMPLE_Z_INDEX].Velocity_RMS * 100);
+	Clog_Float("Z Velocity_RMS:" ,APP_CalcValue[APP_SAMPLE_Z_INDEX].Velocity_RMS);
 	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_Z_VELOCITY_RMS , data_temp) != 1)
 	{
 	}	
 	// ----------- Z Displace_PP -------
 	data_temp = (uint16_t)(APP_CalcValue[APP_SAMPLE_Z_INDEX].Displace_PP * 100);
+	Clog_Float("Z Displace_PP:" ,APP_CalcValue[APP_SAMPLE_Z_INDEX].Displace_PP);
 	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_Z_DISPLACE_PP , data_temp) != 1)
 	{
 	}	
 	// ----------- Z Kurtosis Coe -------
 	data_temp = (uint16_t)(APP_CalcValue[APP_SAMPLE_Z_INDEX].Kurtosis_Coefficient * 100);
+	Clog_Float("Z Kurtosis_Coefficient:" ,APP_CalcValue[APP_SAMPLE_Z_INDEX].Kurtosis_Coefficient);
 	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_Z_KURTOSIS_COE , data_temp) != 1)
 	{
 	}	
 	// ----------- Z Envelope -------
 	data_temp = (uint16_t)(APP_CalcValue[APP_SAMPLE_Z_INDEX].Envelope * 100);
+	Clog_Float("Z Envelope:" ,APP_CalcValue[APP_SAMPLE_Z_INDEX].Envelope);
 	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_Z_ENVELOPE , data_temp) != 1)
 	{
 	}	
 	// ----------- Z Displace_RMS -------
 	data_temp = (uint16_t)(APP_CalcValue[APP_SAMPLE_Z_INDEX].Displace_RMS * 100);
+	Clog_Float("Z Displace_RMS:" ,APP_CalcValue[APP_SAMPLE_Z_INDEX].Displace_RMS);
 	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_Z_DISPLACE_RMS , data_temp) != 1)
 	{
 	}		
@@ -154,82 +163,98 @@ void APP_RefreshMB_Charateristic(void)
 	// -----------------------------------------------------
 	// ----------- X base Freq ----------
 	data_temp = (uint16_t)APP_CalcValue[APP_SAMPLE_X_INDEX].BaseFreq;
+	DEBUG("X BaseFreq:%d\r\n" ,APP_CalcValue[APP_SAMPLE_X_INDEX].BaseFreq );
 	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_X_BASE_FREQ , data_temp) != 1)
 	{
 	}
 	// ----------- X ACC_P --------------
 	data_temp = (uint16_t)(APP_CalcValue[APP_SAMPLE_X_INDEX].ACC_P * 100);
+	Clog_Float("X ACC_P:" ,APP_CalcValue[APP_SAMPLE_X_INDEX].Displace_RMS);
 	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_X_ACC_P , data_temp) != 1)
 	{
 	}
 	// ----------- X ACC_RMS ------------
 	data_temp = (uint16_t)(APP_CalcValue[APP_SAMPLE_X_INDEX].ACC_RMS * 100);
+	Clog_Float("X ACC_RMS:" ,APP_CalcValue[APP_SAMPLE_X_INDEX].ACC_RMS);
 	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_X_ACC_RMS , data_temp) != 1)
 	{
 	}	
 	// ----------- X Velocity_RMS -------
 	data_temp = (uint16_t)(APP_CalcValue[APP_SAMPLE_X_INDEX].Velocity_RMS * 100);
+	Clog_Float("X Velocity_RMS:" ,APP_CalcValue[APP_SAMPLE_X_INDEX].Velocity_RMS);
 	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_X_VELOCITY_RMS , data_temp) != 1)
 	{
 	}	
 	// ----------- X Displace_PP -------
 	data_temp = (uint16_t)(APP_CalcValue[APP_SAMPLE_X_INDEX].Displace_PP * 100);
+	Clog_Float("X Displace_PP:" ,APP_CalcValue[APP_SAMPLE_X_INDEX].Displace_PP);
 	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_X_DISPLACE_PP , data_temp) != 1)
 	{
 	}	
 	// ----------- X Kurtosis Coe -------
 	data_temp = (uint16_t)(APP_CalcValue[APP_SAMPLE_X_INDEX].Kurtosis_Coefficient * 100);
+	Clog_Float("X Kurtosis_Coefficient:" ,APP_CalcValue[APP_SAMPLE_X_INDEX].Kurtosis_Coefficient);
 	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_X_KURTOSIS_COE , data_temp) != 1)
 	{
 	}	
 	// ----------- X Envelope -------
 	data_temp = (uint16_t)(APP_CalcValue[APP_SAMPLE_X_INDEX].Envelope * 100);
+	Clog_Float("X Envelope:" ,APP_CalcValue[APP_SAMPLE_X_INDEX].Envelope);
 	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_X_ENVELOPE , data_temp) != 1)
 	{
 	}	
 	// ----------- X Displace_RMS -------
 	data_temp = (uint16_t)(APP_CalcValue[APP_SAMPLE_X_INDEX].Displace_RMS * 100);
+	Clog_Float("X Displace_RMS:" ,APP_CalcValue[APP_SAMPLE_X_INDEX].Envelope);
 	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_X_DISPLACE_RMS , data_temp) != 1)
 	{
 	}
 	// ------------------------------------------------------
 	// ----------- Y base Freq ----------
 	data_temp = (uint16_t)APP_CalcValue[APP_SAMPLE_Y_INDEX].BaseFreq;
+	DEBUG("Y BaseFreq:%d\r\n" ,APP_CalcValue[APP_SAMPLE_Y_INDEX].BaseFreq );
 	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_Y_BASE_FREQ , data_temp) != 1)
 	{
 	}
 	// ----------- Y ACC_P --------------
 	data_temp = (uint16_t)(APP_CalcValue[APP_SAMPLE_Y_INDEX].ACC_P * 100);
+	Clog_Float("Y ACC_P:" ,APP_CalcValue[APP_SAMPLE_Y_INDEX].Envelope);
 	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_Y_ACC_P , data_temp) != 1)
 	{
 	}
 	// ----------- Y ACC_RMS ------------
 	data_temp = (uint16_t)(APP_CalcValue[APP_SAMPLE_Y_INDEX].ACC_RMS * 100);
+	Clog_Float("Y ACC_RMS:" ,APP_CalcValue[APP_SAMPLE_Y_INDEX].ACC_RMS);
 	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_Y_ACC_RMS , data_temp) != 1)
 	{
 	}	
 	// ----------- Y Velocity_RMS -------
 	data_temp = (uint16_t)(APP_CalcValue[APP_SAMPLE_Y_INDEX].Velocity_RMS * 100);
+	Clog_Float("Y Velocity_RMS:" ,APP_CalcValue[APP_SAMPLE_Y_INDEX].Velocity_RMS);
 	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_Y_VELOCITY_RMS , data_temp) != 1)
 	{
 	}	
 	// ----------- Y Displace_PP -------
 	data_temp = (uint16_t)(APP_CalcValue[APP_SAMPLE_Y_INDEX].Displace_PP * 100);
+	Clog_Float("Y Displace_PP:" ,APP_CalcValue[APP_SAMPLE_Y_INDEX].Displace_PP);
 	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_Y_DISPLACE_PP , data_temp) != 1)
 	{
 	}	
 	// ----------- Y Kurtosis Coe -------
 	data_temp = (uint16_t)(APP_CalcValue[APP_SAMPLE_Y_INDEX].Kurtosis_Coefficient * 100);
+	Clog_Float("Y Kurtosis_Coefficient:" ,APP_CalcValue[APP_SAMPLE_Y_INDEX].Kurtosis_Coefficient);
 	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_Y_KURTOSIS_COE , data_temp) != 1)
 	{
 	}	
 	// ----------- Y Envelope -------
 	data_temp = (uint16_t)(APP_CalcValue[APP_SAMPLE_Y_INDEX].Envelope * 100);
+	Clog_Float("Y Envelope:" ,APP_CalcValue[APP_SAMPLE_Y_INDEX].Envelope);
 	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_Y_ENVELOPE , data_temp) != 1)
 	{
 	}	
 	// ----------- Y Displace_RMS -------
 	data_temp = (uint16_t)(APP_CalcValue[APP_SAMPLE_Y_INDEX].Displace_RMS * 100);
+	Clog_Float("Y Displace_RMS:" ,APP_CalcValue[APP_SAMPLE_Y_INDEX].Displace_RMS);
 	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_Y_DISPLACE_RMS , data_temp) != 1)
 	{
 	}	
@@ -237,6 +262,7 @@ void APP_RefreshMB_Charateristic(void)
 	// ----------- Temperature ----------
 	float temperature = BSP_LMT01_GetValue();
 	data_temp = (int16_t)(temperature * 100);
+	Clog_Float("temperature:" ,temperature);
 	if( MB_WirteRegister(MBREGISTERINPUT, MB_REGINPUT_TEMPERATURE , (uint16_t)data_temp) != 1)
 	{
 	}	
@@ -319,7 +345,7 @@ void APP_RefreshMB_ConfParam(void)
 	}		
 	
 	// ----------- Temperature_C ----------
-	data_temp = (uint16_t)(g_SystemParam_Config.Temperature_C * 100);
+	data_temp = (int16_t)(g_SystemParam_Config.Temperature_C * 100);
 	if( MB_WirteRegister(MBREGISTERHOLDING, MB_REGHOLD_TEMPTERATURE , data_temp) != 1)
 	{
 	}		
@@ -344,7 +370,13 @@ void APP_RefreshMB_ConfParam(void)
 	data_temp = (uint16_t)(g_SystemParam_Config.StopBitCount );
 	if( MB_WirteRegister(MBREGISTERHOLDING, MB_REGHOLD_STOPBITCOUNT , data_temp) != 1)
 	{
-	}			
+	}
+	// ----------- X_ANGLE ----------
+	data_temp = (uint16_t)(g_SystemParam_Config.X_angle * 100);
+	if( MB_WirteRegister(MBREGISTERHOLDING, MB_REGHOLD_X_ANGLE , data_temp) != 1)
+	{
+	}	
+	
 }
 
 void APP_Refresh_MBtoSys(void)
@@ -410,7 +442,7 @@ void APP_Refresh_MBtoSys(void)
 	// ----------- Temperature_C ----------
 	if( MB_ReadRegister(MBREGISTERHOLDING, MB_REGHOLD_TEMPTERATURE , &data_temp) == 1)
 	{
-		g_SystemParam_Config.Temperature_C = (float)((float)data_temp / 100.0f);
+		g_SystemParam_Config.Temperature_C = (float)((float)((int16_t)data_temp / 100.0f));
 	}		
 	
 	// ----------- Waveform Interal ----------
@@ -447,7 +479,11 @@ void APP_Refresh_MBtoSys(void)
 			MB_WirteRegister(MBREGISTERHOLDING, MB_REGHOLD_DEVICE_REST , 0x0000); 
 		}
 	}		
-	
+	// ----------- X_ANGLE ----------
+	if( MB_ReadRegister(MBREGISTERHOLDING, MB_REGHOLD_X_ANGLE , &data_temp) == 1)
+	{
+		g_SystemParam_Config.X_angle = (float)((float)data_temp / 100.0f);
+	}		
 	
 	//SystemParam_Save();	
 }

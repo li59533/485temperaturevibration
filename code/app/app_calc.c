@@ -116,6 +116,11 @@ void APP_Calc_Process(void)
 	float *testOutput = 0;
 	float *testOutput_2 = 0;
 	float * fftcalc_space = 0;
+	float cosx = 0;
+	float sinx = 0;
+	
+	cosx = arm_cos_f32(g_SystemParam_Config.X_angle);
+	sinx = arm_sin_f32(g_SystemParam_Config.X_angle);
 	
 	fftcalc_space =  pvPortMalloc(sizeof(float) * APP_SAMPLE_CHANNEL_0_RATE * 2);
 	emu_inter_data = pvPortMalloc(sizeof(float) * APP_SAMPLE_CHANNEL_0_RATE); //vPortFree()
@@ -159,6 +164,9 @@ void APP_Calc_Process(void)
 		if(APP_Sample_buf.Sample_Channel_buf[channel_index].cur_dataPtr >=0 &&\
 			APP_Sample_buf.Sample_Channel_buf[channel_index].cur_dataPtr < APP_SAMPLE_CHANNEL_0_RATE)
 		{
+			
+			
+			
 			for(uint16_t i = 0 ; i < APP_SAMPLE_CHANNEL_0_RATE ; i ++)
 			{
 				emu_inter_data[i] = (float)APP_Sample_buf.Sample_Channel_buf[channel_index].originalData[i + 4096] * APP_CALC_ADC_SCALEFACTOR * Axial_Sensitivity[channel_index];
@@ -166,6 +174,9 @@ void APP_Calc_Process(void)
 		}
 		else
 		{
+			
+			
+			
 			for(uint16_t i = 0 ; i < APP_SAMPLE_CHANNEL_0_RATE ; i ++)
 			{
 				emu_inter_data[i] = (float)APP_Sample_buf.Sample_Channel_buf[channel_index].originalData[i] * APP_CALC_ADC_SCALEFACTOR * Axial_Sensitivity[channel_index];
@@ -175,13 +186,89 @@ void APP_Calc_Process(void)
 		// --------------Get ACC without bias -----------
 		float * mean_value = 0;
 		mean_value = pvPortMalloc(sizeof(float) * 1); //vPortFree()
-		arm_mean_f32(emu_inter_data ,APP_SAMPLE_CHANNEL_0_RATE ,  mean_value);
-		//Clog_Float("MeanValue:", *mean_value);
-		
-		for(uint16_t i = 0; i < APP_SAMPLE_CHANNEL_0_RATE ; i ++ )
+		if(channel_index == APP_SAMPLE_X_INDEX)
 		{
-			emu_inter_data[i] -= *mean_value;
+			if(APP_Sample_buf.Sample_Channel_buf[APP_SAMPLE_X_INDEX].cur_dataPtr >=0 &&\
+				APP_Sample_buf.Sample_Channel_buf[APP_SAMPLE_X_INDEX].cur_dataPtr < APP_SAMPLE_CHANNEL_0_RATE)
+			{
+				for(uint16_t i = 0 ; i < APP_SAMPLE_CHANNEL_0_RATE ; i ++)
+				{
+					testOutput_2[i] = (float)APP_Sample_buf.Sample_Channel_buf[APP_SAMPLE_Y_INDEX].originalData[i + 4096] * APP_CALC_ADC_SCALEFACTOR * Axial_Sensitivity[APP_SAMPLE_Y_INDEX];
+				}
+			}
+			else
+			{
+
+				for(uint16_t i = 0 ; i < APP_SAMPLE_CHANNEL_0_RATE ; i ++)
+				{
+					testOutput_2[i] = (float)APP_Sample_buf.Sample_Channel_buf[APP_SAMPLE_Y_INDEX].originalData[i] * APP_CALC_ADC_SCALEFACTOR * Axial_Sensitivity[APP_SAMPLE_Y_INDEX];
+				}		
+			}	
+
+			arm_mean_f32(emu_inter_data ,APP_SAMPLE_CHANNEL_0_RATE ,  mean_value);
+			for(uint16_t i = 0; i < APP_SAMPLE_CHANNEL_0_RATE ; i ++ )
+			{
+				emu_inter_data[i] -= *mean_value;
+			}			
+
+			arm_mean_f32(testOutput_2 ,APP_SAMPLE_CHANNEL_0_RATE ,  mean_value);
+			for(uint16_t i = 0; i < APP_SAMPLE_CHANNEL_0_RATE ; i ++ )
+			{
+				testOutput_2[i] -= *mean_value;
+			}
+			
+			for(uint16_t i = 0 ; i < APP_SAMPLE_CHANNEL_0_RATE ; i ++)
+			{
+				emu_inter_data[i] = emu_inter_data[i] * cosx + testOutput_2[i] * sinx;
+			}
 		}
+		else if(channel_index == APP_SAMPLE_Y_INDEX)
+		{
+			if(APP_Sample_buf.Sample_Channel_buf[APP_SAMPLE_Y_INDEX].cur_dataPtr >=0 &&\
+				APP_Sample_buf.Sample_Channel_buf[APP_SAMPLE_Y_INDEX].cur_dataPtr < APP_SAMPLE_CHANNEL_0_RATE)
+			{
+				for(uint16_t i = 0 ; i < APP_SAMPLE_CHANNEL_0_RATE ; i ++)
+				{
+					testOutput_2[i] = (float)APP_Sample_buf.Sample_Channel_buf[APP_SAMPLE_X_INDEX].originalData[i + 4096] * APP_CALC_ADC_SCALEFACTOR * Axial_Sensitivity[APP_SAMPLE_X_INDEX];
+				}
+			}
+			else
+			{
+
+				for(uint16_t i = 0 ; i < APP_SAMPLE_CHANNEL_0_RATE ; i ++)
+				{
+					testOutput_2[i] = (float)APP_Sample_buf.Sample_Channel_buf[APP_SAMPLE_X_INDEX].originalData[i] * APP_CALC_ADC_SCALEFACTOR * Axial_Sensitivity[APP_SAMPLE_X_INDEX];
+				}		
+			}	
+
+			arm_mean_f32(emu_inter_data ,APP_SAMPLE_CHANNEL_0_RATE ,  mean_value);
+			for(uint16_t i = 0; i < APP_SAMPLE_CHANNEL_0_RATE ; i ++ )
+			{
+				emu_inter_data[i] -= *mean_value;
+			}			
+
+			arm_mean_f32(testOutput_2 ,APP_SAMPLE_CHANNEL_0_RATE ,  mean_value);
+			for(uint16_t i = 0; i < APP_SAMPLE_CHANNEL_0_RATE ; i ++ )
+			{
+				testOutput_2[i] -= *mean_value;
+			}
+			
+			for(uint16_t i = 0 ; i < APP_SAMPLE_CHANNEL_0_RATE ; i ++)
+			{
+				emu_inter_data[i] = emu_inter_data[i] * cosx + testOutput_2[i] * sinx;
+			}			
+		}
+		else
+		{
+			arm_mean_f32(emu_inter_data ,APP_SAMPLE_CHANNEL_0_RATE ,  mean_value);
+			//Clog_Float("MeanValue:", *mean_value);
+			
+			for(uint16_t i = 0; i < APP_SAMPLE_CHANNEL_0_RATE ; i ++ )
+			{
+				emu_inter_data[i] -= *mean_value;
+			}			
+		}
+		
 		vPortFree(mean_value);
 		
 		

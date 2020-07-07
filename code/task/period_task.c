@@ -121,7 +121,7 @@ uint32_t Period_Task_Init(void)
 	BaseType_t basetype = { 0 };
 	basetype = xTaskCreate(Period_Task,\
 							"Period_Task",\
-							64,
+							1024,
 							NULL,
 							1,
 							&Period_Task_Handle);
@@ -143,6 +143,7 @@ uint32_t Period_Task_Init(void)
 void Period_Task(void * pvParameter)
 {
 	DEBUG("Period Task Enter\r\n");
+	BSP_LMT01_Power_ON();
 	while(1)
 	{
 		//DEBUG("Period Task Looping\r\n");

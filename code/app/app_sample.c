@@ -175,7 +175,7 @@ void APP_GetOriginalData( uint16_t data)
 		Sample_Task_Event_Start( SAMPLE_TASK_CALC_EVENT, EVENT_FROM_ISR);
 	}
 	 // ---test code---
-	waveform[app_sample_rank[APP_Sample_buf.cur_channel]] = data;
+	//waveform[app_sample_rank[APP_Sample_buf.cur_channel]] = data;
 	 // ---------------
 	APP_SetNextQriginalChannel_Process();
 }

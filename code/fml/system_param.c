@@ -75,9 +75,9 @@
 const SystemParam_Config_t SystemParam_Config_Default = 
 {
 	.MB_Slave_ID = 0x01,
-	.X_Axial_Sensitivity = 132.0f,
-	.Y_Axial_Sensitivity = 132.0f,
-	.Z_Axial_Sensitivity = 132.0f,
+	.X_Axial_Sensitivity = 13.20f,
+	.Y_Axial_Sensitivity = 13.20f,
+	.Z_Axial_Sensitivity = 13.20f,
 	.FFT_V_LowPass = 1000,
 	.FFT_V_HighPass = 4,
 	.FFT_X_LowPass = 1000,
@@ -88,6 +88,7 @@ const SystemParam_Config_t SystemParam_Config_Default =
 	.BaudRate_Bps = 2 ,
 	.ParityMode = 0,
 	.StopBitCount = 1,
+	.X_angle = 0,
 };
 /**
  * @}

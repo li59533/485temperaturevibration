@@ -53,6 +53,7 @@ typedef enum
 	MB_REGHOLD_PARITYMODE		= 19 ,
 	MB_REGHOLD_STOPBITCOUNT     = 20 ,
 	MB_REGHOLD_DEVICE_REST		= 21 , 
+	MB_REGHOLD_X_ANGLE			= 22 ,
 }MB_Reg_Hold_e;
 
 // -----------------------------

@@ -118,7 +118,7 @@ uint32_t Hal_Task_Init(void)
 	BaseType_t basetype = { 0 };
 	basetype = xTaskCreate(Hal_Task,\
 							"Hal Task",\
-							512,
+							1024,
 							NULL,
 							1,
 							&Hal_Task_Handle);

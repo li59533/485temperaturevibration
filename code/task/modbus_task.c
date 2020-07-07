@@ -117,7 +117,7 @@ uint32_t Modbus_Task_Init(void)
 	BaseType_t basetype = { 0 };
 	basetype = xTaskCreate(Modbus_Task,\
 							"Modbus Task",\
-							256,
+							1024,
 							NULL,
 							configMAX_PRIORITIES - 1,
 							&Modbus_Task_Handle);

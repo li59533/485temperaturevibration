@@ -152,18 +152,34 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>215</LineNumber>
+          <LineNumber>348</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>14786</Address>
+          <Address>13086</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\bsp\bsp_lmt01.c</Filename>
+          <Filename>..\app\app_refresh.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\MK24FN256\../bsp/bsp_lmt01.c\215</Expression>
+          <Expression>\\MK24FN256\../app/app_refresh.c\348</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>445</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>13540</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\app\app_refresh.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\MK24FN256\../app/app_refresh.c\445</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>

@@ -121,7 +121,7 @@ uint32_t Sample_Task_Init(void)
 	BaseType_t basetype = { 0 };
 	basetype = xTaskCreate(Sample_Task,\
 							"Sample Task",\
-							256,
+							1024,
 							NULL,
 							configMAX_PRIORITIES - 1,
 							&Sample_Task_Handle);

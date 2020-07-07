@@ -241,12 +241,12 @@ float BSP_LMT01_GetValue(void)
 
 void PORTB_IRQHandler(void)
 {
-	if((PORT_GetPinsInterruptFlags(PORTB) & (0x01 << 7) )== (0x01 << 7))
+	if((PORT_GetPinsInterruptFlags(PORTB) & (0x01 << 8) )== (0x01 << 8))
 	{
 		//DEBUG("PORTC_PORTD_IRQHandler");
 		bsp_lmt01_data.lmt01_pulse_count ++;
 		bsp_lmt01_data.lmt01_pulse_status = LMT01_Pulse_ON;
-		PORT_ClearPinsInterruptFlags( PORTB, (0x01 << 7));
+		PORT_ClearPinsInterruptFlags( PORTB, (0x01 << 8));
 	}
 }
 

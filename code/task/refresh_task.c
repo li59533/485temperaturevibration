@@ -121,7 +121,7 @@ uint32_t Refresh_Task_Init(void)
 	BaseType_t basetype = { 0 };
 	basetype = xTaskCreate(Refresh_Task,\
 							"Refresh Task",\
-							128,
+							1024,
 							NULL,
 							1,
 							&Refresh_Task_Handle);
