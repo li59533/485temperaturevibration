@@ -54,6 +54,10 @@ typedef enum
 	MB_REGHOLD_STOPBITCOUNT     = 20 ,
 	MB_REGHOLD_DEVICE_REST		= 21 , 
 	MB_REGHOLD_X_ANGLE			= 22 ,
+	MB_REGHOLD_Z_SELF_CAL		= 23 ,
+	MB_REGHOLD_X_SELF_CAL		= 24 ,
+	MB_REGHOLD_Y_SELF_CAL		= 25 ,
+	
 }MB_Reg_Hold_e;
 
 // -----------------------------

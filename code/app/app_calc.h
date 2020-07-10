@@ -74,6 +74,9 @@ extern APP_CalcValue_t APP_CalcValue[] ;
  * @{  
  */
 void APP_Calc_Process(void);
+void APP_Calc_Z_SelfCal(void);
+void APP_Calc_X_SelfCal(void);
+void APP_Calc_Y_SelfCal(void);
 
 /**
  * @}

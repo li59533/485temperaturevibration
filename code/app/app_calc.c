@@ -374,6 +374,52 @@ void APP_Calc_Process(void)
 }
 
 
+void APP_Calc_Z_SelfCal(void)
+{
+	float difvalue ;
+	float abs_value ; 
+	float cur_value ;
+	cur_value = APP_CalcValue[APP_SAMPLE_Z_INDEX].ACC_RMS;
+	difvalue =  cur_value - 9.8f;
+	arm_abs_f32(&difvalue ,&abs_value , 1);
+	if(abs_value <= 2.0f)
+	{
+		g_SystemParam_Config.Z_Axial_Sensitivity = cur_value / 9.8f * g_SystemParam_Config.Z_Axial_Sensitivity;
+	
+	}
+}
+
+void APP_Calc_X_SelfCal(void)
+{
+	float difvalue ;
+	float abs_value ; 
+	float cur_value ;
+	cur_value = APP_CalcValue[APP_SAMPLE_X_INDEX].ACC_RMS;
+	difvalue =  cur_value - 9.8f;
+	arm_abs_f32(&difvalue ,&abs_value , 1);
+	if(abs_value <= 2.0f)
+	{
+		g_SystemParam_Config.X_Axial_Sensitivity = cur_value / 9.8f * g_SystemParam_Config.X_Axial_Sensitivity;
+	
+	}
+}
+
+void APP_Calc_Y_SelfCal(void)
+{
+	float difvalue ;
+	float abs_value ; 
+	float cur_value ;
+	cur_value = APP_CalcValue[APP_SAMPLE_Y_INDEX].ACC_RMS;
+	difvalue =  cur_value - 9.8f;
+	arm_abs_f32(&difvalue ,&abs_value , 1);
+	if(abs_value <= 2.0f)
+	{
+		g_SystemParam_Config.Y_Axial_Sensitivity = cur_value / 9.8f * g_SystemParam_Config.Y_Axial_Sensitivity;
+	
+	}
+}
+
+
 /**
  * @}
  */

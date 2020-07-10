@@ -467,7 +467,7 @@ void APP_Refresh_MBtoSys(void)
 		g_SystemParam_Config.StopBitCount = (uint8_t)data_temp ; 
 	}		
 	
-	// ----------- StopbitCount ----------
+	// ----------- Hal_Rest ----------
 	if( MB_ReadRegister(MBREGISTERHOLDING, MB_REGHOLD_DEVICE_REST , &data_temp) == 1)
 	{
 		if(data_temp == 0x0001)
@@ -484,6 +484,46 @@ void APP_Refresh_MBtoSys(void)
 	{
 		g_SystemParam_Config.X_angle = (float)((float)data_temp / 100.0f);
 	}		
+	
+	// ------------ Z self Cal ---------
+	if( MB_ReadRegister(MBREGISTERHOLDING, MB_REGHOLD_Z_SELF_CAL , &data_temp) == 1)
+	{
+		if(data_temp == 0x0001)
+		{
+			APP_Calc_Z_SelfCal();
+		}
+		else
+		{
+			
+		}	
+		MB_WirteRegister(MBREGISTERHOLDING, MB_REGHOLD_Z_SELF_CAL , 0x0000); 
+	}		
+	// ------------ X self Cal ---------
+	if( MB_ReadRegister(MBREGISTERHOLDING, MB_REGHOLD_X_SELF_CAL , &data_temp) == 1)
+	{
+		if(data_temp == 0x0001)
+		{
+			APP_Calc_X_SelfCal();
+		}
+		else
+		{
+			
+		}	
+		MB_WirteRegister(MBREGISTERHOLDING, MB_REGHOLD_X_SELF_CAL , 0x0000); 
+	}			
+	// ------------ Y self Cal ---------
+	if( MB_ReadRegister(MBREGISTERHOLDING, MB_REGHOLD_Y_SELF_CAL , &data_temp) == 1)
+	{
+		if(data_temp == 0x0001)
+		{
+			APP_Calc_Y_SelfCal();
+		}
+		else
+		{
+			
+		}	
+		MB_WirteRegister(MBREGISTERHOLDING, MB_REGHOLD_Y_SELF_CAL , 0x0000); 
+	}				
 	
 	//SystemParam_Save();	
 }
