@@ -570,5 +570,28 @@ namespace Serialtool
                 MessageBox.Show("No Slave ID");
             }
         }
+
+        private void btn_rest_Click(object sender, EventArgs e)
+        {
+
+            if (tbx_mbslaveid.TextLength > 0)
+            {
+                byte slaveid = Convert.ToByte(tbx_mbslaveid.Text.Trim());
+
+                try
+                {
+                    serial_1.master.WriteSingleRegister(slaveid, 21, 0x0001);
+                    MessageBox.Show("命令已下发");
+                }
+                catch
+                {
+                    MessageBox.Show("Failed");
+                }
+            }
+            else
+            {
+                MessageBox.Show("No Slave ID");
+            }
+        }
     }
 }

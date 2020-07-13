@@ -75,6 +75,17 @@
             this.label18 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.btn_change_ysen = new System.Windows.Forms.Button();
+            this.label22 = new System.Windows.Forms.Label();
+            this.btn_change_xsen = new System.Windows.Forms.Button();
+            this.label23 = new System.Windows.Forms.Label();
+            this.btn_change_zsen = new System.Windows.Forms.Button();
+            this.tbx_cur_zsen = new System.Windows.Forms.TextBox();
+            this.btn_refresh_sen = new System.Windows.Forms.Button();
+            this.tbx_cur_xsen = new System.Windows.Forms.TextBox();
+            this.tbx_cur_ysen = new System.Windows.Forms.TextBox();
             this.btn_yselcal = new System.Windows.Forms.Button();
             this.btn_xselcal = new System.Windows.Forms.Button();
             this.btn_zselcal = new System.Windows.Forms.Button();
@@ -90,17 +101,7 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.tmr_getvalue = new System.Windows.Forms.Timer(this.components);
-            this.label21 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.tbx_cur_zsen = new System.Windows.Forms.TextBox();
-            this.tbx_cur_xsen = new System.Windows.Forms.TextBox();
-            this.tbx_cur_ysen = new System.Windows.Forms.TextBox();
-            this.btn_refresh_sen = new System.Windows.Forms.Button();
-            this.btn_change_zsen = new System.Windows.Forms.Button();
-            this.btn_change_xsen = new System.Windows.Forms.Button();
-            this.btn_change_ysen = new System.Windows.Forms.Button();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.btn_rest = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -110,8 +111,8 @@
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.tabPage3.SuspendLayout();
-            this.groupBox7.SuspendLayout();
             this.groupBox8.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -586,6 +587,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.btn_rest);
             this.tabPage3.Controls.Add(this.groupBox8);
             this.tabPage3.Controls.Add(this.btn_yselcal);
             this.tabPage3.Controls.Add(this.btn_xselcal);
@@ -598,6 +600,120 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "ShowValue";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.label21);
+            this.groupBox8.Controls.Add(this.btn_change_ysen);
+            this.groupBox8.Controls.Add(this.label22);
+            this.groupBox8.Controls.Add(this.btn_change_xsen);
+            this.groupBox8.Controls.Add(this.label23);
+            this.groupBox8.Controls.Add(this.btn_change_zsen);
+            this.groupBox8.Controls.Add(this.tbx_cur_zsen);
+            this.groupBox8.Controls.Add(this.btn_refresh_sen);
+            this.groupBox8.Controls.Add(this.tbx_cur_xsen);
+            this.groupBox8.Controls.Add(this.tbx_cur_ysen);
+            this.groupBox8.Location = new System.Drawing.Point(6, 283);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(296, 104);
+            this.groupBox8.TabIndex = 14;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "手动校准";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(6, 20);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(87, 17);
+            this.label21.TabIndex = 4;
+            this.label21.Text = "当前Z轴灵敏度";
+            // 
+            // btn_change_ysen
+            // 
+            this.btn_change_ysen.Font = new System.Drawing.Font("苹方字体", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn_change_ysen.Location = new System.Drawing.Point(229, 71);
+            this.btn_change_ysen.Name = "btn_change_ysen";
+            this.btn_change_ysen.Size = new System.Drawing.Size(60, 23);
+            this.btn_change_ysen.TabIndex = 13;
+            this.btn_change_ysen.Text = "修改";
+            this.btn_change_ysen.UseVisualStyleBackColor = true;
+            this.btn_change_ysen.Click += new System.EventHandler(this.btn_change_ysen_Click);
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(6, 48);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(87, 17);
+            this.label22.TabIndex = 5;
+            this.label22.Text = "当前X轴灵敏度";
+            // 
+            // btn_change_xsen
+            // 
+            this.btn_change_xsen.Font = new System.Drawing.Font("苹方字体", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn_change_xsen.Location = new System.Drawing.Point(229, 43);
+            this.btn_change_xsen.Name = "btn_change_xsen";
+            this.btn_change_xsen.Size = new System.Drawing.Size(60, 23);
+            this.btn_change_xsen.TabIndex = 12;
+            this.btn_change_xsen.Text = "修改";
+            this.btn_change_xsen.UseVisualStyleBackColor = true;
+            this.btn_change_xsen.Click += new System.EventHandler(this.btn_change_xsen_Click);
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(6, 76);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(88, 17);
+            this.label23.TabIndex = 6;
+            this.label23.Text = "当前Y轴灵敏度";
+            // 
+            // btn_change_zsen
+            // 
+            this.btn_change_zsen.Font = new System.Drawing.Font("苹方字体", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn_change_zsen.Location = new System.Drawing.Point(229, 15);
+            this.btn_change_zsen.Name = "btn_change_zsen";
+            this.btn_change_zsen.Size = new System.Drawing.Size(60, 23);
+            this.btn_change_zsen.TabIndex = 11;
+            this.btn_change_zsen.Text = "修改";
+            this.btn_change_zsen.UseVisualStyleBackColor = true;
+            this.btn_change_zsen.Click += new System.EventHandler(this.btn_change_zsen_Click);
+            // 
+            // tbx_cur_zsen
+            // 
+            this.tbx_cur_zsen.Location = new System.Drawing.Point(90, 16);
+            this.tbx_cur_zsen.Name = "tbx_cur_zsen";
+            this.tbx_cur_zsen.ReadOnly = true;
+            this.tbx_cur_zsen.Size = new System.Drawing.Size(100, 24);
+            this.tbx_cur_zsen.TabIndex = 7;
+            // 
+            // btn_refresh_sen
+            // 
+            this.btn_refresh_sen.Font = new System.Drawing.Font("苹方字体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn_refresh_sen.Location = new System.Drawing.Point(196, 15);
+            this.btn_refresh_sen.Name = "btn_refresh_sen";
+            this.btn_refresh_sen.Size = new System.Drawing.Size(27, 78);
+            this.btn_refresh_sen.TabIndex = 10;
+            this.btn_refresh_sen.Text = "刷新";
+            this.btn_refresh_sen.UseVisualStyleBackColor = true;
+            this.btn_refresh_sen.Click += new System.EventHandler(this.btn_refresh_sen_Click);
+            // 
+            // tbx_cur_xsen
+            // 
+            this.tbx_cur_xsen.Location = new System.Drawing.Point(90, 44);
+            this.tbx_cur_xsen.Name = "tbx_cur_xsen";
+            this.tbx_cur_xsen.ReadOnly = true;
+            this.tbx_cur_xsen.Size = new System.Drawing.Size(100, 24);
+            this.tbx_cur_xsen.TabIndex = 8;
+            // 
+            // tbx_cur_ysen
+            // 
+            this.tbx_cur_ysen.Location = new System.Drawing.Point(90, 72);
+            this.tbx_cur_ysen.Name = "tbx_cur_ysen";
+            this.tbx_cur_ysen.ReadOnly = true;
+            this.tbx_cur_ysen.Size = new System.Drawing.Size(100, 24);
+            this.tbx_cur_ysen.TabIndex = 9;
             // 
             // btn_yselcal
             // 
@@ -721,126 +837,22 @@
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(101, 14);
             this.label20.TabIndex = 5;
-            this.label20.Text = "tool Version ： 0.0.1";
+            this.label20.Text = "tool Version ： 0.0.2";
             // 
             // tmr_getvalue
             // 
             this.tmr_getvalue.Interval = 1000;
             this.tmr_getvalue.Tick += new System.EventHandler(this.tmr_getvalue_Tick);
             // 
-            // label21
+            // btn_rest
             // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(6, 20);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(87, 17);
-            this.label21.TabIndex = 4;
-            this.label21.Text = "当前Z轴灵敏度";
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(6, 48);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(87, 17);
-            this.label22.TabIndex = 5;
-            this.label22.Text = "当前X轴灵敏度";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(6, 76);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(88, 17);
-            this.label23.TabIndex = 6;
-            this.label23.Text = "当前Y轴灵敏度";
-            // 
-            // tbx_cur_zsen
-            // 
-            this.tbx_cur_zsen.Location = new System.Drawing.Point(90, 16);
-            this.tbx_cur_zsen.Name = "tbx_cur_zsen";
-            this.tbx_cur_zsen.ReadOnly = true;
-            this.tbx_cur_zsen.Size = new System.Drawing.Size(100, 24);
-            this.tbx_cur_zsen.TabIndex = 7;
-            // 
-            // tbx_cur_xsen
-            // 
-            this.tbx_cur_xsen.Location = new System.Drawing.Point(90, 44);
-            this.tbx_cur_xsen.Name = "tbx_cur_xsen";
-            this.tbx_cur_xsen.ReadOnly = true;
-            this.tbx_cur_xsen.Size = new System.Drawing.Size(100, 24);
-            this.tbx_cur_xsen.TabIndex = 8;
-            // 
-            // tbx_cur_ysen
-            // 
-            this.tbx_cur_ysen.Location = new System.Drawing.Point(90, 72);
-            this.tbx_cur_ysen.Name = "tbx_cur_ysen";
-            this.tbx_cur_ysen.ReadOnly = true;
-            this.tbx_cur_ysen.Size = new System.Drawing.Size(100, 24);
-            this.tbx_cur_ysen.TabIndex = 9;
-            // 
-            // btn_refresh_sen
-            // 
-            this.btn_refresh_sen.Font = new System.Drawing.Font("苹方字体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn_refresh_sen.Location = new System.Drawing.Point(196, 15);
-            this.btn_refresh_sen.Name = "btn_refresh_sen";
-            this.btn_refresh_sen.Size = new System.Drawing.Size(27, 78);
-            this.btn_refresh_sen.TabIndex = 10;
-            this.btn_refresh_sen.Text = "刷新";
-            this.btn_refresh_sen.UseVisualStyleBackColor = true;
-            this.btn_refresh_sen.Click += new System.EventHandler(this.btn_refresh_sen_Click);
-            // 
-            // btn_change_zsen
-            // 
-            this.btn_change_zsen.Font = new System.Drawing.Font("苹方字体", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn_change_zsen.Location = new System.Drawing.Point(229, 15);
-            this.btn_change_zsen.Name = "btn_change_zsen";
-            this.btn_change_zsen.Size = new System.Drawing.Size(60, 23);
-            this.btn_change_zsen.TabIndex = 11;
-            this.btn_change_zsen.Text = "修改";
-            this.btn_change_zsen.UseVisualStyleBackColor = true;
-            this.btn_change_zsen.Click += new System.EventHandler(this.btn_change_zsen_Click);
-            // 
-            // btn_change_xsen
-            // 
-            this.btn_change_xsen.Font = new System.Drawing.Font("苹方字体", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn_change_xsen.Location = new System.Drawing.Point(229, 43);
-            this.btn_change_xsen.Name = "btn_change_xsen";
-            this.btn_change_xsen.Size = new System.Drawing.Size(60, 23);
-            this.btn_change_xsen.TabIndex = 12;
-            this.btn_change_xsen.Text = "修改";
-            this.btn_change_xsen.UseVisualStyleBackColor = true;
-            this.btn_change_xsen.Click += new System.EventHandler(this.btn_change_xsen_Click);
-            // 
-            // btn_change_ysen
-            // 
-            this.btn_change_ysen.Font = new System.Drawing.Font("苹方字体", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn_change_ysen.Location = new System.Drawing.Point(229, 71);
-            this.btn_change_ysen.Name = "btn_change_ysen";
-            this.btn_change_ysen.Size = new System.Drawing.Size(60, 23);
-            this.btn_change_ysen.TabIndex = 13;
-            this.btn_change_ysen.Text = "修改";
-            this.btn_change_ysen.UseVisualStyleBackColor = true;
-            this.btn_change_ysen.Click += new System.EventHandler(this.btn_change_ysen_Click);
-            // 
-            // groupBox8
-            // 
-            this.groupBox8.Controls.Add(this.label21);
-            this.groupBox8.Controls.Add(this.btn_change_ysen);
-            this.groupBox8.Controls.Add(this.label22);
-            this.groupBox8.Controls.Add(this.btn_change_xsen);
-            this.groupBox8.Controls.Add(this.label23);
-            this.groupBox8.Controls.Add(this.btn_change_zsen);
-            this.groupBox8.Controls.Add(this.tbx_cur_zsen);
-            this.groupBox8.Controls.Add(this.btn_refresh_sen);
-            this.groupBox8.Controls.Add(this.tbx_cur_xsen);
-            this.groupBox8.Controls.Add(this.tbx_cur_ysen);
-            this.groupBox8.Location = new System.Drawing.Point(6, 283);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(296, 104);
-            this.groupBox8.TabIndex = 14;
-            this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "手动校准";
+            this.btn_rest.Location = new System.Drawing.Point(519, 221);
+            this.btn_rest.Name = "btn_rest";
+            this.btn_rest.Size = new System.Drawing.Size(106, 56);
+            this.btn_rest.TabIndex = 15;
+            this.btn_rest.Text = "设备重启";
+            this.btn_rest.UseVisualStyleBackColor = true;
+            this.btn_rest.Click += new System.EventHandler(this.btn_rest_Click);
             // 
             // Form1
             // 
@@ -852,7 +864,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "R101_Conftool";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -868,10 +880,10 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.tabPage3.ResumeLayout(false);
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -951,6 +963,7 @@
         private System.Windows.Forms.Button btn_change_zsen;
         private System.Windows.Forms.Button btn_refresh_sen;
         private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.Button btn_rest;
     }
 }
 
