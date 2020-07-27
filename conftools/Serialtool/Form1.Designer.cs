@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btn_getcom = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.btn_serial_sw = new System.Windows.Forms.Button();
             this.cbx_comx = new System.Windows.Forms.ComboBox();
@@ -75,6 +76,15 @@
             this.label18 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.btn_errclear = new System.Windows.Forms.Button();
+            this.lab_prob = new System.Windows.Forms.Label();
+            this.lab_getcount = new System.Windows.Forms.Label();
+            this.lab_errcount = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.btn_rest = new System.Windows.Forms.Button();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.label21 = new System.Windows.Forms.Label();
             this.btn_change_ysen = new System.Windows.Forms.Button();
@@ -101,7 +111,7 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.tmr_getvalue = new System.Windows.Forms.Timer(this.components);
-            this.btn_rest = new System.Windows.Forms.Button();
+            this.btn_changeslaveid = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -111,12 +121,14 @@
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.groupBox9.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btn_getcom);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.btn_serial_sw);
             this.groupBox1.Controls.Add(this.cbx_comx);
@@ -124,15 +136,25 @@
             this.groupBox1.Font = new System.Drawing.Font("苹方字体", 7.999999F);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(116, 110);
+            this.groupBox1.Size = new System.Drawing.Size(116, 132);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Serial_Information";
             // 
+            // btn_getcom
+            // 
+            this.btn_getcom.Location = new System.Drawing.Point(6, 55);
+            this.btn_getcom.Name = "btn_getcom";
+            this.btn_getcom.Size = new System.Drawing.Size(96, 12);
+            this.btn_getcom.TabIndex = 4;
+            this.btn_getcom.Text = "-";
+            this.btn_getcom.UseVisualStyleBackColor = true;
+            this.btn_getcom.Click += new System.EventHandler(this.btn_getcom_Click);
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 91);
+            this.label2.Location = new System.Drawing.Point(6, 110);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(101, 16);
             this.label2.TabIndex = 3;
@@ -140,9 +162,9 @@
             // 
             // btn_serial_sw
             // 
-            this.btn_serial_sw.Location = new System.Drawing.Point(9, 54);
+            this.btn_serial_sw.Location = new System.Drawing.Point(6, 73);
             this.btn_serial_sw.Name = "btn_serial_sw";
-            this.btn_serial_sw.Size = new System.Drawing.Size(98, 34);
+            this.btn_serial_sw.Size = new System.Drawing.Size(96, 34);
             this.btn_serial_sw.TabIndex = 2;
             this.btn_serial_sw.Text = "Open";
             this.btn_serial_sw.UseVisualStyleBackColor = true;
@@ -153,7 +175,7 @@
             this.cbx_comx.FormattingEnabled = true;
             this.cbx_comx.Location = new System.Drawing.Point(35, 28);
             this.cbx_comx.Name = "cbx_comx";
-            this.cbx_comx.Size = new System.Drawing.Size(60, 24);
+            this.cbx_comx.Size = new System.Drawing.Size(67, 24);
             this.cbx_comx.TabIndex = 1;
             // 
             // label1
@@ -412,6 +434,7 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.btn_changeslaveid);
             this.groupBox4.Controls.Add(this.tbx_version);
             this.groupBox4.Controls.Add(this.tbx_sncode);
             this.groupBox4.Controls.Add(this.tbx_slaveid);
@@ -587,6 +610,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.groupBox9);
             this.tabPage3.Controls.Add(this.btn_rest);
             this.tabPage3.Controls.Add(this.groupBox8);
             this.tabPage3.Controls.Add(this.btn_yselcal);
@@ -600,6 +624,96 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "ShowValue";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.btn_errclear);
+            this.groupBox9.Controls.Add(this.lab_prob);
+            this.groupBox9.Controls.Add(this.lab_getcount);
+            this.groupBox9.Controls.Add(this.lab_errcount);
+            this.groupBox9.Controls.Add(this.label26);
+            this.groupBox9.Controls.Add(this.label25);
+            this.groupBox9.Controls.Add(this.label24);
+            this.groupBox9.Location = new System.Drawing.Point(440, 303);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(200, 100);
+            this.groupBox9.TabIndex = 18;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "获取数据出错次数";
+            // 
+            // btn_errclear
+            // 
+            this.btn_errclear.Location = new System.Drawing.Point(125, 23);
+            this.btn_errclear.Name = "btn_errclear";
+            this.btn_errclear.Size = new System.Drawing.Size(51, 61);
+            this.btn_errclear.TabIndex = 17;
+            this.btn_errclear.Text = "清除";
+            this.btn_errclear.UseVisualStyleBackColor = true;
+            this.btn_errclear.Click += new System.EventHandler(this.btn_errclear_Click);
+            // 
+            // lab_prob
+            // 
+            this.lab_prob.AutoSize = true;
+            this.lab_prob.Location = new System.Drawing.Point(65, 66);
+            this.lab_prob.Name = "lab_prob";
+            this.lab_prob.Size = new System.Drawing.Size(22, 17);
+            this.lab_prob.TabIndex = 22;
+            this.lab_prob.Text = "--";
+            // 
+            // lab_getcount
+            // 
+            this.lab_getcount.AutoSize = true;
+            this.lab_getcount.Location = new System.Drawing.Point(65, 45);
+            this.lab_getcount.Name = "lab_getcount";
+            this.lab_getcount.Size = new System.Drawing.Size(22, 17);
+            this.lab_getcount.TabIndex = 21;
+            this.lab_getcount.Text = "--";
+            // 
+            // lab_errcount
+            // 
+            this.lab_errcount.AutoSize = true;
+            this.lab_errcount.Location = new System.Drawing.Point(65, 23);
+            this.lab_errcount.Name = "lab_errcount";
+            this.lab_errcount.Size = new System.Drawing.Size(22, 17);
+            this.lab_errcount.TabIndex = 16;
+            this.lab_errcount.Text = "--";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(6, 66);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(44, 17);
+            this.label26.TabIndex = 20;
+            this.label26.Text = "概率：";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(7, 45);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(68, 17);
+            this.label25.TabIndex = 19;
+            this.label25.Text = "请求次数：";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(7, 24);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(68, 17);
+            this.label24.TabIndex = 18;
+            this.label24.Text = "出错次数：";
+            // 
+            // btn_rest
+            // 
+            this.btn_rest.Location = new System.Drawing.Point(519, 221);
+            this.btn_rest.Name = "btn_rest";
+            this.btn_rest.Size = new System.Drawing.Size(106, 56);
+            this.btn_rest.TabIndex = 15;
+            this.btn_rest.Text = "设备重启";
+            this.btn_rest.UseVisualStyleBackColor = true;
+            this.btn_rest.Click += new System.EventHandler(this.btn_rest_Click);
             // 
             // groupBox8
             // 
@@ -795,7 +909,7 @@
             this.groupBox7.Controls.Add(this.tbx_mbslaveid);
             this.groupBox7.Controls.Add(this.label10);
             this.groupBox7.Font = new System.Drawing.Font("苹方字体", 7.999999F);
-            this.groupBox7.Location = new System.Drawing.Point(15, 161);
+            this.groupBox7.Location = new System.Drawing.Point(12, 150);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(116, 100);
             this.groupBox7.TabIndex = 4;
@@ -833,26 +947,26 @@
             // 
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("苹方字体", 6.999999F);
-            this.label20.Location = new System.Drawing.Point(12, 131);
+            this.label20.Location = new System.Drawing.Point(18, 501);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(101, 14);
             this.label20.TabIndex = 5;
-            this.label20.Text = "tool Version ： 0.0.2";
+            this.label20.Text = "tool Version ： 0.0.4";
             // 
             // tmr_getvalue
             // 
             this.tmr_getvalue.Interval = 1000;
             this.tmr_getvalue.Tick += new System.EventHandler(this.tmr_getvalue_Tick);
             // 
-            // btn_rest
+            // btn_changeslaveid
             // 
-            this.btn_rest.Location = new System.Drawing.Point(519, 221);
-            this.btn_rest.Name = "btn_rest";
-            this.btn_rest.Size = new System.Drawing.Size(106, 56);
-            this.btn_rest.TabIndex = 15;
-            this.btn_rest.Text = "设备重启";
-            this.btn_rest.UseVisualStyleBackColor = true;
-            this.btn_rest.Click += new System.EventHandler(this.btn_rest_Click);
+            this.btn_changeslaveid.Location = new System.Drawing.Point(210, 23);
+            this.btn_changeslaveid.Name = "btn_changeslaveid";
+            this.btn_changeslaveid.Size = new System.Drawing.Size(26, 23);
+            this.btn_changeslaveid.TabIndex = 23;
+            this.btn_changeslaveid.Text = "-";
+            this.btn_changeslaveid.UseVisualStyleBackColor = true;
+            this.btn_changeslaveid.Click += new System.EventHandler(this.btn_changeslaveid_Click);
             // 
             // Form1
             // 
@@ -880,6 +994,8 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.tabPage3.ResumeLayout(false);
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox9.PerformLayout();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
             this.groupBox7.ResumeLayout(false);
@@ -964,6 +1080,16 @@
         private System.Windows.Forms.Button btn_refresh_sen;
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.Button btn_rest;
+        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.Label lab_errcount;
+        private System.Windows.Forms.Button btn_errclear;
+        private System.Windows.Forms.Label lab_prob;
+        private System.Windows.Forms.Label lab_getcount;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Button btn_getcom;
+        private System.Windows.Forms.Button btn_changeslaveid;
     }
 }
 

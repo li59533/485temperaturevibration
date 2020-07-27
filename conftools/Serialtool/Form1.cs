@@ -36,7 +36,10 @@ namespace Serialtool
                 Console.WriteLine("   {0}", s);
                 cbx_comx.Items.Add(s);
             }
-            cbx_comx.SelectedIndex = 0;
+            if (cbx_comx.Items.Count > 0)
+            {
+                cbx_comx.SelectedIndex = 0;
+            }
 
             if (serial_1.current_status == true)
             {
@@ -217,6 +220,9 @@ namespace Serialtool
             }
         }
 
+
+        public UInt32 getcount = 0;
+        public UInt32 errcount = 0;
         private void tmr_getvalue_Tick(object sender, EventArgs e)
         {
             if (tbx_mbslaveid.TextLength > 0)
@@ -226,6 +232,8 @@ namespace Serialtool
 
                 try
                 {
+                    getcount ++;
+
                     ushort[] buf_z = serial_1.master.ReadInputRegisters(slaveid, 0, 10);
                     Delay(100);
                     ushort[] buf_x = serial_1.master.ReadInputRegisters(slaveid, 10, 10);
@@ -319,10 +327,26 @@ namespace Serialtool
                 }
                 catch
                 {
-                    
+                    errcount ++;
+
+
+
                 }
 
 
+                lab_errcount.Text = errcount.ToString();
+                lab_getcount.Text = getcount.ToString();
+                float prob;
+                if(getcount > 0)
+                {
+                    prob = (float)((float)errcount / (float)getcount) * 100.0f;
+                    lab_prob.Text = prob.ToString("F3") + "%";
+                }
+                else
+                {
+                    lab_prob.Text = "--";
+                }
+                
             }
             else
             {
@@ -582,6 +606,63 @@ namespace Serialtool
                 {
                     serial_1.master.WriteSingleRegister(slaveid, 21, 0x0001);
                     MessageBox.Show("命令已下发");
+                }
+                catch
+                {
+                    MessageBox.Show("Failed");
+                }
+            }
+            else
+            {
+                MessageBox.Show("No Slave ID");
+            }
+        }
+
+        private void btn_errclear_Click(object sender, EventArgs e)
+        {
+            lab_prob.Text = "--";
+            lab_errcount.Text = "--";
+            lab_getcount.Text = "--";
+            getcount = 0;
+            errcount = 0;
+        }
+
+        private void btn_getcom_Click(object sender, EventArgs e)
+        {
+            cbx_comx.Items.Clear();
+            foreach (string s in SerialPort.GetPortNames())
+            {
+                Console.WriteLine("   {0}", s);
+                cbx_comx.Items.Add(s);
+            }
+            if (cbx_comx.Items.Count > 0)
+            {
+                cbx_comx.SelectedIndex = 0;
+            }
+        }
+
+        private void btn_changeslaveid_Click(object sender, EventArgs e)
+        {
+            if (tbx_mbslaveid.TextLength > 0)
+            {
+                byte slaveid = Convert.ToByte(tbx_mbslaveid.Text.Trim());
+
+                try
+                {
+                    string value_str = Interaction.InputBox("修改值", "输入", "", -1, -1);
+                    byte value = Convert.ToByte(value_str.Trim());
+                    if (value > 0)
+                    {
+                        if (value >= 256)
+                        {
+                            MessageBox.Show("值不能 > 655");
+                            return;
+                        }
+                        ushort change_value = (ushort)(value);
+
+                        serial_1.master.WriteSingleRegister(slaveid, 0, change_value);
+                    }
+
                 }
                 catch
                 {
